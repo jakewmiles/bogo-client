@@ -4,3 +4,8 @@ export type MainBottomTabParamList = {
   Messages: undefined;
   Profile: undefined;
 }
+
+export type MessagesStackParamList = {
+  firstChat: undefined;
+  secondChat: undefined;
+}

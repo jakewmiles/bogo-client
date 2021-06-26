@@ -1,23 +1,47 @@
-import React from 'react';
+import React, {} from 'react';
+import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MainBottomTabParamList } from './types';
-import FavouritesScreen from './screens/FavouritesScreen';
 import BrowseScreen from './screens/BrowseScreen';
 import ProfileScreen from './screens/ProfileScreen';
-import MessagesScreen from './screens/MessagesScreen';
+import ConnectionsStack from './screens/ConnectionsStack';
 
-const BottomTab = createBottomTabNavigator<MainBottomTabParamList>();
 
 export default function App() {
+  const Tab = createBottomTabNavigator();
+
   return (
     <NavigationContainer>
-      <BottomTab.Navigator initialRouteName="Browse">
-        <BottomTab.Screen name="Favourites" component={FavouritesScreen}/>
-        <BottomTab.Screen name="Browse" component={BrowseScreen}/>
-        <BottomTab.Screen name="Messages" component={MessagesScreen}/>
-        <BottomTab.Screen name="Profile" component={ProfileScreen} />
-      </BottomTab.Navigator>
+      <Tab.Navigator 
+        tabBarOptions={{
+          activeBackgroundColor: '#dddddd',
+          tabStyle: styles.tab,
+          labelStyle: styles.tabText,
+          }}>
+        <Tab.Screen 
+          name="Browse" 
+          component={BrowseScreen}
+        />
+        <Tab.Screen 
+          name="Connections" 
+          component={ConnectionsStack}
+        />
+        <Tab.Screen 
+          name="Profile" 
+          component={ProfileScreen} 
+        />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  tab: {
+    justifyContent: 'center',
+  },
+  tabText: {
+    fontSize: 14,
+    alignSelf: 'center',
+    color: 'black',
+  }
+})
