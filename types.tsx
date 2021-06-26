@@ -1,5 +1,6 @@
 export type MainBottomTabParamList = {
+  Favourites: undefined;
   Browse: undefined;
-  Chat: undefined;
+  Messages: undefined;
   Profile: undefined;
 }

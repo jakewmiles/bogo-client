@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, Text } from "react-native";
 
-export interface ChatScreenProps {
+export interface FavouritesScreenProps {
   
 }
  
-const ChatScreen: React.FC<ChatScreenProps> = () => {
+const FavouritesScreen: React.FC<FavouritesScreenProps> = () => {
   return ( 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Chat Screen</Text>
+      <Text>Favourites Screen</Text>
     </View>
    );
 }
  
-export default ChatScreen;
+export default FavouritesScreen;
