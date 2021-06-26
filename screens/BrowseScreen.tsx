@@ -4,19 +4,19 @@ import { useNavigation } from '@react-navigation/core';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { MainBottomTabParamList } from '../types';
 
-type HomeScreenProp = BottomTabNavigationProp<MainBottomTabParamList, 'Home'>;
+type BrowseScreenProp = BottomTabNavigationProp<MainBottomTabParamList, 'Browse'>;
 
-export interface HomeScreenProps {
+export interface BrowseScreenProps {
   
 }
  
-const HomeScreen: React.FC<HomeScreenProps> = () => {
-  const navigation = useNavigation<HomeScreenProp>();
+const BrowseScreen: React.FC<BrowseScreenProps> = () => {
+  const navigation = useNavigation<BrowseScreenProp>();
   return ( 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
+      <Text>Browse Screen</Text>
     </View>
    );
 }
  
-export default HomeScreen;
+export default BrowseScreen;

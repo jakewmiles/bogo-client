@@ -1,16 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export interface DetailsScreenProps {
+export interface ProfileScreenProps {
   
 }
  
-const DetailsScreen: React.FC<DetailsScreenProps> = () => {
+const ProfileScreen: React.FC<ProfileScreenProps> = () => {
   return ( 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
+      <Text>Profile Screen</Text>
     </View>
    );
 }
  
-export default DetailsScreen;
+export default ProfileScreen;
