@@ -7,7 +7,7 @@ interface Props {
   profilePicture: string;
 }
 
-const Match = (props: Props) => {
+const Connection = (props: Props) => {
   return (
     <View style={styles.view}>
       <View style={styles.imageView}>
@@ -18,7 +18,9 @@ const Match = (props: Props) => {
           }}
         />
       </View>
-      <Text style={styles.text}>{props.firstName}</Text>
+      <View style={styles.textView}>
+        <Text style={styles.text}>{props.firstName}</Text>
+      </View>
     </View>
   );
 };
@@ -26,17 +28,13 @@ const Match = (props: Props) => {
 const styles = StyleSheet.create({
   view: {
     marginVertical: 10,
-    width: 350,
+    width: '100%',
     height: 80,
-    backgroundColor: 'white',
-    borderRadius: 20,
     flexDirection: 'row',
     alignItems: 'center',
   },
   image: {
     flex: 1,
-    height: '80%',
-    width: '80%',
     resizeMode: 'contain',
     borderRadius: 150,
   },
@@ -44,9 +42,12 @@ const styles = StyleSheet.create({
     height: '80%',
     width: '40%',
   },
+  textView: {
+    width: '60%',
+  },
   text: {
     fontSize: 27,
   },
 });
 
-export default Match;
+export default Connection;

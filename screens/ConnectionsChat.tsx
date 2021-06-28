@@ -15,7 +15,14 @@ interface Props {
   route: any;
 }
 
-const MatchesChat = (props: Props) => {
+interface Message {
+  id: number;
+  user: boolean;
+  createdOn: string;
+  content: string;
+}
+
+const MatchesChat = ( props: Props ) => {
   const [messageContent, setMessageContent] = useState<string>('');
   const [messagesArray, setMessagesArray] = useState<any[]>([]);
 
@@ -54,7 +61,11 @@ const MatchesChat = (props: Props) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            setMessagesArray([...messagesArray, messageContent]);
+            console.log(messagesArray);
+            setMessagesArray(prev => [...prev, messageContent]);
+            setMessageContent('');
+            console.log(messagesArray);
+            
           }}
         >
           <Text style={styles.buttonText}>+</Text>
@@ -66,14 +77,14 @@ const MatchesChat = (props: Props) => {
 
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: '#eaebed',
+    backgroundColor: '#f9f5ff',
     height: '100%',
   },
   mainHeader: {
     fontSize: 60,
     alignSelf: 'center',
     marginTop: '10%',
-    marginLeft: '5%',
+    marginLeft: '-30%',
   },
   headerContainer: {
     flexDirection: 'row-reverse',
@@ -87,8 +98,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     borderRadius: 150,
     alignSelf: 'center',
-    marginLeft: '5%',
-    marginTop: '10%',
+    marginLeft: '60%',
+    marginTop: '-18%',
   },
   input: {
     borderWidth: 1,
