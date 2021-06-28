@@ -13,9 +13,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <BottomTab.Navigator initialRouteName="Browse">
-        <BottomTab.Screen name="Favourites" component={FavouritesScreen}/>
-        <BottomTab.Screen name="Browse" component={BrowseScreen}/>
-        <BottomTab.Screen name="Messages" component={MessagesScreen}/>
+        <BottomTab.Screen name="Favourites" component={FavouritesScreen} />
+        <BottomTab.Screen name="Browse" component={BrowseScreen} />
+        <BottomTab.Screen name="Messages" component={MessagesScreen} />
         <BottomTab.Screen name="Profile" component={ProfileScreen} />
       </BottomTab.Navigator>
     </NavigationContainer>
