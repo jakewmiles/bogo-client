@@ -15,6 +15,7 @@ import {
   PublicSans_500Medium,
 } from "@expo-google-fonts/dev";
 import StarRating from 'react-native-star-rating';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props {
 
@@ -29,6 +30,7 @@ const mock = {
   city: 'Dartford',
   country: 'England',
   rating: 4.5,
+  content: 'If falling asleep on trains after a great night out at a pub is your thing. I\'d be happy to introduce some local brews!'
 }
 
 const Profile = (props: Props) => {
@@ -81,16 +83,32 @@ const Profile = (props: Props) => {
               uri: mock.profilePicture
             }}
           />
-          <View>
+          <View style={styles.headerInfo}>
             <Text style={styles.name}>{mock.name}, {mock.age}</Text>
             <Text style={styles.location}>{mock.city}, {mock.country}</Text>
             <StarRating
               disabled={false}
               maxStars={5}
               rating={4.5}
+              starSize={20}
+              fullStarColor={"#99879D"}
+              halfStarColor={"#99879D"}
+              emptyStarColor={"#99879D"}
               selectedStar={(rating: Number) => onStarRatingPress(rating)}
             />
           </View>
+          <MaterialCommunityIcons
+            name="compass"
+            color="black"
+            size={27}
+          />
+        </View>
+        <Text style={styles.content}>{mock.content}</Text>
+        <View style={styles.hangoutHeader}>
+          <Text style={styles.hangoutText}>Local hangout spots</Text>
+          <TouchableOpacity style={styles.hangoutButton}>
+            <Text style={styles.hangoutButtonText}>Add +</Text>
+          </TouchableOpacity>
         </View>
         {/* <ScrollView contentContainerStyle={styles.scroll}>
         <Text style={styles.mainHeader}>{profileInfo.first_name}</Text>
@@ -130,10 +148,9 @@ const styles = StyleSheet.create({
   },
   profileHeader: {
     flexDirection: 'row',
-    backgroundColor: 'green',
-    height: 100,
+    height: 120,
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   profilePicture: {
     height: 69,
@@ -142,11 +159,47 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: 'PTSans_700Bold',
-    fontSize: 25,
+    fontSize: 30,
   },
   location: {
     fontFamily: 'PTSans_400Regular',
     fontSize: 18,
+    color: '#99879D',
+  },
+  headerInfo: {
+    alignItems: "flex-start",
+    justifyContent: 'space-between',
+    paddingRight: 20,
+    paddingLeft: 10,
+    width: '60%',
+    height: 100,
+  },
+  content: {
+    height: 130,
+    fontFamily: 'PTSans_400Regular',
+    fontSize: 22,
+    color: '#99879D',
+  },
+  hangoutHeader: {
+    height: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  hangoutText: {
+    fontFamily: 'RedHatDisplay_700Bold',
+    fontSize: 21,
+  },
+  hangoutButtonText: {
+    fontFamily: 'PublicSans_500Medium',
+    fontSize: 19,
+  },
+  hangoutButton: {
+    backgroundColor: '#99879D',
+    borderRadius: 4,
+    height: '100%',
+    paddingHorizontal: 20,
+    justifyContent: 'center',
   },
   // scroll: {
   //   width: '100%',
