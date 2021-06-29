@@ -7,6 +7,8 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import Message from '../components/Message';
 
@@ -22,12 +24,15 @@ interface Message {
   content: string;
 }
 
-const MatchesChat = ( props: Props ) => {
+const ContactsChat = ( props: Props ) => {
   const [messageContent, setMessageContent] = useState<string>('');
   const [messagesArray, setMessagesArray] = useState<any[]>([]);
 
   return (
-    <View style={styles.view}>
+    <TouchableWithoutFeedback onPress={() => {
+      Keyboard.dismiss();
+    }}>
+      <View style={styles.view}>
         <Text style={styles.mainHeader}>{props.route.params.firstName}</Text>
         <Image
           style={styles.image}
@@ -35,43 +40,44 @@ const MatchesChat = ( props: Props ) => {
             uri: props.route.params.profilePicture,
           }}
         />
-      <FlatList
-        data={messagesArray}
-        keyExtractor={item => String(item.id)}
-        renderItem={({ item }) => {
-          return (
-            <Message
+        <FlatList
+          data={messagesArray}
+          keyExtractor={item => String(item.id)}
+          renderItem={({ item }) => {
+            return (
+              <Message
               id={item.id}
               user={item.user}
               createdOn={item.createdOn}
               content={item.content}
+              />
+              );
+            }}
             />
-          );
-        }}
-      />
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          value={messageContent}
-          onChangeText={setMessageContent}
-          multiline={true}
-          numberOfLines={2}
-          placeholder="Type message"
-        />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            console.log(messagesArray);
-            setMessagesArray(prev => [...prev, messageContent]);
-            setMessageContent('');
-            console.log(messagesArray);
-            
-          }}
-        >
-          <Text style={styles.buttonText}>+</Text>
-        </TouchableOpacity>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            value={messageContent}
+            onChangeText={setMessageContent}
+            multiline={true}
+            numberOfLines={2}
+            placeholder="Type message"
+            />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              console.log(messagesArray);
+              setMessagesArray(prev => [...prev, messageContent]);
+              setMessageContent('');
+              console.log(messagesArray);
+              
+            }}
+            >
+            <Text style={styles.buttonText}>+</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -133,4 +139,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MatchesChat;
+export default ContactsChat;

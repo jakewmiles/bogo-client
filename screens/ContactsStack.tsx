@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
-import ConnectionsHome from './ConnectionsHome';
-import ConnectionsChat from './ConnectionsChat';
+import ContactsHome from './ContactsHome';
+import ContactsChat from './ContactsChat';
 
 interface Props {
   userInfo: {
@@ -12,22 +12,22 @@ interface Props {
 
 const Stack = createStackNavigator();
 
-const ConnectionsStack = (props: Props) => {
+const ContactsStack = (props: Props) => {
   return ( 
     <Stack.Navigator>
       <Stack.Screen
-        name="ConnectionsHome"
-        component={ ConnectionsHome }
+        name="ContactsHome"
+        component={ ContactsHome }
         initialParams={{ userInfo: props.userInfo }}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="ConnectionsChat"
-        component={ ConnectionsChat }
+        name="ContactsChat"
+        component={ ContactsChat }
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
    );
 }
  
-export default ConnectionsStack;
+export default ContactsStack;
