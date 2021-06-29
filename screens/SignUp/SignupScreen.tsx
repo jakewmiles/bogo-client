@@ -9,7 +9,6 @@ export interface SignupScreenProps {
   route: any;
 }
 
- 
 const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
   return ( 
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -44,6 +43,7 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
               />
               <TextInput 
                 placeholder="Password"
+                secureTextEntry={true}
                 style={styles.inputField}
                 onChangeText={handleChange('password')}
                 onBlur={handleBlur('password')}
@@ -53,8 +53,8 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
             <TouchableOpacity 
               style={styles.button}
               onPress={() => {
-                // alert(values.password);
-                navigation.navigate('BirthDateScreen', {firstName: values.firstName});
+                if(!values.firstName || !values.lastName || !values.email || !values.password) alert('FAIL')
+                else navigation.navigate('BirthDateScreen', {firstName: values.firstName});
               }}>
               <TextButton title={'Create Profile'}/>
             </TouchableOpacity>
