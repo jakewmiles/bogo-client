@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BrowseScreen from './screens/BrowseScreen';
 import ProfileScreen from './screens/ProfileScreen';
-import ConnectionsStack from './screens/ConnectionsStack';
+import ContactsStack from './screens/ContactsStack';
 
 
 export default function App() {
@@ -23,8 +23,8 @@ export default function App() {
           component={BrowseScreen}
         />
         <Tab.Screen 
-          name="Connections" 
-          component={ConnectionsStack}
+          name="Contacts" 
+          component={ContactsStack}
         />
         <Tab.Screen 
           name="Profile" 
