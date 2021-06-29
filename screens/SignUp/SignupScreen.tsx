@@ -18,7 +18,7 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
       >
         {({ handleChange, handleBlur, handleSubmit, values}) => (
           <View style={{width: '90%', justifyContent: 'center', alignItems: 'center'}}>
-            <View style={styles.wholeForm}>
+            <View style={styles.card}>
               <Text style={{ fontSize: 32, marginVertical: '10%' }}>Sign-up</Text>
               <TextInput
                 placeholder="First name"
@@ -53,7 +53,7 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
               style={styles.button}
               onPress={() => {
                 // alert(values.password);
-                navigation.navigate('BirthDateScreen');
+                navigation.navigate('BirthDateScreen', {firstName: values.firstName});
               }}>
               <TextButton title={'Create Profile'}/>
             </TouchableOpacity>
@@ -69,6 +69,20 @@ const styles = StyleSheet.create({
     width: '70%',
     height: 55,
     marginTop: '25%',
+  },
+  card: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '90%',
+    borderRadius: 6,
+    elevation: 6,
+    backgroundColor: '#fff',
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: '#99879D',
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    marginHorizontal: 4,
+    marginVertical: 6,
   },
   wholeForm: {
     alignItems: 'center',
