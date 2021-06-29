@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
-import LongButton from '../../components/LongButton';
+import TextButton from '../../components/TextButton';
 
 export interface LandingScreenProps {
   route: any;
@@ -14,7 +14,7 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ navigation }) => {
         style={styles.button}
         onPress={() => navigation.navigate('SignupScreen')}
       >
-        <LongButton 
+        <TextButton 
           title={'Create Account'}
           />
       </TouchableOpacity>

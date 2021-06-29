@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-export interface LongButtonProps {
+export interface TextButtonProps {
   title: string,
 }
 
-const LongButton: React.FC<LongButtonProps> = ({title}) => {
+const TextButton: React.FC<TextButtonProps> = ({title}) => {
   return (
     <View style={styles.button}>
       <Text style={styles.buttonText}> {title} </Text>
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default LongButton;
+export default TextButton;
