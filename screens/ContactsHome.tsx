@@ -75,7 +75,7 @@ const ConnectionsHome = (props: Props) => {
           return (
             <TouchableOpacity style={{ backgroundColor: alternatingColor[index % alternatingColor.length]}}
               onPress={() => {
-                props.navigation.navigate('ConnectionsChat', {
+                props.navigation.navigate('ContactsChat', {
                   id: item.id,
                   firstName: item.first_name,
                   profilePicture: item.profile_picture,
