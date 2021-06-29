@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
   Image,
 } from 'react-native';
@@ -16,13 +15,13 @@ import {
 } from "@expo-google-fonts/dev";
 import StarRating from 'react-native-star-rating';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconButton from './IconButton';
 
 interface Props {
 
 }
 
 //MOCKS
-
 const mock = {
   profilePicture: 'https://ca.slack-edge.com/T0WU5R8NT-U01RH16H9TP-f954b072e6f0-512',
   name: 'George',
@@ -34,7 +33,8 @@ const mock = {
   hangout1: 'https://i.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68',
   hangout2: 'https://i.picsum.photos/id/1016/3844/2563.jpg?hmac=WEryKFRvTdeae2aUrY-DHscSmZuyYI9jd_-p94stBvc',
   interests: ['Music', 'Hiking', 'Films', 'Football', 'Cooking'],
-  languages: [{ name: 'English', level: 'Fluent' }, { name: 'Chinese', level: 'Conversational' }]
+  languages: [{ name: 'English', level: 'Fluent' }, { name: 'Chinese', level: 'Conversational' }],
+  ownProfile: false,
 }
 
 let interestsString = '';
@@ -66,33 +66,6 @@ const Profile = (props: Props) => {
     return;
   };
 
-  // const [profileInfo, setProfileInfo] = useState<any>({});
-  // const [isMatch, setIsMatch] = useState<string>('Here to be matched');
-
-  // useEffect(() => {
-  //   api.getProfileInfo(props.userId).then(newProfileInfo => {
-  //     setProfileInfo(newProfileInfo);
-  //     if (profileInfo.is_match === false) {
-  //       setIsMatch('Here to make matches');
-  //     }
-  //   });
-  // }, [props.userId, profileInfo.is_match]);
-
-  // let editButton;
-  // if (props.user) {
-  //   editButton = (
-  //     <View>
-  //       <TouchableOpacity
-  //         onPress={() => {
-  //           return;
-  //         }}
-  //       >
-  //         <Text style={styles.button}>Edit Profile</Text>
-  //       </TouchableOpacity>
-  //       <Text style={styles.subHeader}>UserID: {profileInfo.id}</Text>
-  //     </View>
-  //   );
-  // }
   if (fontsLoaded) {
     return (
       <View style={styles.view}>
@@ -138,34 +111,32 @@ const Profile = (props: Props) => {
         <Text style={styles.categories}>{interestsString}</Text>
         <Text style={styles.categoriesHeading}>Speaks</Text>
         <Text style={styles.categories}>{languagesString}</Text>
-        {/* <ScrollView contentContainerStyle={styles.scroll}>
-        <Text style={styles.mainHeader}>{profileInfo.first_name}</Text>
-        <Image
-          style={styles.image}
-          source={{
-            uri: 'http://10.0.2.2:3001/' + profileInfo.profile_picture,
-          }}
-        />
-        {editButton}
-        <View style={styles.container}>
-          <Text style={styles.subHeader}>{isMatch}</Text>
+        <View style={styles.iconView}>
+          <TouchableOpacity>
+            <IconButton
+              name={'star'}
+              color={'white'}
+              size={30} />
+          </TouchableOpacity>
+          <View style={styles.buttonDiv} />
+          <TouchableOpacity>
+            <IconButton
+              name={'chat-processing-outline'}
+              color={'white'}
+              size={30} />
+          </TouchableOpacity>
         </View>
-        <Text style={styles.subHeader}>About me</Text>
-        <View style={styles.container}>
-          <Text style={styles.description}>{profileInfo.description}</Text>
-        </View>
-      </ScrollView> */}
-      </View>
+      </View >
     );
   } else {
-    return <Text>Hello</Text>;
+    return <Text></Text>;
   }
 };
 
 const styles = StyleSheet.create({
   view: {
     backgroundColor: '#ffffff',
-    height: 580,
+    height: 590,
     width: '95%',
     borderRadius: 8,
     paddingHorizontal: 15,
@@ -173,7 +144,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowColor: 'rgba(0, 0, 0, .25)',
     shadowOpacity: 1,
-    elevation: 3,
+    elevation: 5,
   },
   profileHeader: {
     flexDirection: 'row',
@@ -253,6 +224,14 @@ const styles = StyleSheet.create({
     color: '#99879D',
     marginBottom: 10,
   },
+  iconView: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  buttonDiv: {
+    height: 60,
+    width: 20,
+  }
   // scroll: {
   //   width: '100%',
   //   height: 1000,
