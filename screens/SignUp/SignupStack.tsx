@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import LandingScreen from '../SignUp/LandingScreen';
 import SignupScreen from '../SignUp/SignupScreen';
+import SigninScreen from '../SignUp/SigninScreen';
 import BirthDateScreen from '../SignUp/BirthDateScreen';
 import LocationScreen from '../SignUp/LocationScreen';
 import HobbiesScreen from '../SignUp/HobbiesScreen';
@@ -10,16 +11,14 @@ import SummaryScreen from '../SignUp/SummaryScreen';
 import LanguagesScreen from '../SignUp/LanguagesScreen';
 
 interface Props {
-  userInfo: {
-    id: number,
-    name: string,
-  }
+ 
 }
 
 const Stack = createStackNavigator();
 
 const SignupStack = (props: Props) => {
   return ( 
+
     <Stack.Navigator>
       <Stack.Screen
         name="LandingScreen"
@@ -29,6 +28,11 @@ const SignupStack = (props: Props) => {
       <Stack.Screen
         name="SignupScreen"
         component={ SignupScreen }
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SigninScreen"
+        component={ SigninScreen }
         options={{ headerShown: false }}
       />
       <Stack.Screen

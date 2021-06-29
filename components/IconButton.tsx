@@ -22,13 +22,12 @@ const IconButton: React.FC<IconButtonProps> = ({name, color, size}) => {
 
 const styles = StyleSheet.create({
   button: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#99879D',
-    borderRadius: 50,
-    height: '30%',
-    width: '100%',
+    borderRadius: 30,
+    height: 60,
+    width: 60,
   },
   buttonText: {
     color: '#FFFFFF', 

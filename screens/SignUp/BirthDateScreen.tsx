@@ -1,6 +1,8 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import IconButton from '../../components/IconButton';
+// import MapView from 'react-native-maps';
 
 export interface BirthDateScreenProps {
   navigation: any;
@@ -8,12 +10,32 @@ export interface BirthDateScreenProps {
 }
 
 const BirthDateScreen: React.FC<BirthDateScreenProps> = ({ navigation }) => {
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
+  
+  const onChange = (event: Event, selectedDate: Date) => {
+    const currentDate = selectedDate || date;
+    setShow(false);
+    setDate(currentDate);
+  }
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={styles.text}>When were you born?</Text>
+      <Text style={styles.text}>What's your date of birth?</Text>
+      <TouchableOpacity onPress={() => setShow(true)}>
+        <Text style={styles.datePicker}>
+          {('0' + date.getDate()).slice(-2)}/{('0' + (date.getMonth()+1)).slice(-2)}/{date.getFullYear()}
+        </Text>
+      </TouchableOpacity>
+      {show && (<DateTimePicker
+        value={date}
+        mode={'date'}
+        display='default'
+        onChange={onChange}
+      />)}
+      <Text style={styles.text}>Where are you from?</Text>
       <TouchableOpacity 
-        style={styles.button}
-        onPress={() => navigation.navigate('LandingScreen')}
+        onPress={() => navigation.navigate('LocationScreen')}
       >
         <IconButton 
           name={'chevron-right'}
@@ -27,12 +49,18 @@ const BirthDateScreen: React.FC<BirthDateScreenProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 15,
+    fontSize: 24,
     fontWeight: "bold",
+    marginVertical: 50,
   },
-  button: {
-    width: '17%',
-    height: '8%',
+  datePicker: {
+    fontSize: 20,
+    borderWidth: 1,
+    borderColor: '#99879D',
+    color: '#655669',
+    paddingHorizontal: '15%',
+    paddingVertical: 10,
+
   },
 })
 
