@@ -66,6 +66,29 @@ const Profile = (props: Props) => {
     return;
   };
 
+  let iconButtons = (<View style={styles.iconView}>
+    <TouchableOpacity>
+      <IconButton
+        name={'star'}
+        color={'white'}
+        size={30} />
+    </TouchableOpacity>
+    <View style={styles.buttonDiv} />
+    <TouchableOpacity>
+      <IconButton
+        name={'chat-processing-outline'}
+        color={'white'}
+        size={30} />
+    </TouchableOpacity>
+  </View>)
+
+  let hangoutButtonText = 'View All';
+
+  if (mock.ownProfile) {
+    iconButtons = <View />;
+    hangoutButtonText = 'Add +';
+  }
+
   if (fontsLoaded) {
     return (
       <View style={styles.view}>
@@ -111,21 +134,7 @@ const Profile = (props: Props) => {
         <Text style={styles.categories}>{interestsString}</Text>
         <Text style={styles.categoriesHeading}>Speaks</Text>
         <Text style={styles.categories}>{languagesString}</Text>
-        <View style={styles.iconView}>
-          <TouchableOpacity>
-            <IconButton
-              name={'star'}
-              color={'white'}
-              size={30} />
-          </TouchableOpacity>
-          <View style={styles.buttonDiv} />
-          <TouchableOpacity>
-            <IconButton
-              name={'chat-processing-outline'}
-              color={'white'}
-              size={30} />
-          </TouchableOpacity>
-        </View>
+        {iconButtons}
       </View >
     );
   } else {
@@ -232,53 +241,6 @@ const styles = StyleSheet.create({
     height: 60,
     width: 20,
   }
-  // scroll: {
-  //   width: '100%',
-  //   height: 1000,
-  //   alignItems: 'center',
-  // },
-  // mainHeader: {
-  //   paddingTop: 30,
-  //   paddingBottom: 10,
-  //   fontSize: 60,
-  //   fontFamily: 'MomcakeThin-9Y6aZ',
-  //   marginBottom: 20,
-  // },
-  // subHeader: {
-  //   fontSize: 30,
-  //   alignSelf: 'center',
-  //   marginTop: 20,
-  // },
-  // container: {
-  //   marginVertical: 20,
-  //   paddingBottom: 20,
-  //   alignItems: 'center',
-  //   width: '90%',
-  //   backgroundColor: 'white',
-  //   borderRadius: 20,
-  // },
-  // button: {
-  //   marginTop: 30,
-  //   backgroundColor: '#222222',
-  //   paddingHorizontal: 30,
-  //   paddingVertical: 10,
-  //   color: 'white',
-  //   width: '100%',
-  //   alignSelf: 'center',
-  //   textAlign: 'center',
-  // },
-  // image: {
-  //   height: '30%',
-  //   width: '80%',
-  //   resizeMode: 'contain',
-  //   borderRadius: 150,
-  // },
-  // description: {
-  //   fontSize: 25,
-  //   alignSelf: 'flex-start',
-  //   marginTop: 20,
-  //   marginLeft: '5%',
-  // },
 });
 
 export default Profile;
