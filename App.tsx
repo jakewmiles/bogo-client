@@ -6,12 +6,12 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import BrowseScreen from './screens/BrowseScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import ContactsStack from './screens/ContactsStack';
-import LandingScreen from './screens/SignUp/LandingScreen';
+import SignupStack from './screens/SignUp/SignupStack';
 import client from './client';
 
 export default function App() {
   const Tab = createBottomTabNavigator();
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   let homeScreen;
 
   if (isLoggedIn) {
@@ -42,7 +42,9 @@ export default function App() {
     );
   } else {
     homeScreen = (
-      <LandingScreen />
+      <NavigationContainer>
+        <SignupStack />
+      </NavigationContainer>
     )
   }
 

@@ -1,52 +1,51 @@
-import React from 'react';
-import {
-  Button,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  TextStyle,
-  ViewStyle
-} from 'react-native';
+// import React from 'react';
+// import {
+//   Button,
+//   StyleSheet,
+//   TouchableOpacity,
+//   Text,
+//   TextStyle,
+//   ViewStyle
+// } from 'react-native';
 
-export interface ArrowButtonProps {
-  //onClick: () => void;
-  title: string,
-}
-
-// export interface ArrowButtonStyles {
-//   arrowButtonContainer: ViewStyle;
-//   arrowButtonText: TextStyle;
+// export interface CircularButtonProps {
+//   //onClick: () => void;
+//   title: string,
 // }
 
-const ArrowButton: React.FC<ArrowButtonProps> = ({
-  //onClick,
-  title,
-}) => {
+// // export interface CircularButtonStyles {
+// //   CircularButtonContainer: ViewStyle;
+// //   CircularButtonText: TextStyle;
+// // }
 
-  return (
-    <button style={styles.arrowButtonContainer}>
-      <Text style={styles.arrowButtonText}>{title}</Text>
-    </button>
-  )
+// const CircularButton: React.FC<CircularButtonProps> = ({
+//   //onClick,
+//   title,
+// }) => {
 
-}
+//   return (
+//     <button style={styles.CircularButtonContainer}>
+//       <Text style={styles.CircularButtonText}>{title}</Text>
+//     </button>
+//   )
 
-const styles = StyleSheet.create({
+// }
 
-  arrowButtonContainer: {
-    backgroundColor: "#99879D",
-    height: "200px",
-    radius: "50%",
-    width: "200px",
-  },
+// const styles = StyleSheet.create({
 
-  arrowButtonText: {
-    fontSize: 18,
-    color: "FFFFFF",
-    fontWeight: "bold",
-    alignSelf: "center",
-  }
+//   CircularButtonContainer: {
+//     backgroundColor: "#99879D",
+//     height: "200px",
+//     width: "200px",
+//   },
 
-})
+//   CircularButtonText: {
+//     fontSize: 18,
+//     color: "FFFFFF",
+//     fontWeight: "bold",
+//     alignSelf: "center",
+//   }
 
-export default ArrowButton;
+// })
+
+// export default CircularButton;
