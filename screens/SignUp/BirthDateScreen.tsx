@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-nati
 import DateTimePicker from '@react-native-community/datetimepicker';
 import IconButton from '../../components/IconButton';
 import MapView, { LatLng, Marker } from 'react-native-maps';
+import FloatingCard from '../../components/FloatingCard';
 
 export interface BirthDateScreenProps {
   navigation: any;
@@ -24,7 +25,7 @@ const BirthDateScreen: React.FC<BirthDateScreenProps> = ({ navigation, route }) 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text style={[styles.text, {fontSize: 30}]}>Nice to meet you, {route.params.firstName}!</Text>
-      <View style={styles.card}>
+      <FloatingCard cardWidth={'60%'}>
         <Text style={styles.text}>When's your birthday?</Text>
         <TouchableOpacity onPress={() => setShow(true)}>
           <Text style={styles.datePicker}>
@@ -37,8 +38,8 @@ const BirthDateScreen: React.FC<BirthDateScreenProps> = ({ navigation, route }) 
           display='default'
           onChange={onChange}
         />)}
-      </View>
-      <View style={styles.card}>
+      </FloatingCard>
+      <FloatingCard cardWidth={'75%'}>
         <Text style={styles.text}>Where are you from?</Text>
         <MapView 
           style={styles.map}
@@ -65,7 +66,7 @@ const BirthDateScreen: React.FC<BirthDateScreenProps> = ({ navigation, route }) 
           <Marker coordinate={marker}/>
         </MapView>
         <Text style={styles.text}>{location}</Text>
-      </View>
+      </FloatingCard>
       <TouchableOpacity 
         onPress={() => navigation.navigate('LocationScreen')}
       >
@@ -87,8 +88,8 @@ const styles = StyleSheet.create({
   },
   datePicker: {
     fontSize: 20,
-    // borderWidth: 1,
-    // borderColor: '#99879D',
+    borderTopWidth: 1,
+    borderColor: '#99879D',
     color: '#655669',
     paddingHorizontal: '15%',
     paddingVertical: 10,
@@ -97,19 +98,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width - 100,
     height: Dimensions.get('window').height - 400,
     borderWidth: 1,
-  },
-  card: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 6,
-    elevation: 6,
-    backgroundColor: '#fff',
-    shadowOffset: { width: 1, height: 1 },
-    shadowColor: '#333',
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    marginHorizontal: 4,
-    marginVertical: 6,
   },
 })
 

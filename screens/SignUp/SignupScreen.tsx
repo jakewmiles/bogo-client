@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { Formik } from 'formik';
 import TextButton from '../../components/TextButton';
+import FloatingCard from '../../components/FloatingCard';
 
 export interface SignupScreenProps {
   navigation: any;
@@ -18,7 +19,7 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
       >
         {({ handleChange, handleBlur, handleSubmit, values}) => (
           <View style={{width: '90%', justifyContent: 'center', alignItems: 'center'}}>
-            <View style={styles.card}>
+            <FloatingCard cardWidth={'90%'}>
               <Text style={{ fontSize: 32, marginVertical: '10%' }}>Sign-up</Text>
               <TextInput
                 placeholder="First name"
@@ -48,7 +49,7 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
                 onBlur={handleBlur('password')}
                 value={values.password}
               />
-            </View>
+            </FloatingCard>
             <TouchableOpacity 
               style={styles.button}
               onPress={() => {
@@ -69,20 +70,6 @@ const styles = StyleSheet.create({
     width: '70%',
     height: 55,
     marginTop: '25%',
-  },
-  card: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '90%',
-    borderRadius: 6,
-    elevation: 6,
-    backgroundColor: '#fff',
-    shadowOffset: { width: 1, height: 1 },
-    shadowColor: '#99879D',
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    marginHorizontal: 4,
-    marginVertical: 6,
   },
   wholeForm: {
     alignItems: 'center',
