@@ -19,6 +19,7 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
             name={'chevron-right'}
             color={'white'}
             size={30}
+            bgColor={'#99879D'}
             />
         </TouchableOpacity>
     </View>

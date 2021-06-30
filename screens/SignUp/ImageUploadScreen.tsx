@@ -19,6 +19,8 @@ const ImageUploadScreen: React.FC<ImageUploadScreenProps> = ({ navigation }) => 
             name={'chevron-right'}
             color={'white'}
             size={30}
+            bgColor={'#99879D'}
+
             />
         </TouchableOpacity>
     </View>
