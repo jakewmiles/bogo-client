@@ -9,7 +9,11 @@
   },
   "dependencies": {
     "@apollo/react-hooks": "^4.0.0",
+<<<<<<< HEAD
     "@react-native-community/datetimepicker": "^3.5.2",
+=======
+    "@expo-google-fonts/dev": "^0.1.0",
+>>>>>>> e31ceb32bd1df885c11c12f640c9beffb9d81a2a
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/native": "^5.9.4",
@@ -19,10 +23,17 @@
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
     "expo": "~41.0.1",
+<<<<<<< HEAD
     "expo-location": "^12.0.4",
     "expo-permissions": "~12.0.1",
     "expo-status-bar": "~1.0.4",
     "formik": "^2.2.9",
+=======
+    "expo-cli": "^4.7.2",
+    "expo-font": "~9.1.0",
+    "expo-status-bar": "~1.0.4",
+    "graphql": "^15.5.1",
+>>>>>>> e31ceb32bd1df885c11c12f640c9beffb9d81a2a
     "graphql-tag": "^2.12.5",
     "moment": "^2.29.1",
     "react": "16.13.1",
@@ -33,13 +44,15 @@
     "react-native-reanimated": "~2.1.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.0.0",
-    "react-native-vector-icons": "^8.1.0",
+    "react-native-star-rating": "^1.1.0",
+    "react-native-vector-icons": "^4.6.0",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
+    "@types/react-native-star-rating": "^1.1.1",
     "typescript": "~4.0.0"
   },
   "private": true

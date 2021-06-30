@@ -8,7 +8,7 @@ export interface IconButtonProps {
   size: number,
 }
 
-const IconButton: React.FC<IconButtonProps> = ({name, color, size}) => {
+const IconButton: React.FC<IconButtonProps> = ({ name, color, size }) => {
   return (
     <View style={styles.button}>
       <MaterialCommunityIcon
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     width: 60,
   },
   buttonText: {
-    color: '#FFFFFF', 
+    color: '#FFFFFF',
     textTransform: 'uppercase',
     fontSize: 20,
   }

@@ -11,7 +11,7 @@ import client from './client';
 
 export default function App() {
   const Tab = createBottomTabNavigator();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   let homeScreen;
 
   if (isLoggedIn) {
@@ -20,21 +20,21 @@ export default function App() {
         <NavigationContainer>
           <Tab.Navigator
             tabBarOptions={{
-            activeBackgroundColor: '#dddddd',
-            tabStyle: styles.tab,
-            labelStyle: styles.tabText,
-          }}>
-            <Tab.Screen 
-              name="Browse" 
+              activeBackgroundColor: '#dddddd',
+              tabStyle: styles.tab,
+              labelStyle: styles.tabText,
+            }}>
+            <Tab.Screen
+              name="Browse"
               component={BrowseScreen}
             />
-            <Tab.Screen 
-              name="Contacts" 
+            <Tab.Screen
+              name="Contacts"
               component={ContactsStack}
             />
-            <Tab.Screen 
-              name="Profile" 
-              component={ProfileScreen} 
+            <Tab.Screen
+              name="Profile"
+              component={ProfileScreen}
             />
           </Tab.Navigator>
         </NavigationContainer>
