@@ -71,14 +71,18 @@ const Profile = (props: Props) => {
       <IconButton
         name={'star'}
         color={'white'}
-        size={30} />
+        size={30}
+        bgColor={'#99879D'}
+      />
     </TouchableOpacity>
     <View style={styles.buttonDiv} />
     <TouchableOpacity>
       <IconButton
         name={'chat-processing-outline'}
         color={'white'}
-        size={30} />
+        size={30}
+        bgColor={'#99879D'}
+      />
     </TouchableOpacity>
   </View>)
 

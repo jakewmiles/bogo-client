@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, Text, Button } from 'react-native';
-import Carousel from 'react-native-snap-carousel'
+import React, { useState } from 'react';
+import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import Carousel, { Pagination } from 'react-native-snap-carousel'
 import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from '../components/ProfileCarousel';
 import { useNavigation } from '@react-navigation/core';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
@@ -63,6 +63,7 @@ const data = [
 ]
 
 const BrowseScreen: React.FC<BrowseScreenProps> = () => {
+  const [index, setIndex] = React.useState<Number>(0)
   const isCarousel = React.useRef(null);
 
   return (
@@ -77,9 +78,34 @@ const BrowseScreen: React.FC<BrowseScreenProps> = () => {
         itemWidth={ITEM_WIDTH}
         inactiveSlideShift={0}
         useScrollView={true}
+        onSnapToItem={(index: Number) => setIndex(index)}
       />
+      <View style={{ height: '8%' }}>
+        <Pagination
+          containerStyle={styles.pagination}
+          dotsLength={data.length}
+          activeDotIndex={index}
+          carouselRef={isCarousel}
+          dotStyle={{
+            width: 10,
+            height: 10,
+            borderRadius: 5,
+            marginHorizontal: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.92)'
+          }}
+          inactiveDotOpacity={0.4}
+          inactiveDotScale={0.6}
+          tappableDots={true}
+        />
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  pagination: {
+    width: 10,
+  },
+})
 
 export default BrowseScreen;

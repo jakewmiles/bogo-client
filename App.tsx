@@ -11,7 +11,7 @@ import client from './client';
 
 export default function App() {
   const Tab = createBottomTabNavigator();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   let homeScreen;
 
   if (isLoggedIn) {
