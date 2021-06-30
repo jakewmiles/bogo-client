@@ -1,16 +1,40 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import IconButton from '../../components/IconButton';
 
 export interface SummaryScreenProps {
-  
+  navigation: any;
+  route: any;
 }
  
-const SummaryScreen: React.FC<SummaryScreenProps> = () => {
+const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
   return ( 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Summary Screen</Text>
+      <Text style={styles.text}>Write a summary about yourself</Text>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => navigation.navigate('LanguagesScreen')}
+        >
+          <IconButton 
+            name={'chevron-right'}
+            color={'white'}
+            size={30}
+            bgColor={'#99879D'}
+            />
+        </TouchableOpacity>
     </View>
    );
 }
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 15,
+    fontWeight: "bold",
+  },
+  button: {
+    width: '15%',
+    height: '7%',
+  },
+})
  
 export default SummaryScreen;
