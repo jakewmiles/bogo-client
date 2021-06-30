@@ -50,46 +50,46 @@ const Map: React.FC<MapProps> = ({ title, currentLocation }) => {
 
   return (
     <FloatingCard cardWidth={'75%'}>
-        <Text style={styles.text}>{title}</Text>
-        <MapView
-          ref={(map: MapView) => { _mapView = map; }} 
-          style={styles.map}
-          showsMyLocationButton={true}
-          initialRegion={{
-            latitude: 51.5,
-            longitude: 0.1,
-            latitudeDelta: 10,
-            longitudeDelta: 10,
+      <Text style={styles.text}>{title}</Text>
+      <MapView
+        ref={(map: MapView) => { _mapView = map; }} 
+        style={styles.map}
+        showsMyLocationButton={true}
+        initialRegion={{
+          latitude: 51.5,
+          longitude: 0.1,
+          latitudeDelta: 10,
+          longitudeDelta: 10,
+        }}
+        onLongPress={async (e) => {
+          setMarker(e.nativeEvent.coordinate)
+          let latitude = String(e.nativeEvent.coordinate.latitude);
+          let longitude = String(e.nativeEvent.coordinate.longitude);
+          setLocationName(latitude, longitude);
+        }}
+      >
+        <Marker coordinate={marker}/>
+      </MapView>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Text style={[styles.text, {width: '100%', paddingVertical: 5, paddingLeft: '20%'}]}>{location}</Text>
+        {currentLocation && (
+          <TouchableOpacity style={{position: 'absolute', top: '-135%', right: '3%'}}
+          onPress={() => {
+            _mapView.animateToRegion({
+              latitude: region.coords.latitude,
+              longitude: region.coords.longitude,
+              latitudeDelta: 0.05,
+              longitudeDelta: 0.05,
+            })
+            setMarker({latitude: region.coords.latitude, longitude: region.coords.longitude})
+            setLocationName(String(region.coords.latitude), String(region.coords.longitude));
           }}
-          onLongPress={async (e) => {
-            setMarker(e.nativeEvent.coordinate)
-            let latitude = String(e.nativeEvent.coordinate.latitude);
-            let longitude = String(e.nativeEvent.coordinate.longitude);
-            setLocationName(latitude, longitude);
-          }}
-        >
-          <Marker coordinate={marker}/>
-        </MapView>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={[styles.text, {width: '100%', paddingVertical: 5, paddingLeft: '20%'}]}>{location}</Text>
-          {currentLocation && (
-            <TouchableOpacity style={{position: 'absolute', top: '-135%', right: '3%'}}
-            onPress={() => {
-              _mapView.animateToRegion({
-                latitude: region.coords.latitude,
-                longitude: region.coords.longitude,
-                latitudeDelta: 0.05,
-                longitudeDelta: 0.05,
-              })
-              setMarker({latitude: region.coords.latitude, longitude: region.coords.longitude})
-              setLocationName(String(region.coords.latitude), String(region.coords.longitude));
-            }}
-            disabled={disabledButton}>
-            <IconButton name={'crosshairs-gps'} color={'black'} size={30} bgColor={'white'}/>
-          </TouchableOpacity>
-          )}
-        </View>
-      </FloatingCard>
+          disabled={disabledButton}>
+          <IconButton name={'crosshairs-gps'} color={'black'} size={30} bgColor={'white'}/>
+        </TouchableOpacity>
+        )}
+      </View>
+    </FloatingCard>
   )
 }
 

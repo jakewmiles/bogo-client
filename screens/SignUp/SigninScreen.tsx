@@ -14,7 +14,7 @@ const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
         style={styles.button}
         onPress={() => navigation.navigate('LandingScreen')}
       >
-        <TextButton title={'Sign in'}/>
+        <TextButton title={'Sign in'} filled={true}/>
       </TouchableOpacity>
     </View>
    );
