@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  ScrollView,
 } from 'react-native';
 import {
   useFonts,
@@ -37,27 +38,10 @@ interface Props {
   ownProfile: boolean
 }
 
-
-// let interestsString = '';
-// mock.interests.forEach(interest => {
-//   interestsString = interestsString + interest + ', ';
-//   return;
-// })
-// if (interestsString) {
-//   interestsString = interestsString.slice(0, -2);
-// }
-// let languagesString = '';
-// mock.languages.forEach(language => {
-//   languagesString = languagesString + language.level + ' ' + language.name + ', ';
-// })
-// if (languagesString) {
-//   languagesString = languagesString.slice(0, -2);
-// }
-
 const Profile = (props: Props) => {
-
   const user = props.user;
 
+  //the below formats the interests and languages from the array/object based DB notation to the CSV list displayed to users
   let interestsString = '';
   user.interests.forEach(interest => {
     interestsString = interestsString + interest + ', ';
@@ -81,10 +65,7 @@ const Profile = (props: Props) => {
     PublicSans_500Medium
   });
 
-  function onStarRatingPress(rating: Number) {
-    return;
-  };
-
+  //icon buttons to chat or favourite are not visible when viewing own profile
   let iconButtons = (<View style={styles.iconView}>
     <TouchableOpacity>
       <IconButton
@@ -101,8 +82,8 @@ const Profile = (props: Props) => {
     </TouchableOpacity>
   </View>)
 
+  //view or add hangouts depending on whether this is own profile
   let hangoutButtonText = 'View All';
-
   if (props.ownProfile) {
     iconButtons = <View />;
     hangoutButtonText = 'Add +';
@@ -129,7 +110,7 @@ const Profile = (props: Props) => {
               fullStarColor={"#99879D"}
               halfStarColor={"#99879D"}
               emptyStarColor={"#99879D"}
-              selectedStar={(rating: Number) => onStarRatingPress(rating)}
+              selectedStar={() => { return; }}
             />
           </View>
           <MaterialCommunityIcons
@@ -138,7 +119,9 @@ const Profile = (props: Props) => {
             size={27}
           />
         </View>
-        <Text style={styles.content}>{user.content}</Text>
+        <ScrollView style={styles.contentScroll}>
+          <Text style={styles.content}>{user.content}</Text>
+        </ScrollView>
         <View style={styles.hangoutHeader}>
           <Text style={styles.hangoutText}>Local hangout spots</Text>
           <TouchableOpacity style={styles.hangoutButton}>
@@ -164,7 +147,7 @@ const Profile = (props: Props) => {
 const styles = StyleSheet.create({
   view: {
     backgroundColor: '#ffffff',
-    height: 590,
+    height: 560,
     width: '95%',
     borderRadius: 8,
     paddingHorizontal: 15,
@@ -202,8 +185,10 @@ const styles = StyleSheet.create({
     width: '60%',
     height: 85,
   },
+  contentScroll: {
+    height: 140,
+  },
   content: {
-    height: 130,
     fontFamily: 'PTSans_400Regular',
     fontSize: 22,
     color: '#99879D',
