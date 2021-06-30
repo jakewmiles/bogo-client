@@ -17,43 +17,62 @@ import StarRating from 'react-native-star-rating';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconButton from './IconButton';
 
+interface User {
+  profilePicture: string
+  name: string
+  age: string
+  city: string
+  country: string
+  rating: number
+  content: string
+  hangout1: string
+  hangout2: string
+  interests: string[]
+  languages: Array<{ name: string, level: string }>
+  starRating: Number
+}
+
 interface Props {
-
+  user: User
+  ownProfile: boolean
 }
 
-//MOCKS
-const mock = {
-  profilePicture: 'https://ca.slack-edge.com/T0WU5R8NT-U01RH16H9TP-f954b072e6f0-512',
-  name: 'George',
-  age: '28',
-  city: 'Dartford',
-  country: 'England',
-  rating: 4.5,
-  content: 'If falling asleep on trains after a great night out at a pub is your thing. I\'d be happy to introduce some local brews!',
-  hangout1: 'https://i.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68',
-  hangout2: 'https://i.picsum.photos/id/1016/3844/2563.jpg?hmac=WEryKFRvTdeae2aUrY-DHscSmZuyYI9jd_-p94stBvc',
-  interests: ['Music', 'Hiking', 'Films', 'Football', 'Cooking'],
-  languages: [{ name: 'English', level: 'Fluent' }, { name: 'Chinese', level: 'Conversational' }],
-  ownProfile: false,
-}
 
-let interestsString = '';
-mock.interests.forEach(interest => {
-  interestsString = interestsString + interest + ', ';
-  return;
-})
-if (interestsString) {
-  interestsString = interestsString.slice(0, -2);
-}
-let languagesString = '';
-mock.languages.forEach(language => {
-  languagesString = languagesString + language.level + ' ' + language.name + ', ';
-})
-if (languagesString) {
-  languagesString = languagesString.slice(0, -2);
-}
+// let interestsString = '';
+// mock.interests.forEach(interest => {
+//   interestsString = interestsString + interest + ', ';
+//   return;
+// })
+// if (interestsString) {
+//   interestsString = interestsString.slice(0, -2);
+// }
+// let languagesString = '';
+// mock.languages.forEach(language => {
+//   languagesString = languagesString + language.level + ' ' + language.name + ', ';
+// })
+// if (languagesString) {
+//   languagesString = languagesString.slice(0, -2);
+// }
 
 const Profile = (props: Props) => {
+
+  const user = props.user;
+
+  let interestsString = '';
+  user.interests.forEach(interest => {
+    interestsString = interestsString + interest + ', ';
+    return;
+  })
+  if (interestsString) {
+    interestsString = interestsString.slice(0, -2);
+  }
+  let languagesString = '';
+  user.languages.forEach(language => {
+    languagesString = languagesString + language.level + ' ' + language.name + ', ';
+  })
+  if (languagesString) {
+    languagesString = languagesString.slice(0, -2);
+  }
 
   let [fontsLoaded] = useFonts({
     PTSans_400Regular,
@@ -84,7 +103,7 @@ const Profile = (props: Props) => {
 
   let hangoutButtonText = 'View All';
 
-  if (mock.ownProfile) {
+  if (props.ownProfile) {
     iconButtons = <View />;
     hangoutButtonText = 'Add +';
   }
@@ -96,16 +115,16 @@ const Profile = (props: Props) => {
           <Image
             style={styles.profilePicture}
             source={{
-              uri: mock.profilePicture
+              uri: user.profilePicture
             }}
           />
           <View style={styles.headerInfo}>
-            <Text style={styles.name}>{mock.name}, {mock.age}</Text>
-            <Text style={styles.location}>{mock.city}, {mock.country}</Text>
+            <Text style={styles.name}>{user.name}, {user.age}</Text>
+            <Text style={styles.location}>{user.city}, {user.country}</Text>
             <StarRating
               disabled={false}
               maxStars={5}
-              rating={4.5}
+              rating={user.starRating}
               starSize={20}
               fullStarColor={"#99879D"}
               halfStarColor={"#99879D"}
@@ -119,16 +138,16 @@ const Profile = (props: Props) => {
             size={27}
           />
         </View>
-        <Text style={styles.content}>{mock.content}</Text>
+        <Text style={styles.content}>{user.content}</Text>
         <View style={styles.hangoutHeader}>
           <Text style={styles.hangoutText}>Local hangout spots</Text>
           <TouchableOpacity style={styles.hangoutButton}>
-            <Text style={styles.hangoutButtonText}>Add +</Text>
+            <Text style={styles.hangoutButtonText}>{hangoutButtonText}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.hangoutImages}>
-          <Image source={{ uri: mock.hangout1 }} style={styles.hangoutImage} />
-          <Image source={{ uri: mock.hangout2 }} style={styles.hangoutImage} />
+          <Image source={{ uri: user.hangout1 }} style={styles.hangoutImage} />
+          <Image source={{ uri: user.hangout2 }} style={styles.hangoutImage} />
         </View>
         <Text style={styles.categoriesHeading}>Interests</Text>
         <Text style={styles.categories}>{interestsString}</Text>
@@ -202,12 +221,13 @@ const styles = StyleSheet.create({
   hangoutButtonText: {
     fontFamily: 'PublicSans_500Medium',
     fontSize: 19,
+    textAlign: 'center',
   },
   hangoutButton: {
     backgroundColor: '#99879D',
     borderRadius: 4,
     height: '100%',
-    paddingHorizontal: 20,
+    width: 90,
     justifyContent: 'center',
   },
   hangoutImages: {
