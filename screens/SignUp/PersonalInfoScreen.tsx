@@ -2,24 +2,59 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import IconButton from '../../components/IconButton';
-import MapView, { LatLng, Marker } from 'react-native-maps';
+import MapView, { LatLng, Marker, Region } from 'react-native-maps';
 import FloatingCard from '../../components/FloatingCard';
+import TextButton from '../../components/TextButton';
+import * as Location from 'expo-location';
+import * as Permission from 'expo-permissions';
+import { LocationObject } from 'expo-location';
 
-export interface BirthDateScreenProps {
+export interface PersonalInfoScreenProps {
   navigation: any;
   route: any;
 }
 
-const BirthDateScreen: React.FC<BirthDateScreenProps> = ({ navigation, route }) => {
+const PersonalInfoScreen: React.FC<PersonalInfoScreenProps> = ({ navigation, route }) => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+  const [region, setRegion] = useState<LocationObject>({coords: {latitude: 0, longitude: 0, altitude: null, accuracy: null, altitudeAccuracy: null, heading: null, speed: null }, timestamp: 0})
   const [marker, setMarker] = useState<LatLng>({latitude: 0, longitude: 0});
   const [location, setLocation] = useState('')
+  let _mapView: MapView;
   
   const onChange = (event: Event, selectedDate: Date) => {
     const currentDate = selectedDate || date;
     setShow(false);
     setDate(currentDate);
+  }
+
+  useEffect(() => {
+    getCurrentLocation();
+  }, []);
+
+  const getCurrentLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') console.log('Permission denied');
+    let location = await Location.getCurrentPositionAsync({});
+    setRegion(location)
+  }
+
+  const setLocationName = async (latitude: string, longitude: string) => {
+    if (Number(latitude) > 0) {
+      latitude = '+' + String(latitude);
+    } else {
+      latitude = String(latitude);
+    };
+    if (Number(longitude) > 0) {
+      longitude = '+' + String(longitude)
+    } else {
+      longitude = String(longitude);
+    };
+    const response = await fetch(`http://geodb-free-service.wirefreethought.com/v1/geo/cities?limit=5&offset=0&location=${encodeURIComponent(latitude)}${encodeURIComponent(longitude)}&radius=50&sort=-population`)
+    const locations = await response.json();    
+    const cities = locations.data.filter((location: any) => location.type === "CITY");
+    if (!cities.length) setLocation('No major cities near you');
+    else setLocation(`${cities[0].city}, ${cities[0].country}`);
   }
 
   return (
@@ -41,13 +76,14 @@ const BirthDateScreen: React.FC<BirthDateScreenProps> = ({ navigation, route }) 
       </FloatingCard>
       <FloatingCard cardWidth={'75%'}>
         <Text style={styles.text}>Where are you from?</Text>
-        <MapView 
+        <MapView
+          ref={(map: MapView) => { _mapView = map; }} 
           style={styles.map}
           initialRegion={{
-            latitude: 51.49492,
-            longitude: -0.12766,
-            latitudeDelta: 0.1,
-            longitudeDelta: 0.1,
+            latitude: 51.5,
+            longitude: 0.1,
+            latitudeDelta: 10,
+            longitudeDelta: 10,
           }}
           onLongPress={async (e) => {
             setMarker(e.nativeEvent.coordinate)
@@ -57,7 +93,6 @@ const BirthDateScreen: React.FC<BirthDateScreenProps> = ({ navigation, route }) 
             if (Number(longitude) > 0) longitude = '+' + longitude;
             const response = await fetch(`http://geodb-free-service.wirefreethought.com/v1/geo/cities?limit=5&offset=0&location=${encodeURIComponent(latitude)}${encodeURIComponent(longitude)}&radius=50&sort=-population`)
             const locations = await response.json();
-            // console.log(locations.data);
             const cities = locations.data.filter((location: any) => location.type === "CITY");
             if (!cities.length) setLocation('No major cities near you');
             else setLocation(`${cities[0].city}, ${cities[0].country}`);
@@ -67,14 +102,26 @@ const BirthDateScreen: React.FC<BirthDateScreenProps> = ({ navigation, route }) 
         </MapView>
         <Text style={styles.text}>{location}</Text>
       </FloatingCard>
+      <TouchableOpacity style={{height: '10%'}}
+        onPress={() => {
+          _mapView.animateToRegion({
+            latitude: region.coords.latitude,
+            longitude: region.coords.longitude,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+          })
+          setMarker({latitude: region.coords.latitude, longitude: region.coords.longitude})
+          setLocationName();
+        }}>
+        <TextButton title={'Get current location'}/>
+      </TouchableOpacity>
       <TouchableOpacity 
-        onPress={() => navigation.navigate('LocationScreen')}
+        onPress={() => {
+          if (!marker.longitude && !marker.latitude) alert('No location selected!')
+          else if (location === 'No major cities near you') alert('No major cities near you!')
+          else navigation.navigate('HobbiesScreen')}}
       >
-        <IconButton 
-          name={'chevron-right'}
-          color={'white'}
-          size={30}
-          />
+        <IconButton name={'chevron-right'} color={'white'} size={30}/>
       </TouchableOpacity>
     </View>
   );
@@ -101,4 +148,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default BirthDateScreen;
+export default PersonalInfoScreen;

@@ -3,8 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LandingScreen from '../SignUp/LandingScreen';
 import SignupScreen from '../SignUp/SignupScreen';
 import SigninScreen from '../SignUp/SigninScreen';
-import BirthDateScreen from '../SignUp/BirthDateScreen';
-import LocationScreen from '../SignUp/LocationScreen';
+import PersonalInfoScreen from './PersonalInfoScreen';
 import HobbiesScreen from '../SignUp/HobbiesScreen';
 import ImageUploadScreen from '../SignUp/ImageUploadScreen';
 import SummaryScreen from '../SignUp/SummaryScreen';
@@ -36,13 +35,8 @@ const SignupStack = (props: Props) => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="BirthDateScreen"
-        component={ BirthDateScreen }
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="LocationScreen"
-        component={ LocationScreen }
+        name="PersonalInfoScreen"
+        component={ PersonalInfoScreen }
         options={{ headerShown: false }}
       />
       <Stack.Screen

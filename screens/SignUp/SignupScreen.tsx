@@ -54,7 +54,7 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
               style={styles.button}
               onPress={() => {
                 if(!values.firstName || !values.lastName || !values.email || !values.password) alert('FAIL')
-                else navigation.navigate('BirthDateScreen', {firstName: values.firstName});
+                else navigation.navigate('PersonalInfoScreen', {firstName: values.firstName});
               }}>
               <TextButton title={'Create Profile'}/>
             </TouchableOpacity>

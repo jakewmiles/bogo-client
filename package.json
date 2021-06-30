@@ -19,6 +19,8 @@
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
     "expo": "~41.0.1",
+    "expo-location": "^12.0.4",
+    "expo-permissions": "~12.0.1",
     "expo-status-bar": "~1.0.4",
     "formik": "^2.2.9",
     "graphql-tag": "^2.12.5",
