@@ -8,6 +8,9 @@ import ProfileScreen from './screens/ProfileScreen';
 import ContactsStack from './screens/ContactsStack';
 import SignupStack from './screens/SignUp/SignupStack';
 import client from './client';
+import { makeVar } from '@apollo/client';
+
+export const userVar = makeVar<any>([]);
 
 export default function App() {
   const Tab = createBottomTabNavigator();

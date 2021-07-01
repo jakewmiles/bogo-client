@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import IconButton from '../../components/IconButton';
-import MapView, { LatLng, Marker, Region } from 'react-native-maps';
 import FloatingCard from '../../components/FloatingCard';
 import Map from '../../components/Map';
-import * as Location from 'expo-location';
-import { LocationObject } from 'expo-location';
+import { userVar } from '../../App';
 
 export interface PersonalInfoScreenProps {
   navigation: any;
@@ -16,18 +14,19 @@ export interface PersonalInfoScreenProps {
 const PersonalInfoScreen: React.FC<PersonalInfoScreenProps> = ({ navigation, route }) => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
-  const [location, setLocation] = useState('');
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
+
   
   const onChange = (event: Event, selectedDate: Date) => {
     const currentDate = selectedDate || date;
     setShow(false);
     setDate(currentDate);
-    console.log(currentDate);
-    
   }
 
-  const handleLocation = (newLocation: string) => {
-    setLocation(newLocation);
+  const handleLocation = (newCity: string, newCountry: string) => {
+    setCity(newCity);
+    setCountry(newCountry);
   }
 
   return (
@@ -50,7 +49,8 @@ const PersonalInfoScreen: React.FC<PersonalInfoScreenProps> = ({ navigation, rou
       <Map title={'Where are you from?'} currentLocation={true} onSelectLocation={handleLocation} />
       <TouchableOpacity 
         onPress={() => {
-          if(!location) alert('No location selected!')
+          userVar({...userVar(), DOB: date, city: city, country: country});
+          if(!city) alert('No location selected!')
           else navigation.navigate('HobbiesScreen')}}
       >
         <IconButton name={'chevron-right'} color={'white'} size={30} bgColor={'#99879D'}/>

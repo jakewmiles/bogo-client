@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from "@react-navigation/stack";
+import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack";
 import LandingScreen from '../SignUp/LandingScreen';
 import SignupScreen from '../SignUp/SignupScreen';
 import SigninScreen from '../SignUp/SigninScreen';
@@ -9,16 +9,13 @@ import ImageUploadScreen from '../SignUp/ImageUploadScreen';
 import SummaryScreen from '../SignUp/SummaryScreen';
 import LanguagesScreen from '../SignUp/LanguagesScreen';
 
-interface Props {
- 
-}
-
 const Stack = createStackNavigator();
 
-const SignupStack = (props: Props) => {
+const SignupStack = () => {
   return ( 
-
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS}}
+    >
       <Stack.Screen
         name="LandingScreen"
         component={ LandingScreen }

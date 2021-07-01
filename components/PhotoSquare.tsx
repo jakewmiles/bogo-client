@@ -5,18 +5,23 @@ import * as ImagePicker from 'expo-image-picker';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export interface PhotoSquareProps {
-  
+  handleUpload: any;
+  handleDelete: any;
 }
  
-const PhotoSquare: React.FC<PhotoSquareProps> = () => {
+const PhotoSquare: React.FC<PhotoSquareProps> = ({ handleUpload, handleDelete }) => {
   const [image, setImage] = useState<string | null>(null)
 
   useEffect(() => {
     (async () => {
       if (Platform.OS !== 'web') {
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== 'granted') {
-          alert('Camera roll permissions not given!')
+        const cameraRollStatus = (await ImagePicker.requestMediaLibraryPermissionsAsync()).status;
+        const cameraStatus = (await ImagePicker.requestCameraPermissionsAsync()).status;
+        if (cameraRollStatus !== 'granted') {
+          alert('Camera roll permission not given!');
+        }
+        if (cameraStatus !== 'granted') {
+          alert('Camera permission not given!');
         }
       }
     })();
@@ -28,9 +33,8 @@ const PhotoSquare: React.FC<PhotoSquareProps> = () => {
       quality: 1,
     })
     if (!result.cancelled) {
-      setImage(result.uri)
-      console.log(result.uri);
-      
+      setImage(result.uri);
+      handleUpload(result.uri);
     }
   };
 
@@ -42,10 +46,12 @@ const PhotoSquare: React.FC<PhotoSquareProps> = () => {
       >
         <IconButton name='plus-circle-outline' color='#99879D75' bgColor='transparent' size={40}/>
       </TouchableOpacity>}
-      {image && <TouchableOpacity 
-        onPress={pickImage}
-      >  
-        {image && <Image source={{uri: image}} style={styles.thumbnail}/>}
+      {image && <TouchableOpacity
+                  onLongPress={() => {
+                    handleDelete(image)
+                    setImage(null)
+                }}>  
+        <Image source={{uri: image}} style={styles.thumbnail}/>
       </TouchableOpacity>}
     </View>
    );
@@ -53,9 +59,11 @@ const PhotoSquare: React.FC<PhotoSquareProps> = () => {
 
 const styles = StyleSheet.create({
   box: {
-    backgroundColor: '#DDDDDD90',
+    backgroundColor: 'transparent',
     borderWidth: 1,
     borderColor: '#99879D75',
+    borderStyle: 'dotted',
+    borderRadius: 5,
     height: 125,
     width: 125,
     alignItems: 'center',
@@ -65,7 +73,6 @@ const styles = StyleSheet.create({
   thumbnail: {
     height: 125,
     width: 125,
-    aspectRatio: 1,
     margin: 1,
     borderWidth: 1,
     borderColor: '#99879D75',
