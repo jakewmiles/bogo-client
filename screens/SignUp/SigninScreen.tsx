@@ -31,7 +31,7 @@ const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
       <Formik
         initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
         onSubmit={values => console.log(values)}
-      >
+   
         {({ handleChange, handleBlur, handleSubmit, values}) => (
           <View style={{width: '90%', justifyContent: 'center', alignItems: 'center'}}>
             <FloatingCard cardWidth={'90%'}>
@@ -65,6 +65,7 @@ const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
           </View>
         )}
       </Formik>
+
     </View>
    );
 }
