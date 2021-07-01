@@ -34,7 +34,7 @@ const HobbiesScreen: React.FC<HobbiesScreenProps> = ({ navigation }) => {
   return ( 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text style={styles.text}>What are your hobbies?</Text>
-      <FloatingCard cardWidth={'75%'}>
+      <FloatingCard cardWidth={'85%'}>
         <ToggleableButtonFlatlist array={Hobbies}/>
       </FloatingCard>
       <TouchableOpacity 
