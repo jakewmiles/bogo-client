@@ -21,13 +21,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#99879D',
     borderRadius: 50,
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
     height: '30%',
     width: '100%',
   },
   filledText: {
     color: '#FFFFFF', 
     fontSize: 20,
-
   },
   notFilled: {
     flex: 1,

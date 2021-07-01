@@ -22,6 +22,8 @@ const PersonalInfoScreen: React.FC<PersonalInfoScreenProps> = ({ navigation, rou
     const currentDate = selectedDate || date;
     setShow(false);
     setDate(currentDate);
+    console.log(currentDate);
+    
   }
 
   const handleLocation = (newLocation: string) => {
