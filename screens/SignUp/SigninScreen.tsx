@@ -3,6 +3,7 @@ import { StyleSheet, Text, View,TextInput, TouchableOpacity } from 'react-native
 import { Formik } from 'formik';
 import FloatingCard from '../../components/FloatingCard';
 import TextButton from '../../components/TextButton';
+import { isLoggedInVar } from  '../../client'
 
 export interface SigninScreenProps {
   navigation: any;
@@ -40,7 +41,7 @@ const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
               style={styles.button}
               onPress={() => {
                 if(!values.email || !values.password) alert('FAIL')
-                else navigation.navigate('Home');
+                else isLoggedInVar(true);
               }}>
               <TextButton title={'Sign in'}/>
             </TouchableOpacity>
