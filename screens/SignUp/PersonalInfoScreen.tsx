@@ -16,11 +16,16 @@ export interface PersonalInfoScreenProps {
 const PersonalInfoScreen: React.FC<PersonalInfoScreenProps> = ({ navigation, route }) => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+  const [location, setLocation] = useState('');
   
   const onChange = (event: Event, selectedDate: Date) => {
     const currentDate = selectedDate || date;
     setShow(false);
     setDate(currentDate);
+  }
+
+  const handleLocation = (newLocation: string) => {
+    setLocation(newLocation);
   }
 
   return (
@@ -40,10 +45,11 @@ const PersonalInfoScreen: React.FC<PersonalInfoScreenProps> = ({ navigation, rou
           onChange={onChange}
         />)}
       </FloatingCard>
-      <Map title={'Where are you from?'} currentLocation={true}/>
+      <Map title={'Where are you from?'} currentLocation={true} onSelectLocation={handleLocation} />
       <TouchableOpacity 
         onPress={() => {
-          navigation.navigate('HobbiesScreen')}}
+          if(!location) alert('No location selected!')
+          else navigation.navigate('HobbiesScreen')}}
       >
         <IconButton name={'chevron-right'} color={'white'} size={30} bgColor={'#99879D'}/>
       </TouchableOpacity>

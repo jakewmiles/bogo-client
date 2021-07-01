@@ -32,7 +32,7 @@ const HobbiesScreen: React.FC<HobbiesScreenProps> = ({ navigation }) => {
 
   
   return ( 
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 100 }}>
       <Text style={styles.text}>What are your hobbies?</Text>
       <FlatList
         data={renderData}

@@ -9,9 +9,10 @@ import { LocationObject } from 'expo-location';
 export interface MapProps {
   title: string;
   currentLocation: boolean;
+  onSelectLocation: any;
 }
 
-const Map: React.FC<MapProps> = ({ title, currentLocation }) => {
+const Map: React.FC<MapProps> = ({ title, currentLocation, onSelectLocation }) => {
   const [region, setRegion] = useState<LocationObject>({coords: {latitude: 0, longitude: 0, altitude: null, accuracy: null, altitudeAccuracy: null, heading: null, speed: null }, timestamp: 0});
   const [marker, setMarker] = useState<LatLng>({latitude: 0, longitude: 0});
   const [location, setLocation] = useState('');
@@ -45,7 +46,10 @@ const Map: React.FC<MapProps> = ({ title, currentLocation }) => {
     const locations = await response.json();    
     const cities = locations.data.filter((location: any) => location.type === "CITY");
     if (!cities.length) setLocation('No major cities nearby');
-    else setLocation(`${cities[0].city}, ${cities[0].country}`);
+    else {
+      setLocation(`${cities[0].city}, ${cities[0].country}`)
+      onSelectLocation(`${cities[0].city}, ${cities[0].country}`)
+    };
   }
 
   return (
