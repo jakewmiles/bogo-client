@@ -25,7 +25,7 @@ interface Props {
 const mock = {
   profilePicture: 'https://ca.slack-edge.com/T0WU5R8NT-U01RH16H9TP-f954b072e6f0-512',
   name: 'George',
-  age: '28',
+  age: '26',
   city: 'Dartford',
   country: 'England',
   rating: 4.5,

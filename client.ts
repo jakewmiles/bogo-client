@@ -2,16 +2,27 @@
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
-import { makeVar } from '@apollo/client';
-import gql from 'graphql-tag'
+import { makeVar, gql } from '@apollo/client';
 
 
 const link = new HttpLink({
-  uri: 'http://localhost:3005'
+  uri: 'http://10.10.22.42:3005'
 });
 
 export const isLoggedInVar = makeVar(false)
+export const userVar = makeVar([])
 
+
+export const GET_USER = gql`
+  query GetUser($loginInput: LoginInput!) {
+    user(input: $loginInput) {
+      id
+      firstName
+      lastName
+    }
+
+  }
+`
 
 
 

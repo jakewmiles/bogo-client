@@ -3,7 +3,8 @@ import { StyleSheet, Text, View,TextInput, TouchableOpacity } from 'react-native
 import { Formik } from 'formik';
 import FloatingCard from '../../components/FloatingCard';
 import TextButton from '../../components/TextButton';
-import { isLoggedInVar } from  '../../client'
+import { GET_USER, isLoggedInVar, userVar } from  '../../client'
+import { useLazyQuery } from '@apollo/client'
 
 export interface SigninScreenProps {
   navigation: any;
@@ -11,6 +12,20 @@ export interface SigninScreenProps {
 }
  
 const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
+
+    const [getUser, {loading, data}] = useLazyQuery(GET_USER)
+
+    if (data) { 
+      console.log(data)
+      userVar(data)
+      console.log(userVar(), 'uservar')
+      isLoggedInVar(true);
+    }
+    if(loading) {
+      return <View><Text>loading</Text></View>
+    }
+    
+
   return ( 
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Formik
@@ -41,7 +56,9 @@ const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
               style={styles.button}
               onPress={() => {
                 if(!values.email || !values.password) alert('FAIL')
-                else isLoggedInVar(true);
+                else { 
+                 getUser({variables:{loginInput: {email: values.email, password: values.password}}})
+                } 
               }}>
               <TextButton title={'Sign in'}/>
             </TouchableOpacity>
