@@ -7,6 +7,7 @@ import {
   FlatList,
 } from 'react-native';
 import Connection from '../components/Connection';
+import { userVar } from '../client'
 
 interface Props {
   navigation: any;
@@ -64,7 +65,7 @@ const Connections: Connection[] = [
 
 const ConnectionsHome = (props: Props) => {
   const alternatingColor = ['#ffffff', '#f9f5ff'];
-  const userInfo = props.route.params.userInfo;
+  const userInfo = userVar();
   return (
     <View style={styles.view}>
       <Text style={styles.mainHeader}>Your Connections</Text>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View,TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View,TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Formik } from 'formik';
 import FloatingCard from '../../components/FloatingCard';
 import TextButton from '../../components/TextButton';
@@ -28,6 +28,9 @@ const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
 
   return ( 
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <TouchableWithoutFeedback onPress={() => {
+        Keyboard.dismiss();
+      }} />
       <Formik
         initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
         onSubmit={values => console.log(values)}>

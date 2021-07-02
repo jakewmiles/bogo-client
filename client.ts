@@ -51,6 +51,13 @@ export const SEND_USER = gql`
         id
         userId
         user1Id
+        profile {
+          id
+          firstName
+          lastName
+          city
+          courtry
+        }
       }
     }
   }
