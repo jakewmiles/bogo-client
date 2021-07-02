@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Platform, Image, FlatList } f
 import IconButton from '../../components/IconButton';
 import * as ImagePicker from 'expo-image-picker';
 import PhotoSquare from '../../components/PhotoSquare';
-import { userVar } from '../../App';
+import { newUserVar } from '../../App';
 
 export interface ImageUploadScreenProps {
   navigation: any;
@@ -54,7 +54,7 @@ const ImageUploadScreen: React.FC<ImageUploadScreenProps> = ({ navigation }) => 
       <TouchableOpacity 
         style={styles.button}
         onPress={() => {
-          userVar({...userVar(), profileImg: profileImage ? profileImage : '', photoAlbum: images});
+          newUserVar({...newUserVar(), profileImg: 'https://picsum.photos/200' ? 'https://picsum.photos/200' : '', photoAlbum: ['https://picsum.photos/200', 'https://picsum.photos/200', 'https://picsum.photos/200']});
           navigation.navigate('SummaryScreen');
       }}>
         <IconButton name={'chevron-right'} color={'white'} size={30} bgColor={'#99879D'}/>

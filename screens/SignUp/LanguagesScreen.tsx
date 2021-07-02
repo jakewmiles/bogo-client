@@ -3,7 +3,11 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import TextButton from '../../components/TextButton';
 import ToggleableButtonFlatlist from '../../components/ToggleableButtonFlatlist';
 import FloatingCard from '../../components/FloatingCard';
-import { userVar } from '../../App';
+import { newUserVar } from '../../App';
+import { LANGUAGES } from '../../services/queriesApi';
+import { useLazyQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { isLoggedInVar, SEND_USER } from '../../client';
 
 export interface LanguagesScreenProps {
   navigation: any;
@@ -16,38 +20,41 @@ interface Language {
   selected: boolean;
 }
 
-const Languages: Language[] = [
-  { name: 'English', id: '1', selected: false },
-  { name: 'Somali', id: '2', selected: false },
-  { name: 'Basque', id: '3', selected: false },
-  { name: 'Uzbek', id: '4', selected: false },
-  { name: 'Klingon', id: '5', selected: false },
-  { name: 'Esperanto', id: '6', selected: false },
-  { name: 'Toki Pona', id: '7', selected: false },
-  { name: 'Deccan', id: '8', selected: false },
-  { name: 'Zulu', id: '9', selected: false },
-  { name: 'Kazakh', id: '10', selected: false },
-  { name: 'Yiddish', id: '11', selected: false },
-  { name: 'Kazakh', id: '12', selected: false },
-
-] 
- 
 const LanguagesScreen: React.FC<LanguagesScreenProps> = ({ navigation }) => {
+  const [ sendUser, sendUserCatch ] = useLazyQuery(SEND_USER);
+  const { loading, error, data } = useQuery(LANGUAGES);
+  while(loading || sendUserCatch.loading) {
+    return null;
+  }
+
+  if (data) {
+    console.log(data);
+    newUserVar(data);
+    console.log('newUserVar', newUserVar());
+    isLoggedInVar(true);
+  }
+
+
+  const dataArray = data.languages;  
+  const languagesArray = dataArray.map((language: Language) => language.selected = false);
+  console.log(dataArray);
+  
   return ( 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text style={styles.text}>What languages do you speak?</Text>
       <FloatingCard cardWidth={'85%'}>
         <View style={{height: 500, justifyContent: 'center', alignItems: 'center', paddingVertical: 100 }}>
-          <ToggleableButtonFlatlist array={Languages}/>
+          <ToggleableButtonFlatlist array={dataArray}/>
         </View>
       </FloatingCard>
       <TouchableOpacity 
         style={styles.button}
         onPress={() => {
-          const selectedLanguageIDs = Languages.filter((language) => language.selected === true)
-                                               .map((language) => language.id);          
-          userVar({...userVar(), languages: selectedLanguageIDs});
-          console.log(userVar());          
+          const selectedLanguageIDs = dataArray.filter((language: Language) => language.selected === true)
+                                               .map((language: Language) => language.id);          
+          newUserVar({...newUserVar(), languages: selectedLanguageIDs});
+          console.log(newUserVar());
+          sendUser({variables:newUserVar()})
           navigation.navigate('LandingScreen');
         }}>
         <TextButton title={'LAUNCH ACCOUNT'} filled={true}/>

@@ -6,7 +6,7 @@ import { makeVar, gql } from '@apollo/client';
 
 
 const link = new HttpLink({
-  uri: 'http://10.10.22.42:3005'
+  uri: 'http://10.10.22.248:3005'
 });
 
 export const isLoggedInVar = makeVar(false)
@@ -20,7 +20,37 @@ export const GET_USER = gql`
       firstName
       lastName
     }
+  }
+`
 
+export const SEND_USER = gql`
+  mutation SendUser($signupInput: UserInput!) {
+    user(input: $signupInput) {
+      id
+    firstName
+    lastName
+    dob
+    guide
+    city
+    country
+    gender
+    summary
+    profileImg
+    filterCity
+    languages {
+      id
+      name
+    }
+    interests {
+      id
+      name
+    }
+    favorites {
+      id
+      userId
+      user1Id
+    }
+    }
   }
 `
 

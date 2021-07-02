@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-nativ
 import { Formik } from 'formik';
 import TextButton from '../../components/TextButton';
 import FloatingCard from '../../components/FloatingCard';
-import { userVar } from '../../App';
+import { newUserVar } from '../../App';
 import { RadioButton } from 'react-native-paper';
 
 export interface SignupScreenProps {
@@ -78,7 +78,7 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
             <TouchableOpacity 
               style={styles.button}
               onPress={() => {
-                userVar({firstName: values.firstName, lastName: values.lastName, email: values.email, password: values.password, gender: checked});
+                newUserVar({firstName: values.firstName, lastName: values.lastName, email: values.email, password: values.password, gender: checked});
                 navigation.navigate('PersonalInfoScreen', {firstName: values.firstName});
               }}>
               <TextButton title={'CREATE PROFILE'} filled={true}/>

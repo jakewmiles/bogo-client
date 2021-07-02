@@ -4,7 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import IconButton from '../../components/IconButton';
 import FloatingCard from '../../components/FloatingCard';
 import Map from '../../components/Map';
-import { userVar } from '../../App';
+import { newUserVar } from '../../App';
 
 export interface PersonalInfoScreenProps {
   navigation: any;
@@ -49,7 +49,7 @@ const PersonalInfoScreen: React.FC<PersonalInfoScreenProps> = ({ navigation, rou
       <Map title={'Where are you from?'} currentLocation={true} onSelectLocation={handleLocation} />
       <TouchableOpacity 
         onPress={() => {
-          userVar({...userVar(), dob: date, city: city, country: country, filterCity: city});
+          newUserVar({...newUserVar(), dob: date, city: city, country: country, filterCity: city});
           if(!city) alert('No location selected!')
           else navigation.navigate('HobbiesScreen')}}
       >

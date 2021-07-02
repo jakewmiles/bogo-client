@@ -11,7 +11,7 @@ import ContactsStack from './screens/ContactsStack';
 import SignupStack from './screens/SignUp/SignupStack';
 import client from './client';
 import { makeVar } from '@apollo/client';
-export const userVar = makeVar<any>([]);
+export const newUserVar = makeVar<any>([]);
 import { isLoggedInVar } from './client'
 import { useReactiveVar } from '@apollo/client';
 
@@ -27,7 +27,6 @@ export default function App() {
 
   if (isLoggedIn) {
     homeScreen = (
-      <ApolloProvider client={client}>
         <NavigationContainer>
           <Tab.Navigator
             tabBarOptions={{
@@ -49,7 +48,6 @@ export default function App() {
             />
           </Tab.Navigator>
         </NavigationContainer>
-       </ApolloProvider> 
     );
   } else {
     homeScreen = (
@@ -62,10 +60,10 @@ export default function App() {
   
   return (
     <ApolloProvider client={client}>
-    <View style={styles.view}>
-      {homeScreen}
-    </View>
-      </ApolloProvider>
+      <View style={styles.view}>
+        {homeScreen}
+      </View>
+    </ApolloProvider>
   );
 }
 

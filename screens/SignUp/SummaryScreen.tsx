@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
-import { userVar } from '../../App';
+import { newUserVar } from '../../App';
 import IconButton from '../../components/IconButton';
-import TextButton from '../../components/TextButton';
+
 
 export interface SummaryScreenProps {
   navigation: any;
@@ -31,7 +31,7 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
       <TouchableOpacity 
         style={styles.button}
         onPress={() => {
-          userVar({...userVar(), guide: guideStatus, summary: text, favorites: []});
+          newUserVar({...newUserVar(), guide: guideStatus, summary: text, favorites: []});
           navigation.navigate('LanguagesScreen');
       }}>
         <IconButton 

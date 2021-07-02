@@ -30,7 +30,7 @@ const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Formik
         initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
-        onSubmit={values => console.log(values)}
+        onSubmit={values => console.log(values)}>
    
         {({ handleChange, handleBlur, handleSubmit, values}) => (
           <View style={{width: '90%', justifyContent: 'center', alignItems: 'center'}}>
@@ -60,12 +60,11 @@ const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
                  getUser({variables:{loginInput: {email: values.email, password: values.password}}})
                 } 
               }}>
-              <TextButton title={'Sign in'}/>
+              <TextButton title={'Sign in'} filled={true}/>
             </TouchableOpacity>
           </View>
         )}
       </Formik>
-
     </View>
    );
 }
