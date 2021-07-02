@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
+import { userVar } from '../../App';
 import FloatingCard from '../../components/FloatingCard';
 import IconButton from '../../components/IconButton';
 import TextButton from '../../components/TextButton';
@@ -35,11 +36,18 @@ const HobbiesScreen: React.FC<HobbiesScreenProps> = ({ navigation }) => {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text style={styles.text}>What are your hobbies?</Text>
       <FloatingCard cardWidth={'85%'}>
-        <ToggleableButtonFlatlist array={Hobbies}/>
+        <View style={{height: 500, justifyContent: 'center', alignItems: 'center', paddingVertical: 100 }}>
+          <ToggleableButtonFlatlist array={Hobbies}/>
+        </View>
       </FloatingCard>
       <TouchableOpacity 
         style={styles.button}
-        onPress={() => navigation.navigate('ImageUploadScreen')}
+        onPress={() => {
+          const selectedHobbyIDs = Hobbies.filter((hobby) => hobby.selected === true)
+                                          .map((hobby) => hobby.id);          
+          userVar({...userVar(), interests: selectedHobbyIDs});
+          navigation.navigate('ImageUploadScreen');
+        }}
       >
       <IconButton name={'chevron-right'} color={'white'} size={30} bgColor={'#99879D'}/>
       </TouchableOpacity>
