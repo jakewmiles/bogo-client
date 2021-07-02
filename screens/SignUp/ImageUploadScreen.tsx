@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Platform, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
 import IconButton from '../../components/IconButton';
 import * as ImagePicker from 'expo-image-picker';
 import PhotoSquare from '../../components/PhotoSquare';
 import { newUserVar } from '../../client';
+import { storage } from '../../client';
+import { ProgressBar } from 'react-native-paper';
 
 export interface ImageUploadScreenProps {
   navigation: any;
   route: any;
 }
- 
+
 const ImageUploadScreen: React.FC<ImageUploadScreenProps> = ({ navigation }) => {
-  const [profileImage, setProfileImage] = useState<string>();
+  const [profileImage, setProfileImage] = useState<string|undefined>(undefined);
   const [images, setImages] = useState<string[]>([])
 
   const handleUpload = (image: string) => {
@@ -27,10 +29,27 @@ const ImageUploadScreen: React.FC<ImageUploadScreenProps> = ({ navigation }) => 
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       quality: 1,
     })
-    if (!result.cancelled) {      
-      setProfileImage(result.uri);      
+    if (!result.cancelled) {     
+      setProfileImage(result.uri);
     }
   };
+
+  const getImageName = (uri: string|undefined) => {
+    if (uri) {
+      const uriSplit = uri.split('/');
+      return uriSplit[uriSplit.length-1]
+    }
+  }
+
+  const firebaseUpload = async (uri: string|undefined, imageName: string|undefined) => {
+    if (uri) {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+  
+      const ref = storage.ref().child(`images/${imageName}`);
+      return ref.put(blob);
+    }
+  }
 
   return ( 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -53,13 +72,23 @@ const ImageUploadScreen: React.FC<ImageUploadScreenProps> = ({ navigation }) => 
       <TouchableOpacity 
         style={styles.button}
         onPress={() => {
-          newUserVar({...newUserVar(), profileImg: 'https://picsum.photos/200' ? 'https://picsum.photos/200' : '', 
-            // photoAlbum: ['https://picsum.photos/200', 'https://picsum.photos/200', 'https://picsum.photos/200']
+          let imagesArray: string[] = [];
+          images.forEach((image) => {
+            let imageName = getImageName(image);
+            firebaseUpload(image, imageName);
+            imagesArray.push(`https://firebasestorage.googleapis.com/v0/b/bogo-client.appspot.com/o/images%2F${imageName}?alt=media`);
+          })
+          let profileImageName = getImageName(profileImage);
+          firebaseUpload(profileImage, profileImageName);
+          newUserVar({...newUserVar(), profileImg: profileImageName ? `https://firebasestorage.googleapis.com/v0/b/bogo-client.appspot.com/o/images%2F${profileImageName}?alt=media` : '', 
+            // photoAlbum: imagesArray
           });
+          console.log(newUserVar());
           navigation.navigate('SummaryScreen');
       }}>
         <IconButton name={'chevron-right'} color={'white'} size={30} bgColor={'#99879D'}/>
       </TouchableOpacity>
+      <ProgressBar progress={0.51} color={'#99879D'} style={{height: 5, width: Dimensions.get('window').width}}/>
     </View>
    );
 }

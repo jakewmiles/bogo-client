@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions} from 'react-native';
 import { newUserVar } from '../../client';
 import FloatingCard from '../../components/FloatingCard';
 import IconButton from '../../components/IconButton';
@@ -7,6 +7,7 @@ import TextButton from '../../components/TextButton';
 import ToggleableButtonFlatlist from '../../components/ToggleableButtonFlatlist';
 import { INTERESTS } from '../../services/queriesApi';
 import { useQuery } from '@apollo/client';
+import { ProgressBar } from 'react-native-paper';
 
 export interface HobbiesScreenProps {
   navigation: any;
@@ -46,6 +47,7 @@ const HobbiesScreen: React.FC<HobbiesScreenProps> = ({ navigation }) => {
       >
       <IconButton name={'chevron-right'} color={'white'} size={30} bgColor={'#99879D'}/>
       </TouchableOpacity>
+      <ProgressBar progress={0.34} color={'#99879D'} style={{height: 5, width: Dimensions.get('window').width}}/>
     </View>
    );
 }

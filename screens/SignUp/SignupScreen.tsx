@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions } from 'react-native';
 import { Formik } from 'formik';
 import TextButton from '../../components/TextButton';
 import FloatingCard from '../../components/FloatingCard';
 import { newUserVar } from '../../client';
-import { RadioButton } from 'react-native-paper';
+import { RadioButton, ProgressBar, Colors } from 'react-native-paper';
 
 export interface SignupScreenProps {
   navigation: any;
@@ -83,6 +83,7 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
               }}>
               <TextButton title={'CREATE PROFILE'} filled={true}/>
             </TouchableOpacity>
+            <ProgressBar progress={0.02} color={'#99879D'} style={{height: 5, width: Dimensions.get('window').width}}/>
           </View>
         )}
       </Formik>

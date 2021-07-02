@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import TextButton from '../../components/TextButton';
 import ToggleableButtonFlatlist from '../../components/ToggleableButtonFlatlist';
 import FloatingCard from '../../components/FloatingCard';
+import { ProgressBar } from 'react-native-paper';
 import { newUserVar } from '../../client';
 import { LANGUAGES } from '../../services/queriesApi';
 import { useMutation } from '@apollo/client';
@@ -30,9 +31,7 @@ const LanguagesScreen: React.FC<LanguagesScreenProps> = ({ navigation }) => {
   }
 
   if (sendUserCatch.data) {
-    console.log(sendUserCatch.data);
     newUserVar(sendUserCatch.data);
-    console.log('newUserVar', newUserVar());
     isLoggedInVar(true);
   }
 
@@ -58,6 +57,7 @@ const LanguagesScreen: React.FC<LanguagesScreenProps> = ({ navigation }) => {
         }}>
         <TextButton title={'LAUNCH ACCOUNT'} filled={true}/>
       </TouchableOpacity>
+      <ProgressBar progress={0.83} color={'#99879D'} style={{height: 5, width: Dimensions.get('window').width}}/>
     </View>
    );
 }

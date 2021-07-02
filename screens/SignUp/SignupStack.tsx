@@ -8,7 +8,6 @@ import HobbiesScreen from '../SignUp/HobbiesScreen';
 import ImageUploadScreen from '../SignUp/ImageUploadScreen';
 import SummaryScreen from '../SignUp/SummaryScreen';
 import LanguagesScreen from '../SignUp/LanguagesScreen';
-import gql from 'graphql-tag'
 
 interface Props {
  

@@ -1,8 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions } from 'react-native';
 import { newUserVar } from '../../client';
 import IconButton from '../../components/IconButton';
+import { ProgressBar } from 'react-native-paper';
 
 
 export interface SummaryScreenProps {
@@ -41,6 +42,7 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
           bgColor={'#99879D'}
           />
       </TouchableOpacity>
+      <ProgressBar progress={0.67} color={'#99879D'} style={{height: 5, width: Dimensions.get('window').width}}/>
     </View>
    );
 }

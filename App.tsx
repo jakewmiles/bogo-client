@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import gql from 'graphql-tag'
-import { useQuery } from '@apollo/react-hooks'
 import { ApolloProvider } from '@apollo/react-hooks';
 import BrowseScreen from './screens/BrowseScreen';
 import ProfileScreen from './screens/ProfileScreen';
@@ -16,9 +14,6 @@ import { useReactiveVar } from '@apollo/client';
 export default function App() {
   const Tab = createBottomTabNavigator();
   const isLoggedIn = useReactiveVar(isLoggedInVar);
-  // console.log(isLoggedIn)
-
-
 
   let homeScreen;
 

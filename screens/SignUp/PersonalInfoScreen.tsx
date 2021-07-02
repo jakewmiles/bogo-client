@@ -5,6 +5,7 @@ import IconButton from '../../components/IconButton';
 import FloatingCard from '../../components/FloatingCard';
 import Map from '../../components/Map';
 import { newUserVar } from '../../client';
+import { ProgressBar } from 'react-native-paper';
 
 export interface PersonalInfoScreenProps {
   navigation: any;
@@ -55,6 +56,7 @@ const PersonalInfoScreen: React.FC<PersonalInfoScreenProps> = ({ navigation, rou
       >
         <IconButton name={'chevron-right'} color={'white'} size={30} bgColor={'#99879D'}/>
       </TouchableOpacity>
+      <ProgressBar progress={0.18} color={'#99879D'} style={{height: 5, width: Dimensions.get('window').width}}/>
     </View>
   );
 }
