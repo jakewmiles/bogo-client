@@ -1,28 +1,17 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
+import { newUserVar } from '../../client';
 import FloatingCard from '../../components/FloatingCard';
 import IconButton from '../../components/IconButton';
 import TextButton from '../../components/TextButton';
 import ToggleableButtonFlatlist from '../../components/ToggleableButtonFlatlist';
+import { INTERESTS } from '../../services/queriesApi';
+import { useQuery } from '@apollo/client';
 
 export interface HobbiesScreenProps {
   navigation: any;
   route: any;
 }
-
-const Hobbies: Hobby[] = [
-  {name: 'Football', id: '1', selected: false}, 
-  {name: 'Wine Tasting', id: '2', selected: false}, 
-  {name: 'Painting', id: '3', selected: false},
-  {name: 'Shredding', id: '4', selected: false},
-  {name: 'Working', id: '5', selected: false},
-  {name: 'Memes', id: '6', selected: false},
-  {name: 'Shrines', id: '7', selected: false},
-  {name: 'Pentagrams', id: '8', selected: false},
-  {name: 'Summoning', id: '9', selected: false},
-  {name: 'Coding', id: '10', selected: false},
-  {name: 'Eating', id: '11', selected: false},
-]
 
 interface Hobby {
   name: string;
@@ -31,15 +20,29 @@ interface Hobby {
 }
  
 const HobbiesScreen: React.FC<HobbiesScreenProps> = ({ navigation }) => {
+  const { loading, error, data } = useQuery(INTERESTS);
+  while(loading) {
+    return null;
+  }
+  const dataArray = data.interests;  
+  const languagesArray = dataArray.map((interest: Hobby) => interest.selected = false);
+
   return ( 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text style={styles.text}>What are your hobbies?</Text>
       <FloatingCard cardWidth={'85%'}>
-        <ToggleableButtonFlatlist array={Hobbies}/>
+        <View style={{height: 500, justifyContent: 'center', alignItems: 'center', paddingVertical: 100 }}>
+          <ToggleableButtonFlatlist array={dataArray}/>
+        </View>
       </FloatingCard>
       <TouchableOpacity 
         style={styles.button}
-        onPress={() => navigation.navigate('ImageUploadScreen')}
+        onPress={() => {
+          const selectedHobbyIDs = dataArray.filter((hobby: Hobby) => hobby.selected === true)
+                                          .map((hobby: Hobby) => hobby.id);          
+          newUserVar({...newUserVar(), interests: selectedHobbyIDs});
+          navigation.navigate('ImageUploadScreen');
+        }}
       >
       <IconButton name={'chevron-right'} color={'white'} size={30} bgColor={'#99879D'}/>
       </TouchableOpacity>

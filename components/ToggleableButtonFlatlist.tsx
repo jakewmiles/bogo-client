@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, FlatList, View } from 'react-native';
 import TextButton from '../components/TextButton';
+import FloatingCard from './FloatingCard';
 
 export interface ToggleableButtonFlatlistProps {
   array: any;
@@ -20,23 +21,21 @@ const ToggleableButtonFlatlist: React.FC<ToggleableButtonFlatlistProps> = ({ arr
   }
 
   return (
-    <View style={{height: 500, justifyContent: 'center', alignItems: 'center', paddingVertical: 100 }}>
-      <FlatList
-        data={renderData}
-        columnWrapperStyle={styles.tagView}
-        numColumns={5}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({item}) => (
-          <TouchableOpacity 
-            onPress={() => onPressHandler(item.id)}
-            style={{height: 48, marginHorizontal: 2, marginVertical: 2}}
-          >
-            <TextButton title={item.name} filled={item.selected}/>
-          </TouchableOpacity>
-        )}
-        extraData={renderData}
-      />
-    </View>
+    <FlatList
+      data={renderData}
+      columnWrapperStyle={styles.tagView}
+      numColumns={3}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({item}) => (
+        <TouchableOpacity 
+          onPress={() => onPressHandler(item.id)}
+          style={{height: 48, marginHorizontal: 2, marginVertical: 2}}
+        >
+          <TextButton title={item.name} filled={item.selected}/>
+        </TouchableOpacity>
+      )}
+      extraData={renderData}
+    />
   )
 }
 

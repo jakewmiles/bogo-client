@@ -13,39 +13,38 @@ import client from './client';
 import { isLoggedInVar } from './client'
 import { useReactiveVar } from '@apollo/client';
 
-
-
 export default function App() {
   const Tab = createBottomTabNavigator();
   const isLoggedIn = useReactiveVar(isLoggedInVar);
+  // console.log(isLoggedIn)
+
+
 
   let homeScreen;
 
   if (isLoggedIn) {
     homeScreen = (
-      <ApolloProvider client={client}>
-        <NavigationContainer>
-          <Tab.Navigator
-            tabBarOptions={{
-              activeBackgroundColor: '#dddddd',
-              tabStyle: styles.tab,
-              labelStyle: styles.tabText,
-            }}>
-            <Tab.Screen
-              name="Browse"
-              component={BrowseStack}
-            />
-            <Tab.Screen
-              name="Contacts"
-              component={ContactsStack}
-            />
-            <Tab.Screen
-              name="Profile"
-              component={ProfileScreen}
-            />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </ApolloProvider>
+      <NavigationContainer>
+        <Tab.Navigator
+          tabBarOptions={{
+            activeBackgroundColor: '#dddddd',
+            tabStyle: styles.tab,
+            labelStyle: styles.tabText,
+          }}>
+          <Tab.Screen
+            name="Browse"
+            component={BrowseStack}
+          />
+          <Tab.Screen
+            name="Contacts"
+            component={ContactsStack}
+          />
+          <Tab.Screen
+            name="Profile"
+            component={ProfileScreen}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
     );
   } else {
     homeScreen = (
