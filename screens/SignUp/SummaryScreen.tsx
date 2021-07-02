@@ -31,7 +31,7 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
       <TouchableOpacity 
         style={styles.button}
         onPress={() => {
-          userVar({...userVar(), guide: guideStatus, summary: text});
+          userVar({...userVar(), guide: guideStatus, summary: text, favorites: []});
           navigation.navigate('LanguagesScreen');
       }}>
         <IconButton 

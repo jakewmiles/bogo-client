@@ -4,12 +4,20 @@ import { Formik } from 'formik';
 import TextButton from '../../components/TextButton';
 import FloatingCard from '../../components/FloatingCard';
 import { userVar } from '../../App';
+import { RadioButton } from 'react-native-paper';
+
 export interface SignupScreenProps {
   navigation: any;
   route: any;
 }
 
+const Genders = [
+  {name: 'Male', id: '0'}, {name: 'Female', id: '1'}, {name: 'Other', id: '2'}
+]
+
 const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
+  const [checked, setChecked] = useState<string>('0');
+
   return ( 
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Formik
@@ -49,11 +57,28 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
                 onBlur={handleBlur('password')}
                 value={values.password}
               />
+              <RadioButton.Group onValueChange={checked => setChecked(checked)} value={checked}>
+                <RadioButton.Item 
+                  label={Genders[0].name}
+                  value={Genders[0].id} 
+                  status={checked === Genders[0].name ? 'checked' : 'unchecked'} 
+                  onPress={() => setChecked(Genders[0].id)}/>
+                <RadioButton.Item
+                  label={Genders[1].name}
+                  value={Genders[1].id} 
+                  status={checked === Genders[1].name ? 'checked' : 'unchecked'} 
+                  onPress={() => setChecked(Genders[1].id)}/>
+                <RadioButton.Item
+                  label={Genders[2].name}
+                  value={Genders[2].id} 
+                  status={checked === Genders[2].name ? 'checked' : 'unchecked'} 
+                  onPress={() => setChecked(Genders[2].id)}/>
+              </RadioButton.Group>
             </FloatingCard>
             <TouchableOpacity 
               style={styles.button}
               onPress={() => {
-                userVar({firstName: values.firstName, lastName: values.lastName, email: values.email, password: values.password});
+                userVar({firstName: values.firstName, lastName: values.lastName, email: values.email, password: values.password, gender: checked});
                 navigation.navigate('PersonalInfoScreen', {firstName: values.firstName});
               }}>
               <TextButton title={'CREATE PROFILE'} filled={true}/>

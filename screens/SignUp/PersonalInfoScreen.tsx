@@ -49,7 +49,7 @@ const PersonalInfoScreen: React.FC<PersonalInfoScreenProps> = ({ navigation, rou
       <Map title={'Where are you from?'} currentLocation={true} onSelectLocation={handleLocation} />
       <TouchableOpacity 
         onPress={() => {
-          userVar({...userVar(), DOB: date, city: city, country: country});
+          userVar({...userVar(), dob: date, city: city, country: country, filterCity: city});
           if(!city) alert('No location selected!')
           else navigation.navigate('HobbiesScreen')}}
       >
