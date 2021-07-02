@@ -3,9 +3,9 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import TextButton from '../../components/TextButton';
 import ToggleableButtonFlatlist from '../../components/ToggleableButtonFlatlist';
 import FloatingCard from '../../components/FloatingCard';
-import { newUserVar } from '../../App';
+import { newUserVar } from '../../client';
 import { LANGUAGES } from '../../services/queriesApi';
-import { useLazyQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import { isLoggedInVar, SEND_USER } from '../../client';
 
@@ -21,15 +21,17 @@ interface Language {
 }
 
 const LanguagesScreen: React.FC<LanguagesScreenProps> = ({ navigation }) => {
-  const [ sendUser, sendUserCatch ] = useLazyQuery(SEND_USER);
+  const [ sendUser, sendUserCatch ] = useMutation(SEND_USER, {
+    onError: (err) => console.log(err)
+  });
   const { loading, error, data } = useQuery(LANGUAGES);
   while(loading || sendUserCatch.loading) {
     return null;
   }
 
-  if (data) {
-    console.log(data);
-    newUserVar(data);
+  if (sendUserCatch.data) {
+    console.log(sendUserCatch.data);
+    newUserVar(sendUserCatch.data);
     console.log('newUserVar', newUserVar());
     isLoggedInVar(true);
   }
@@ -37,7 +39,6 @@ const LanguagesScreen: React.FC<LanguagesScreenProps> = ({ navigation }) => {
 
   const dataArray = data.languages;  
   const languagesArray = dataArray.map((language: Language) => language.selected = false);
-  console.log(dataArray);
   
   return ( 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -53,9 +54,7 @@ const LanguagesScreen: React.FC<LanguagesScreenProps> = ({ navigation }) => {
           const selectedLanguageIDs = dataArray.filter((language: Language) => language.selected === true)
                                                .map((language: Language) => language.id);          
           newUserVar({...newUserVar(), languages: selectedLanguageIDs});
-          console.log(newUserVar());
-          sendUser({variables:newUserVar()})
-          navigation.navigate('LandingScreen');
+          sendUser({variables:{signupInput: newUserVar()}})
         }}>
         <TextButton title={'LAUNCH ACCOUNT'} filled={true}/>
       </TouchableOpacity>

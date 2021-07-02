@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Platform, Image, FlatList } f
 import IconButton from '../../components/IconButton';
 import * as ImagePicker from 'expo-image-picker';
 import PhotoSquare from '../../components/PhotoSquare';
-import { newUserVar } from '../../App';
+import { newUserVar } from '../../client';
 
 export interface ImageUploadScreenProps {
   navigation: any;
@@ -15,7 +15,6 @@ const ImageUploadScreen: React.FC<ImageUploadScreenProps> = ({ navigation }) => 
   const [images, setImages] = useState<string[]>([])
 
   const handleUpload = (image: string) => {
-    console.log(image);
     setImages([...images, image]);   
   }
 
@@ -54,7 +53,9 @@ const ImageUploadScreen: React.FC<ImageUploadScreenProps> = ({ navigation }) => 
       <TouchableOpacity 
         style={styles.button}
         onPress={() => {
-          newUserVar({...newUserVar(), profileImg: 'https://picsum.photos/200' ? 'https://picsum.photos/200' : '', photoAlbum: ['https://picsum.photos/200', 'https://picsum.photos/200', 'https://picsum.photos/200']});
+          newUserVar({...newUserVar(), profileImg: 'https://picsum.photos/200' ? 'https://picsum.photos/200' : '', 
+            // photoAlbum: ['https://picsum.photos/200', 'https://picsum.photos/200', 'https://picsum.photos/200']
+          });
           navigation.navigate('SummaryScreen');
       }}>
         <IconButton name={'chevron-right'} color={'white'} size={30} bgColor={'#99879D'}/>

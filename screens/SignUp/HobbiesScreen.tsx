@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
-import { newUserVar } from '../../App';
+import { newUserVar } from '../../client';
 import FloatingCard from '../../components/FloatingCard';
 import IconButton from '../../components/IconButton';
 import TextButton from '../../components/TextButton';
@@ -26,7 +26,6 @@ const HobbiesScreen: React.FC<HobbiesScreenProps> = ({ navigation }) => {
   }
   const dataArray = data.interests;  
   const languagesArray = dataArray.map((interest: Hobby) => interest.selected = false);
-  console.log(dataArray);
 
   return ( 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

@@ -4,7 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import IconButton from '../../components/IconButton';
 import FloatingCard from '../../components/FloatingCard';
 import Map from '../../components/Map';
-import { newUserVar } from '../../App';
+import { newUserVar } from '../../client';
 
 export interface PersonalInfoScreenProps {
   navigation: any;

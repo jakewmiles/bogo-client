@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
-import { newUserVar } from '../../App';
+import { newUserVar } from '../../client';
 import IconButton from '../../components/IconButton';
 
 

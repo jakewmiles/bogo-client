@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-nativ
 import { Formik } from 'formik';
 import TextButton from '../../components/TextButton';
 import FloatingCard from '../../components/FloatingCard';
-import { newUserVar } from '../../App';
+import { newUserVar } from '../../client';
 import { RadioButton } from 'react-native-paper';
 
 export interface SignupScreenProps {
@@ -60,17 +60,17 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
               <RadioButton.Group onValueChange={checked => setChecked(checked)} value={checked}>
                 <RadioButton.Item 
                   label={Genders[0].name}
-                  value={Genders[0].name} 
+                  value={Genders[0].name.toUpperCase()} 
                   status={checked === Genders[0].name ? 'checked' : 'unchecked'} 
                   onPress={() => setChecked(Genders[0].name)}/>
                 <RadioButton.Item
                   label={Genders[1].name}
-                  value={Genders[1].name} 
+                  value={Genders[1].name.toUpperCase()} 
                   status={checked === Genders[1].name ? 'checked' : 'unchecked'} 
                   onPress={() => setChecked(Genders[1].name)}/>
                 <RadioButton.Item
                   label={Genders[2].name}
-                  value={Genders[2].name} 
+                  value={Genders[2].name.toUpperCase()} 
                   status={checked === Genders[2].name ? 'checked' : 'unchecked'} 
                   onPress={() => setChecked(Genders[2].name)}/>
               </RadioButton.Group>
