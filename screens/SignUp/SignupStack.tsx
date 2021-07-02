@@ -8,10 +8,19 @@ import HobbiesScreen from '../SignUp/HobbiesScreen';
 import ImageUploadScreen from '../SignUp/ImageUploadScreen';
 import SummaryScreen from '../SignUp/SummaryScreen';
 import LanguagesScreen from '../SignUp/LanguagesScreen';
+import { isLoggedInVar } from '../../client'
+import gql from 'graphql-tag'
+
+
+const SignupStack = () => {
+interface Props {
+ 
+}
 
 const Stack = createStackNavigator();
 
-const SignupStack = () => {
+const SignupStack = (props: Props) => {
+
   return ( 
     <Stack.Navigator
       screenOptions={{cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS}}
