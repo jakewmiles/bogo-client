@@ -60,19 +60,19 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
               <RadioButton.Group onValueChange={checked => setChecked(checked)} value={checked}>
                 <RadioButton.Item 
                   label={Genders[0].name}
-                  value={Genders[0].id} 
+                  value={Genders[0].name} 
                   status={checked === Genders[0].name ? 'checked' : 'unchecked'} 
-                  onPress={() => setChecked(Genders[0].id)}/>
+                  onPress={() => setChecked(Genders[0].name)}/>
                 <RadioButton.Item
                   label={Genders[1].name}
-                  value={Genders[1].id} 
+                  value={Genders[1].name} 
                   status={checked === Genders[1].name ? 'checked' : 'unchecked'} 
-                  onPress={() => setChecked(Genders[1].id)}/>
+                  onPress={() => setChecked(Genders[1].name)}/>
                 <RadioButton.Item
                   label={Genders[2].name}
-                  value={Genders[2].id} 
+                  value={Genders[2].name} 
                   status={checked === Genders[2].name ? 'checked' : 'unchecked'} 
-                  onPress={() => setChecked(Genders[2].id)}/>
+                  onPress={() => setChecked(Genders[2].name)}/>
               </RadioButton.Group>
             </FloatingCard>
             <TouchableOpacity 
