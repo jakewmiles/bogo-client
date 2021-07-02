@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ApolloProvider } from '@apollo/react-hooks';
-import BrowseScreen from './screens/BrowseScreen';
+import BrowseStack from './screens/BrowseStack';
 import ProfileScreen from './screens/ProfileScreen';
 import ContactsStack from './screens/ContactsStack';
 import SignupStack from './screens/SignUp/SignupStack';
@@ -26,7 +26,7 @@ export default function App() {
             }}>
             <Tab.Screen
               name="Browse"
-              component={BrowseScreen}
+              component={BrowseStack}
             />
             <Tab.Screen
               name="Contacts"

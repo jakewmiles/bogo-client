@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from '../components/ProfileCarousel';
 import { useNavigation } from '@react-navigation/core';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { MainBottomTabParamList } from '../types';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-type BrowseScreenProp = BottomTabNavigationProp<MainBottomTabParamList, 'Browse'>;
-
-export interface BrowseScreenProps {
+interface Props {
+  navigation: any;
+  route: any;
 }
 
 const userMock = {
@@ -62,7 +63,7 @@ const data = [
   { user: userMock3, ownProfile: false },
 ]
 
-const BrowseScreen: React.FC<BrowseScreenProps> = () => {
+const BrowseScreen = (props: Props) => {
   const [index, setIndex] = React.useState<Number>(0)
   const isCarousel = React.useRef(null);
 
@@ -80,7 +81,17 @@ const BrowseScreen: React.FC<BrowseScreenProps> = () => {
         useScrollView={true}
         onSnapToItem={(index: Number) => setIndex(index)}
       />
-      <View style={{ height: '8%' }}>
+      <View style={styles.paginationView}>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate('BrowseFilter');
+          }}>
+          <MaterialCommunityIcon
+            name={'filter-plus'}
+            color={'rgba(0, 0, 0, 0.5)'}
+            size={40}
+          />
+        </TouchableOpacity>
         <Pagination
           containerStyle={styles.pagination}
           dotsLength={data.length}
@@ -91,14 +102,14 @@ const BrowseScreen: React.FC<BrowseScreenProps> = () => {
             height: 10,
             borderRadius: 5,
             marginHorizontal: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.92)'
+            backgroundColor: '#99879D'
           }}
           inactiveDotOpacity={0.4}
           inactiveDotScale={0.6}
           tappableDots={true}
         />
       </View>
-    </View>
+    </View >
   );
 }
 
@@ -106,6 +117,12 @@ const styles = StyleSheet.create({
   pagination: {
     width: 10,
   },
+  paginationView: {
+    flexDirection: 'row',
+    width: '100%',
+    height: '8%',
+    justifyContent: 'space-around',
+  }
 })
 
 export default BrowseScreen;
