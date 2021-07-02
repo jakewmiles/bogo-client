@@ -2,16 +2,23 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import gql from 'graphql-tag'
+import { useQuery } from '@apollo/react-hooks'
 import { ApolloProvider } from '@apollo/react-hooks';
 import BrowseStack from './screens/BrowseStack';
 import ProfileScreen from './screens/ProfileScreen';
 import ContactsStack from './screens/ContactsStack';
 import SignupStack from './screens/SignUp/SignupStack';
 import client from './client';
+import { isLoggedInVar } from './client'
+import { useReactiveVar } from '@apollo/client';
+
+
 
 export default function App() {
   const Tab = createBottomTabNavigator();
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
+
   let homeScreen;
 
   if (isLoggedIn) {
@@ -50,9 +57,11 @@ export default function App() {
 
 
   return (
-    <View style={styles.view}>
-      {homeScreen}
-    </View>
+    <ApolloProvider client={client}>
+      <View style={styles.view}>
+        {homeScreen}
+      </View>
+    </ApolloProvider>
   );
 }
 

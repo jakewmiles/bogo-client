@@ -15,7 +15,7 @@ const LanguagesScreen: React.FC<LanguagesScreenProps> = ({ navigation }) => {
           style={styles.button}
           onPress={() => navigation.navigate('LandingScreen')}
         >
-          <TextButton title={'launch account'}/>
+          <TextButton title={'LAUNCH ACCOUNT'} filled={true}/>
         </TouchableOpacity>
     </View>
    );
