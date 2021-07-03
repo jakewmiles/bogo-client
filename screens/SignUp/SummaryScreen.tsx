@@ -1,8 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions } from 'react-native';
+import FloatingCard from '../../components/FloatingCard';
 import { newUserVar } from '../../client';
 import IconButton from '../../components/IconButton';
+import { ProgressBar } from 'react-native-paper';
 
 
 export interface SummaryScreenProps {
@@ -15,53 +17,93 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
   const [guideStatus, setGuideStatus] = useState<boolean>(false);
 
   return ( 
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={styles.text}>Write a summary about yourself</Text>
-      <TextInput
-        style={styles.textArea}
-        multiline={true}
-        numberOfLines={6}
-        defaultValue={text}
-        onChangeText={text => setText(text)}
-      />
-      <TouchableOpacity onPress={() => setGuideStatus(!guideStatus)}>
-        {!guideStatus && <IconButton name={'compass'} size={30} color={'#99879D'} bgColor={'white'}/>}
-        {guideStatus && <IconButton name={'compass'} size={30} color={'white'} bgColor={'#99879D'}/>}
-      </TouchableOpacity>
-      <TouchableOpacity 
-        style={styles.button}
-        onPress={() => {
-          newUserVar({...newUserVar(), guide: guideStatus, summary: text, favorites: []});
-          navigation.navigate('LanguagesScreen');
-      }}>
-        <IconButton 
-          name={'chevron-right'}
-          color={'white'}
-          size={30}
-          bgColor={'#99879D'}
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
+      <FloatingCard cardWidth={'85%'}>
+        <View style={{height: 125, flexDirection: 'row', justifyContent: 'center', width: '90%', alignItems: 'center'}}>
+          <TouchableOpacity
+            style={{height: 125, alignItems: 'center', justifyContent: 'center'}}
+            onPress={() => setGuideStatus(!guideStatus)}
+          >
+            {!guideStatus && <View style={{borderWidth: 1, borderRadius: 30, borderColor: '#99879D'}}>
+              <IconButton name={'compass'} size={30} color={'#99879D'} bgColor={'white'}/>
+            </View>}
+            {guideStatus && <View style={{borderWidth: 1, borderRadius: 30, borderColor: 'white'}}>
+              <IconButton name={'compass'} size={30} color={'white'} bgColor={'#99879D'}/>
+            </View>}
+          </TouchableOpacity>
+          <View style={{width: '65%', marginHorizontal: 10}}>
+            <Text style={styles.header}>Would you like to be a guide?</Text>
+          </View>
+        </View>
+      </FloatingCard>
+      <FloatingCard cardWidth={'85%'}>
+        <View style={{height: 400, width: '100%', alignItems: 'center' }}>
+          <Text style={styles.header}>Write a summary about yourself</Text>
+          <TextInput
+            style={styles.textArea}
+            multiline={true}
+            numberOfLines={6}
+            defaultValue={text}
+            onChangeText={text => setText(text)}
           />
-      </TouchableOpacity>
+        </View>
+      </FloatingCard>
+      <View style={styles.buttons}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack()}
+          }>
+          <IconButton name={'chevron-left'} color={'white'} size={30} bgColor={'#99879D'}/>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            newUserVar({...newUserVar(), guide: guideStatus, summary: text});
+            navigation.navigate('ReviewScreen', {newUserObj: newUserVar()});
+        }}>
+          <IconButton
+            name={'chevron-right'}
+            color={'white'}
+            size={30}
+            bgColor={'#99879D'}
+            />
+        </TouchableOpacity>
+      </View>
+      <ProgressBar progress={0.75} color={'#99879D'} style={styles.progressBar}/>
     </View>
    );
 }
 
 const styles = StyleSheet.create({
+  header: {
+    fontSize: 24, 
+    marginVertical: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   text: {
     fontSize: 24,
     fontWeight: "bold",
   },
-  button: {
-    width: '15%',
-    height: '7%',
+  buttons: {
+    width: '70%',
+    marginTop: 25,
+    flexDirection: 'row', 
+    justifyContent: 'space-between'
   },
   textArea: {
     paddingHorizontal: 15,
+    textAlignVertical: 'top',
     paddingVertical: 25,
     borderWidth: 1,
     borderColor: '#99879D',
-    width: '85%',
-    height: '30%',
+    width: '90%',
+    height: '60%',
     marginVertical: 25,
+  },
+  progressBar: {
+    height: 7, 
+    width: Dimensions.get('window').width, 
+    marginTop: 50
   }
 })
  

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import gql from 'graphql-tag'
-import { useQuery } from '@apollo/react-hooks'
 import { ApolloProvider } from '@apollo/react-hooks';
 import BrowseStack from './screens/BrowseStack';
 import ProfileScreen from './screens/ProfileScreen';
@@ -23,7 +21,6 @@ import {
 export default function App() {
   const Tab = createBottomTabNavigator();
   const isLoggedIn = useReactiveVar(isLoggedInVar);
-  // console.log(isLoggedIn)
 
   let [fontsLoaded] = useFonts({
     PTSans_400Regular,
@@ -31,8 +28,6 @@ export default function App() {
     RedHatDisplay_700Bold,
     PublicSans_500Medium
   });
-
-
 
   let homeScreen;
 
