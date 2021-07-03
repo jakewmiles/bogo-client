@@ -3,44 +3,57 @@ import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ApolloProvider } from '@apollo/react-hooks';
-import BrowseScreen from './screens/BrowseScreen';
+import BrowseStack from './screens/BrowseStack';
 import ProfileScreen from './screens/ProfileScreen';
 import ContactsStack from './screens/ContactsStack';
 import SignupStack from './screens/SignUp/SignupStack';
 import client from './client';
 import { isLoggedInVar } from './client'
 import { useReactiveVar } from '@apollo/client';
+import {
+  useFonts,
+  PTSans_400Regular,
+  PTSans_700Bold,
+  RedHatDisplay_700Bold,
+  PublicSans_500Medium,
+} from "@expo-google-fonts/dev";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
   const isLoggedIn = useReactiveVar(isLoggedInVar);
 
-  let homeScreen;
+  let [fontsLoaded] = useFonts({
+    PTSans_400Regular,
+    PTSans_700Bold,
+    RedHatDisplay_700Bold,
+    PublicSans_500Medium
+  });
 
+  let homeScreen;
 
   if (isLoggedIn) {
     homeScreen = (
-        <NavigationContainer>
-          <Tab.Navigator
-            tabBarOptions={{
-              activeBackgroundColor: '#dddddd',
-              tabStyle: styles.tab,
-              labelStyle: styles.tabText,
-            }}>
-            <Tab.Screen
-              name="Browse"
-              component={BrowseScreen}
-            />
-            <Tab.Screen
-              name="Contacts"
-              component={ContactsStack}
-            />
-            <Tab.Screen
-              name="Profile"
-              component={ProfileScreen}
-            />
-          </Tab.Navigator>
-        </NavigationContainer>
+      <NavigationContainer>
+        <Tab.Navigator
+          tabBarOptions={{
+            activeBackgroundColor: '#dddddd',
+            tabStyle: styles.tab,
+            labelStyle: styles.tabText,
+          }}>
+          <Tab.Screen
+            name="Browse"
+            component={BrowseStack}
+          />
+          <Tab.Screen
+            name="Contacts"
+            component={ContactsStack}
+          />
+          <Tab.Screen
+            name="Profile"
+            component={ProfileScreen}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
     );
   } else {
     homeScreen = (
@@ -49,15 +62,18 @@ export default function App() {
       </NavigationContainer>
     )
   }
-  
-  
-  return (
-    <ApolloProvider client={client}>
-      <View style={styles.view}>
-        {homeScreen}
-      </View>
-    </ApolloProvider>
-  );
+
+  if (fontsLoaded) {
+    return (
+      <ApolloProvider client={client}>
+        <View style={styles.view}>
+          {homeScreen}
+        </View>
+      </ApolloProvider>
+    );
+  } else {
+    return <View></View>
+  }
 }
 
 const styles = StyleSheet.create({

@@ -20,14 +20,15 @@ export const storage = firebase.storage();
 
 
 const link = new HttpLink({
-  uri: 'http://10.10.22.248:3005'
+  uri: 'http://10.10.22.250:3005'
 });
 
 export const isLoggedInVar = makeVar(false);
-export const userVar = makeVar([]);
+export const userVar = makeVar<any>([]);
 export const newUserVar = makeVar<any>([]);
-
-
+export const filterInterestsVar = makeVar<any>([]);
+export const filterFavoritesVar = makeVar<any>(false);
+export const usersVar = makeVar<any>([]);
 
 export const GET_USER = gql`
   query GetUser($loginInput: LoginInput!) {
@@ -35,6 +36,22 @@ export const GET_USER = gql`
       id
       firstName
       lastName
+      dob
+      guide
+      city
+      country
+      gender
+      summary
+      profileImg
+      filterCity
+      languages {
+        id
+        name
+      }
+      interests {
+        id
+        name
+      }
     }
   }
 `
