@@ -8,7 +8,7 @@ import HobbiesScreen from '../SignUp/HobbiesScreen';
 import ImageUploadScreen from '../SignUp/ImageUploadScreen';
 import SummaryScreen from '../SignUp/SummaryScreen';
 import LanguagesScreen from '../SignUp/LanguagesScreen';
-import gql from 'graphql-tag'
+import ReviewScreen from './ReviewScreen';
 
 interface Props {
  
@@ -60,6 +60,11 @@ const SignupStack = (props: Props) => {
       <Stack.Screen
         name="LanguagesScreen"
         component={ LanguagesScreen }
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ReviewScreen"
+        component={ ReviewScreen }
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

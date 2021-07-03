@@ -3,6 +3,20 @@ import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { makeVar, gql } from '@apollo/client';
+import firebase from 'firebase/app';
+import 'firebase/storage';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA65wsV-RQqDB0_iYWhvR26lW-WUjcDaGQ",
+  authDomain: "bogo-client.firebaseapp.com",
+  projectId: "bogo-client",
+  storageBucket: "bogo-client.appspot.com",
+  messagingSenderId: "980579043709",
+  appId: "1:980579043709:web:19258e321397cd5ec52414",
+  measurementId: "G-RHHGHHTB8E"
+};
+firebase.initializeApp(firebaseConfig);
+export const storage = firebase.storage();
 
 
 const link = new HttpLink({
