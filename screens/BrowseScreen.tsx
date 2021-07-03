@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/core';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { MainBottomTabParamList } from '../types';
 import { gql, useQuery } from '@apollo/client';
-import { userVar, filterInterestsVar } from '../client';
+import { userVar, filterInterestsVar, filterFavoritesVar } from '../client';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props {
@@ -55,7 +55,7 @@ const BrowseScreen = (props: Props) => {
     return null;
   }
 
-  const data: any[] = [];
+  let data: any[] = [];
 
   // add each user pulled from server to the data array
   if (users) {
@@ -69,13 +69,20 @@ const BrowseScreen = (props: Props) => {
   //remove the users who to not have a matching interest per the interest filter if there is an interest filter
   const filterInterests = filterInterestsVar();
   if (filterInterests.length > 0) {
-    data.filter(userObject => {
+    data = data.filter(userObject => {
       const interests = userObject.user.interests;
       for (let i = 0; i < filterInterests.length; i++) {
         for (let j = 0; j < interests.length; j++) {
           if (filterInterests[i].id === interests[j].id) return true;
         }
       }
+      return false;
+    })
+  }
+
+  if (filterFavoritesVar()) {
+    data = data.filter(userObject => {
+      if (userObject.user.isFavorited) return true;
       return false;
     })
   }
