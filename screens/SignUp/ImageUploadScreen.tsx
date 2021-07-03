@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, Dimensions } from 'react-native';
+import FloatingCard from '../../components/FloatingCard';
 import IconButton from '../../components/IconButton';
 import * as ImagePicker from 'expo-image-picker';
 import PhotoSquare from '../../components/PhotoSquare';
@@ -52,66 +53,104 @@ const ImageUploadScreen: React.FC<ImageUploadScreenProps> = ({ navigation }) => 
   }
 
   return ( 
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <TouchableOpacity onPress={takeImage}>
-        {!profileImage && <IconButton name={'camera'} color={'white'} bgColor={'#99879D'} size={30}/>}
-        {profileImage && <Image source={{uri: profileImage}} style={styles.thumbnail}/>}
-      </TouchableOpacity>
-      <Text style={styles.text}>Upload images and videos of places you'd like to show us!</Text>
-      <View style={{flexDirection:'row', flexWrap:'wrap', alignItems: 'center',  justifyContent: 'center'}}>
-        <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
-        <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
-        <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
-        <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
-        <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
-        <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
-        <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
-        <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
-        <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
+      <FloatingCard cardWidth='85%'>
+        <View style={{height: 125, flexDirection: 'row', justifyContent: 'flex-start', width: '90%', alignItems: 'center'}}>
+          <TouchableOpacity
+            onPress={takeImage}
+          >
+            <View style={styles.profilePicture}>
+              {!profileImage && <IconButton name={'camera'} color={'white'} bgColor={'#99879D'} size={30}/>}
+              {profileImage && <Image source={{uri: profileImage}} style={styles.thumbnail}/>}
+            </View>
+          </TouchableOpacity>
+            <View style={{width: '65%'}}>
+              <Text style={styles.header}>Upload a profile picture</Text>
+            </View>
+        </View>
+      </FloatingCard>
+      <FloatingCard cardWidth='85%'>
+        <Text style={styles.header}>Upload pictures of places you'd like to show us!</Text>
+        <View style={{height: 325, flexDirection:'row', flexWrap:'wrap', alignItems: 'center',  justifyContent: 'center'}}>
+          <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
+          <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
+          <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
+          <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
+          <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
+          <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
+          <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
+          <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
+          <PhotoSquare handleUpload={handleUpload} handleDelete={handleDelete}/>
+        </View>
+      </FloatingCard>
+      <View style={styles.buttons}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.goBack()}
+          }>
+          <IconButton name={'chevron-left'} color={'white'} size={30} bgColor={'#99879D'}/>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            let imagesArray: string[] = [];
+            images.forEach((image) => {
+              let imageName = getImageName(image);
+              firebaseUpload(image, imageName);
+              imagesArray.push(`https://firebasestorage.googleapis.com/v0/b/bogo-client.appspot.com/o/images%2F${imageName}?alt=media`);
+            })
+            let profileImageName = getImageName(profileImage);
+            firebaseUpload(profileImage, profileImageName);
+            newUserVar({...newUserVar(), profileImg: profileImageName ? `https://firebasestorage.googleapis.com/v0/b/bogo-client.appspot.com/o/images%2F${profileImageName}?alt=media` : '',
+              // photoAlbum: imagesArray
+            });
+            navigation.navigate('SummaryScreen');
+        }}>
+          <IconButton name={'chevron-right'} color={'white'} size={30} bgColor={'#99879D'}/>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity 
-        style={styles.button}
-        onPress={() => {
-          let imagesArray: string[] = [];
-          images.forEach((image) => {
-            let imageName = getImageName(image);
-            firebaseUpload(image, imageName);
-            imagesArray.push(`https://firebasestorage.googleapis.com/v0/b/bogo-client.appspot.com/o/images%2F${imageName}?alt=media`);
-          })
-          let profileImageName = getImageName(profileImage);
-          firebaseUpload(profileImage, profileImageName);
-          newUserVar({...newUserVar(), profileImg: profileImageName ? `https://firebasestorage.googleapis.com/v0/b/bogo-client.appspot.com/o/images%2F${profileImageName}?alt=media` : '', 
-            // photoAlbum: imagesArray
-          });
-          console.log(newUserVar());
-          navigation.navigate('SummaryScreen');
-      }}>
-        <IconButton name={'chevron-right'} color={'white'} size={30} bgColor={'#99879D'}/>
-      </TouchableOpacity>
-      <ProgressBar progress={0.51} color={'#99879D'} style={{height: 5, width: Dimensions.get('window').width}}/>
+      <ProgressBar progress={0.61} color={'#99879D'} style={styles.progressBar}/>
     </View>
    );
 }
 
 const styles = StyleSheet.create({
+  header: {
+    fontSize: 24, 
+    marginVertical: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   text: {
     fontSize: 15,
     fontWeight: "bold",
   },
-  button: {
-    width: '15%',
-    height: '7%',
+  buttons: {
+    width: '70%',
+    marginTop: 25,
+    flexDirection: 'row', 
+    justifyContent: 'space-between'
+  },
+  profilePicture: {
+    height: 100, 
+    width: 100, 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    borderWidth: 1, 
+    borderStyle: 'dashed', 
+    borderColor: '#99879D', 
+    borderRadius: 50,
+    marginRight: 15,
   },
   thumbnail: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
   },
-  tagView: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: 'center',
-  },
+  progressBar: {
+    height: 7, 
+    width: Dimensions.get('window').width, 
+    marginTop: 50
+  }
 })
  
 export default ImageUploadScreen;

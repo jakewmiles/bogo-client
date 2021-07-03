@@ -1,76 +1,87 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import TextButton from '../../components/TextButton';
+import IconButton from '../../components/IconButton';
 import ToggleableButtonFlatlist from '../../components/ToggleableButtonFlatlist';
 import FloatingCard from '../../components/FloatingCard';
 import { ProgressBar } from 'react-native-paper';
 import { newUserVar } from '../../client';
 import { LANGUAGES } from '../../services/queriesApi';
-import { useMutation } from '@apollo/client';
 import { useQuery } from '@apollo/client';
-import { isLoggedInVar, SEND_USER } from '../../client';
 
 export interface LanguagesScreenProps {
   navigation: any;
   route: any;
 }
 
-interface Language {
+export interface Language {
   name: string;
   id: string;
   selected: boolean;
 }
 
 const LanguagesScreen: React.FC<LanguagesScreenProps> = ({ navigation }) => {
-  const [ sendUser, sendUserCatch ] = useMutation(SEND_USER, {
-    onError: (err) => console.log(err)
-  });
   const { loading, error, data } = useQuery(LANGUAGES);
-  while(loading || sendUserCatch.loading) {
+  while(loading) {
     return null;
   }
 
-  if (sendUserCatch.data) {
-    newUserVar(sendUserCatch.data);
-    isLoggedInVar(true);
-  }
-
-
   const dataArray = data.languages;  
-  const languagesArray = dataArray.map((language: Language) => language.selected = false);
   
   return ( 
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={styles.text}>What languages do you speak?</Text>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
       <FloatingCard cardWidth={'85%'}>
-        <View style={{height: 500, justifyContent: 'center', alignItems: 'center', paddingVertical: 100 }}>
-          <ToggleableButtonFlatlist array={dataArray}/>
-        </View>
+      <Text style={styles.header}>What languages do you speak?</Text>
+      <View style={{height: 400, justifyContent: 'center', alignItems: 'center' }}>
+        <ToggleableButtonFlatlist array={dataArray}/>
+      </View>
       </FloatingCard>
-      <TouchableOpacity 
-        style={styles.button}
-        onPress={() => {
-          const selectedLanguageIDs = dataArray.filter((language: Language) => language.selected === true)
-                                               .map((language: Language) => language.id);          
-          newUserVar({...newUserVar(), languages: selectedLanguageIDs});
-          sendUser({variables:{signupInput: newUserVar()}})
-        }}>
-        <TextButton title={'LAUNCH ACCOUNT'} filled={true}/>
-      </TouchableOpacity>
-      <ProgressBar progress={0.83} color={'#99879D'} style={{height: 5, width: Dimensions.get('window').width}}/>
+      <View style={styles.buttons}>
+        <TouchableOpacity
+            onPress={() => {
+              navigation.goBack()}
+            }>
+            <IconButton name={'chevron-left'} color={'white'} size={30} bgColor={'#99879D'}/>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            newUserVar({...newUserVar(), languages: dataArray.filter((language: Language) => language.selected === true)});
+            navigation.navigate('HobbiesScreen');
+          }}>
+          <IconButton
+            name={'chevron-right'}
+            color={'white'}
+            size={30}
+            bgColor={'#99879D'}
+          />
+        </TouchableOpacity>
+      </View>
+      <ProgressBar progress={0.31} color={'#99879D'} style={styles.progressBar}/>
     </View>
    );
 }
 
 const styles = StyleSheet.create({
+  header: {
+    fontSize: 32, 
+    marginVertical: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   text: {
     fontSize: 15,
     fontWeight: "bold",
   },
-  button: {
+  buttons: {
     width: '70%',
-    height: '7%',
+    marginTop: 25,
+    flexDirection: 'row', 
+    justifyContent: 'space-between'
   },
+  progressBar: {
+    height: 7, 
+    width: Dimensions.get('window').width, 
+    marginTop: 50
+  }
 })
  
 export default LanguagesScreen;

@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions } from 'react-native';
 import { Formik } from 'formik';
 import TextButton from '../../components/TextButton';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import FloatingCard from '../../components/FloatingCard';
 import { newUserVar } from '../../client';
 import { RadioButton, ProgressBar, Colors } from 'react-native-paper';
@@ -12,14 +13,24 @@ export interface SignupScreenProps {
 }
 
 const Genders = [
-  {name: 'Male', id: '0'}, {name: 'Female', id: '1'}, {name: 'Other', id: '2'}
+  {name: 'Female', id: '0'}, {name: 'Male', id: '1'}, {name: 'Other', id: '2'}
 ]
 
 const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
-  const [checked, setChecked] = useState<string>('0');
+  const [checked, setChecked] = useState<string>('FEMALE');
+  const [show, setShow] = useState(false);
+  const [datePickerTouched, setDatePickerTouched] = useState(false);
+  const [date, setDate] = useState<Date>(new Date());
+
+
+  const onChange = (event: Event, selectedDate: Date) => {
+    const currentDate = selectedDate || date;
+    setShow(false);
+    setDate(currentDate);
+  }
 
   return ( 
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
       <Formik
         initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
         onSubmit={values => console.log(values)}
@@ -27,7 +38,7 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
         {({ handleChange, handleBlur, handleSubmit, values}) => (
           <View style={{width: '90%', justifyContent: 'center', alignItems: 'center'}}>
             <FloatingCard cardWidth={'90%'}>
-              <Text style={{ fontSize: 32, marginVertical: '10%' }}>Sign-up</Text>
+              <Text style={styles.header}>Sign-up</Text>
               <TextInput
                 placeholder="First name"
                 style={styles.inputField}
@@ -57,33 +68,62 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
                 onBlur={handleBlur('password')}
                 value={values.password}
               />
-              <RadioButton.Group onValueChange={checked => setChecked(checked)} value={checked}>
-                <RadioButton.Item 
-                  label={Genders[0].name}
-                  value={Genders[0].name.toUpperCase()} 
-                  status={checked === Genders[0].name ? 'checked' : 'unchecked'} 
-                  onPress={() => setChecked(Genders[0].name)}/>
-                <RadioButton.Item
-                  label={Genders[1].name}
-                  value={Genders[1].name.toUpperCase()} 
-                  status={checked === Genders[1].name ? 'checked' : 'unchecked'} 
-                  onPress={() => setChecked(Genders[1].name)}/>
-                <RadioButton.Item
-                  label={Genders[2].name}
-                  value={Genders[2].name.toUpperCase()} 
-                  status={checked === Genders[2].name ? 'checked' : 'unchecked'} 
-                  onPress={() => setChecked(Genders[2].name)}/>
-              </RadioButton.Group>
+              
+              <View style={{justifyContent: 'flex-start', width: '80%'}}>
+                {/* <Text style={styles.text}>Date of birth</Text> */}
+                <TouchableOpacity onPress={() => {
+                  setShow(true);
+                  setDatePickerTouched(true);
+                }}>
+                  {!datePickerTouched && <Text style={[styles.datePicker, {color: '#8e8e8e'}]}>
+                    Date of birth
+                  </Text>}
+                  {datePickerTouched && <Text style={styles.datePicker}>
+                    {('0' + date.getDate()).slice(-2)}/{('0' + (date.getMonth()+1)).slice(-2)}/{date.getFullYear()}
+                  </Text>}
+                </TouchableOpacity>
+                {show && (<DateTimePicker
+                  value={date}
+                  mode={'date'}
+                  display='default'
+                  onChange={onChange}
+                />)}
+              </View>
+              <View style={{width: '90%', flexDirection: 'row', justifyContent: 'space-around', marginVertical: 10}}>
+                <RadioButton.Group onValueChange={checked => setChecked(checked)} value={checked}>
+                  <RadioButton.Item
+                    style={{height: 48}}
+                    color={'#99879D'}
+                    label={Genders[0].name}
+                    value={Genders[0].name.toUpperCase()}
+                    status={checked === Genders[0].name ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked(Genders[0].name)}/>
+                  <RadioButton.Item
+                    style={{height: 48}}
+                    color={'#99879D'}
+                    label={Genders[1].name}
+                    value={Genders[1].name.toUpperCase()}
+                    status={checked === Genders[1].name ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked(Genders[1].name)}/>
+                  <RadioButton.Item
+                    style={{height: 48}}
+                    color={'#99879D'}
+                    label={Genders[2].name}
+                    value={Genders[2].name.toUpperCase()}
+                    status={checked === Genders[2].name ? 'checked' : 'unchecked'}
+                    onPress={() => setChecked(Genders[2].name)}/>
+                </RadioButton.Group>
+              </View>
             </FloatingCard>
             <TouchableOpacity 
               style={styles.button}
               onPress={() => {
-                newUserVar({firstName: values.firstName, lastName: values.lastName, email: values.email, password: values.password, gender: checked});
+                newUserVar({firstName: values.firstName, lastName: values.lastName, email: values.email, password: values.password, gender: checked, dob: date});
                 navigation.navigate('PersonalInfoScreen', {firstName: values.firstName});
               }}>
               <TextButton title={'CREATE PROFILE'} filled={true}/>
             </TouchableOpacity>
-            <ProgressBar progress={0.02} color={'#99879D'} style={{height: 5, width: Dimensions.get('window').width}}/>
+            <ProgressBar progress={0.02} color={'#99879D'} style={styles.progressBar}/>
           </View>
         )}
       </Formik>
@@ -92,10 +132,16 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    fontSize: 32, 
+    marginVertical: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   button: {
     width: '70%',
     height: 55,
-    marginTop: '25%',
+    marginTop: 25,
   },
   wholeForm: {
     alignItems: 'center',
@@ -106,9 +152,25 @@ const styles = StyleSheet.create({
   },
   inputField: {
     backgroundColor: '#99879D21',
-    width: '85%',
+    height: 48,
+    width: '80%',
     padding: '5%',
-    marginBottom: '8%'
+    marginBottom: 10,
+    borderRadius: 24,
+  },
+  datePicker: {
+    backgroundColor: '#99879D21',
+    alignItems: 'center',
+    height: 48,
+    padding: 14,
+    borderRadius: 24,
+    fontSize: 14,
+    color: '#655669',
+  },
+  progressBar: {
+    height: 7, 
+    width: Dimensions.get('window').width, 
+    marginTop: 50
   }
 })
  
