@@ -16,7 +16,7 @@ export interface ReviewScreenProps {
   route: any;
 }
  
-const ReviewScreen: React.FC<ReviewScreenProps> = ({ navigation }) => {
+const ReviewScreen: React.FC<ReviewScreenProps> = ({ navigation, route }) => {
 const [ sendUser, sendUserCatch ] = useMutation(SEND_USER, {
   onError: (err) => console.log(err)
 });
@@ -30,8 +30,6 @@ const mapIDs = (array: Hobby[]|Language[]) => {
   return array.map((object: Hobby|Language) => object.id);
 }  
 
-const newUser = newUserVar();
-
   return ( 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
       <FloatingCard cardWidth={'85%'}>
@@ -40,10 +38,10 @@ const newUser = newUserVar();
           <View style={{alignItems:'flex-start', width: '100%', padding: 25}}>
             <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft: 35, marginBottom: 10}}>  
               <View>
-                <Image style={styles.profPic} source={newUser.profileImg ? {uri: newUser.profileImg} : {uri:'placeholder'}}/>
+                <Image style={styles.profPic} source={route.params.newUserObj.profileImg ? {uri: route.params.newUserObj.profileImg} : {uri:'placeholder'}}/>
               </View>
               <View style={{marginHorizontal: 15}}>
-                <Text style={styles.labelText}>{newUser.firstName} {newUser.lastName}</Text>
+                <Text style={styles.labelText}>{route.params.newUserObj.firstName} {route.params.newUserObj.lastName}</Text>
               </View>
             </View>
             <View style={{flexDirection:'row'}}>
@@ -56,12 +54,12 @@ const newUser = newUserVar();
                 <Text style={styles.labelText}>Summary:</Text>
               </View>
               <View style={{width: '60%'}}>
-                <Text style={styles.text}>{newUser.email}</Text>
-                <Text style={styles.text}>{newUser.gender.charAt(0) +  newUser.gender.slice(1).toLowerCase()}</Text>
-                <Text style={styles.text}>{('0' + newUser.dob.getDate()).slice(-2)}/{('0' + (newUser.dob.getMonth()+1)).slice(-2)}/{newUser.dob.getFullYear()}</Text>
-                <Text style={styles.text}>{newUser.city}</Text>
-                <Text style={styles.text}>{newUser.guide ? '✅' : "❌"}</Text>
-                <Text style={styles.text}>{newUser.summary}</Text>
+                <Text style={styles.text}>{route.params.newUserObj.email}</Text>
+                <Text style={styles.text}>{route.params.newUserObj.gender.charAt(0) +  route.params.newUserObj.gender.slice(1).toLowerCase()}</Text>
+                <Text style={styles.text}>{('0' + route.params.newUserObj.dob.getDate()).slice(-2)}/{('0' + (route.params.newUserObj.dob.getMonth()+1)).slice(-2)}/{route.params.newUserObj.dob.getFullYear()}</Text>
+                <Text style={styles.text}>{route.params.newUserObj.city}</Text>
+                <Text style={styles.text}>{route.params.newUserObj.guide ? '✅' : "❌"}</Text>
+                <Text style={styles.text}>{route.params.newUserObj.summary}</Text>
               </View>
             </View>
             <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
@@ -69,7 +67,7 @@ const newUser = newUserVar();
                 <Text style={styles.labelText}>You speak: </Text>
               </View>
               <View>
-                {newUser.languages.map((language: Hobby) => (
+                {route.params.newUserObj.languages.map((language: Hobby) => (
                   <Text style={styles.text} key={language.id}>•{language.name} </Text>
                 ))}
               </View>
@@ -79,7 +77,7 @@ const newUser = newUserVar();
                 <Text style={styles.labelText }>Your interests: </Text>
               </View>
               <View>
-                {newUser.interests.map((interest: Hobby) => (
+                {route.params.newUserObj.interests.map((interest: Hobby) => (
                   <Text style={styles.text} key={interest.id}>•{interest.name} </Text>
                 )) }
               </View>
@@ -90,6 +88,7 @@ const newUser = newUserVar();
       <TouchableOpacity 
         style={styles.button}
         onPress={() => {    
+          navigation.navigate('LandingScreen');
           newUserVar({...newUserVar(), languages: mapIDs(newUserVar().languages), interests: mapIDs(newUserVar().interests)})       
           console.log(newUserVar());
           sendUser({variables:{signupInput: newUserVar()}})
