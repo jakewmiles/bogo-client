@@ -7,31 +7,10 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-import {
-  useFonts,
-  PTSans_400Regular,
-  PTSans_700Bold,
-  RedHatDisplay_700Bold,
-  PublicSans_500Medium,
-} from "@expo-google-fonts/dev";
 import StarRating from 'react-native-star-rating';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconButton from './IconButton';
-
-interface User {
-  profilePicture: string
-  name: string
-  age: string
-  city: string
-  country: string
-  rating: number
-  content: string
-  hangout1: string
-  hangout2: string
-  interests: string[]
-  languages: Array<{ name: string, level: string }>
-  starRating: Number
-}
+import User from '../interfaces/interfaces';
 
 interface Props {
   user: User
@@ -41,10 +20,12 @@ interface Props {
 const Profile = (props: Props) => {
   const user = props.user;
 
+  console.log('in profile user', user);
+
   //the below formats the interests and languages from the array/object based DB notation to the CSV list displayed to users
   let interestsString = '';
   user.interests.forEach(interest => {
-    interestsString = interestsString + interest + ', ';
+    interestsString = interestsString + interest.name + ', ';
     return;
   })
   if (interestsString) {
@@ -52,18 +33,11 @@ const Profile = (props: Props) => {
   }
   let languagesString = '';
   user.languages.forEach(language => {
-    languagesString = languagesString + language.level + ' ' + language.name + ', ';
+    languagesString = languagesString + language.name + ', ';
   })
   if (languagesString) {
     languagesString = languagesString.slice(0, -2);
   }
-
-  let [fontsLoaded] = useFonts({
-    PTSans_400Regular,
-    PTSans_700Bold,
-    RedHatDisplay_700Bold,
-    PublicSans_500Medium
-  });
 
   //icon buttons to chat or favourite are not visible when viewing own profile
   let iconButtons = (<View style={styles.iconView}>
@@ -93,59 +67,55 @@ const Profile = (props: Props) => {
     hangoutButtonText = 'Add +';
   }
 
-  if (fontsLoaded) {
-    return (
-      <View style={styles.view}>
-        <View style={styles.profileHeader}>
-          <Image
-            style={styles.profilePicture}
-            source={{
-              uri: user.profilePicture
-            }}
-          />
-          <View style={styles.headerInfo}>
-            <Text style={styles.name}>{user.name}, {user.age}</Text>
-            <Text style={styles.location}>{user.city}, {user.country}</Text>
-            <StarRating
-              disabled={false}
-              maxStars={5}
-              rating={user.starRating}
-              starSize={20}
-              fullStarColor={"#99879D"}
-              halfStarColor={"#99879D"}
-              emptyStarColor={"#99879D"}
-              selectedStar={() => { return; }}
-            />
-          </View>
-          <MaterialCommunityIcons
-            name="compass"
-            color="black"
-            size={27}
+  return (
+    <View style={styles.view}>
+      <View style={styles.profileHeader}>
+        <Image
+          style={styles.profilePicture}
+          source={{
+            uri: user.profileImg
+          }}
+        />
+        <View style={styles.headerInfo}>
+          <Text style={styles.name}>{user.firstName}, {user.dob}</Text>
+          <Text style={styles.location}>{user.city}, {user.country}</Text>
+          <StarRating
+            disabled={false}
+            maxStars={5}
+            rating={3}
+            starSize={20}
+            fullStarColor={"#99879D"}
+            halfStarColor={"#99879D"}
+            emptyStarColor={"#99879D"}
+            selectedStar={() => { return; }}
           />
         </View>
-        <ScrollView style={styles.contentScroll}>
-          <Text style={styles.content}>{user.content}</Text>
-        </ScrollView>
-        <View style={styles.hangoutHeader}>
-          <Text style={styles.hangoutText}>Local hangout spots</Text>
-          <TouchableOpacity style={styles.hangoutButton}>
-            <Text style={styles.hangoutButtonText}>{hangoutButtonText}</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.hangoutImages}>
-          <Image source={{ uri: user.hangout1 }} style={styles.hangoutImage} />
-          <Image source={{ uri: user.hangout2 }} style={styles.hangoutImage} />
-        </View>
-        <Text style={styles.categoriesHeading}>Interests</Text>
-        <Text style={styles.categories}>{interestsString}</Text>
-        <Text style={styles.categoriesHeading}>Speaks</Text>
-        <Text style={styles.categories}>{languagesString}</Text>
-        {iconButtons}
-      </View >
-    );
-  } else {
-    return <Text></Text>;
-  }
+        <MaterialCommunityIcons
+          name="compass"
+          color="black"
+          size={27}
+        />
+      </View>
+      <ScrollView style={styles.contentScroll}>
+        <Text style={styles.content}>{user.summary}</Text>
+      </ScrollView>
+      <View style={styles.hangoutHeader}>
+        <Text style={styles.hangoutText}>Local hangout spots</Text>
+        <TouchableOpacity style={styles.hangoutButton}>
+          <Text style={styles.hangoutButtonText}>{hangoutButtonText}</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.hangoutImages}>
+        <Image source={{ uri: 'https://i.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68' }} style={styles.hangoutImage} />
+        <Image source={{ uri: 'https://i.picsum.photos/id/1016/3844/2563.jpg?hmac=WEryKFRvTdeae2aUrY-DHscSmZuyYI9jd_-p94stBvc' }} style={styles.hangoutImage} />
+      </View>
+      <Text style={styles.categoriesHeading}>Interests</Text>
+      <Text style={styles.categories}>{interestsString}</Text>
+      <Text style={styles.categoriesHeading}>Speaks</Text>
+      <Text style={styles.categories}>{languagesString}</Text>
+      {iconButtons}
+    </View >
+  );
 };
 
 const styles = StyleSheet.create({

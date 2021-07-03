@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Profile from '../components/Profile';
+import { userVar } from '../client';
 
 export interface ProfileScreenProps {
 
@@ -22,9 +23,14 @@ const userMock = {
 }
 
 const ProfileScreen: React.FC<ProfileScreenProps> = () => {
+
+  const userInfo = userVar();
+
+  console.log(userInfo);
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Profile user={userMock} ownProfile={true} />
+      <Profile user={userInfo.user} ownProfile={true} />
     </View>
   );
 }

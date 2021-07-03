@@ -1,27 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import Map from '../components/Map';
+import ToggleableButtonFlatlist from '../components/ToggleableButtonFlatlist';
+import FloatingCard from '../components/FloatingCard';
 import { gql, useMutation } from '@apollo/client';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { userVar, filterInterestsVar, filterFavoritesVar } from '../client';
+import { INTERESTS } from '../services/queriesApi';
+import { useQuery } from '@apollo/client';
 
 interface Props {
   navigation: any;
   route: any;
 }
 
-type FilterCity = {
-  id: String
-  email: String
-  filterCity: String
-}
-
 const UPDATE_LOCATION_FILTER = gql`
-  mutation UpdateLocationFilter($filterCity: FilterCity!) {
-    user(input: $filterCity) {
+  mutation UpdateLocationFilter($city: UserInput!) {
+    user(input: $city) {
       id
       firstName
       lastName
-      dob
       guide
       city
       country
@@ -29,9 +26,15 @@ const UPDATE_LOCATION_FILTER = gql`
       summary
       profileImg
       filterCity
-      languages
-      interests
-      favorites
+      languages {
+        id
+        name
+      }
+      interests {
+        id
+        name
+      }
+      isFavorited
     }
   }
 `;
@@ -39,28 +42,87 @@ const UPDATE_LOCATION_FILTER = gql`
 const BrowseFilter = (props: Props) => {
 
   const [updateLocationFilter, { data }] = useMutation(UPDATE_LOCATION_FILTER)
+  const { loading, error, data: dataInterests } = useQuery(INTERESTS);
+  while (loading) {
+    return null;
+  }
+
+  let interestsArray = dataInterests.interests;
+  interestsArray = interestsArray.map((interest: any) => { return { ...interest, selected: false } });
+  console.log('interestsArray', interestsArray);
+
+  const favoriteToggle = [{ id: "1", name: "Filter by favorites", selected: false }]
+
+  const userInfo = userVar().user;
 
   function onSelectLocation(city: String) {
-    updateLocationFilter({ variables: { filterCity: { id: '55', email: 'hello@gmail.com', filterCity: city } } })
+    updateLocationFilter({ variables: { city: { id: userInfo.id, filterCity: city } } });
+    userVar({ user: { ...userInfo, filterCity: city } });
   }
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Filter our guides by location or </Text>
-      <Map title={'Where are you visiting?'} currentLocation={false} onSelectLocation={onSelectLocation} />
-    </View >
-  );
+    <ScrollView contentContainerStyle={styles.viewContainer}>
+      <Text style={styles.heading}>Filter by destination</Text>
+      <Map title={''} currentLocation={false} onSelectLocation={onSelectLocation} />
+      <Text style={styles.heading}>Filter by interest</Text>
+      <FloatingCard cardWidth={'85%'}>
+        <View style={styles.toggleView}>
+          <ToggleableButtonFlatlist array={interestsArray} />
+        </View>
+      </FloatingCard>
+      <ToggleableButtonFlatlist array={favoriteToggle} />
+      <TouchableOpacity style={styles.hangoutButton}
+        onPress={() => {
+          const selectedInterests = interestsArray.filter((interest: any) => interest.selected === true)
+          filterInterestsVar({ selectedInterests });
+          filterFavoritesVar(favoriteToggle[0].selected);
+          props.navigation.goBack();
+        }}>
+        <Text style={styles.hangoutButtonText}>Apply Filter</Text>
+      </TouchableOpacity>
+    </ScrollView >
+  )
 }
 
 const styles = StyleSheet.create({
-  pagination: {
-    width: 10,
+  viewContainer: {
+    paddingVertical: '10%',
+    paddingHorizontal: 0,
+    alignItems: 'center',
   },
-  paginationView: {
-    flexDirection: 'row',
-    width: '100%',
-    height: '8%',
-    justifyContent: 'space-around',
+  view: {
+    height: 500,
+    flex: 1,
+    alignItems: 'center',
+  },
+  heading: {
+    fontFamily: 'PTSans_400Regular',
+    fontSize: 22,
+    color: '#99879D',
+    alignSelf: 'center',
+    paddingHorizontal: 50,
+    paddingTop: 30,
+    textAlign: 'center',
+  },
+  toggleView: {
+    paddingTop: 10,
+    height: 250,
+  },
+  hangoutButtonText: {
+    fontFamily: 'PublicSans_500Medium',
+    fontSize: 19,
+    textAlign: 'center',
+  },
+  hangoutButton: {
+    backgroundColor: '#99879D',
+    borderRadius: 10,
+    height: 50,
+    width: 150,
+    marginTop: 20,
+    justifyContent: 'center',
+  },
+  favoritesButton: {
+    marginVertical: 15,
   }
 })
 

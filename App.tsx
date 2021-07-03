@@ -12,11 +12,25 @@ import SignupStack from './screens/SignUp/SignupStack';
 import client from './client';
 import { isLoggedInVar } from './client'
 import { useReactiveVar } from '@apollo/client';
+import {
+  useFonts,
+  PTSans_400Regular,
+  PTSans_700Bold,
+  RedHatDisplay_700Bold,
+  PublicSans_500Medium,
+} from "@expo-google-fonts/dev";
 
 export default function App() {
   const Tab = createBottomTabNavigator();
   const isLoggedIn = useReactiveVar(isLoggedInVar);
   // console.log(isLoggedIn)
+
+  let [fontsLoaded] = useFonts({
+    PTSans_400Regular,
+    PTSans_700Bold,
+    RedHatDisplay_700Bold,
+    PublicSans_500Medium
+  });
 
 
 
@@ -54,14 +68,17 @@ export default function App() {
     )
   }
 
-
-  return (
-    <ApolloProvider client={client}>
-      <View style={styles.view}>
-        {homeScreen}
-      </View>
-    </ApolloProvider>
-  );
+  if (fontsLoaded) {
+    return (
+      <ApolloProvider client={client}>
+        <View style={styles.view}>
+          {homeScreen}
+        </View>
+      </ApolloProvider>
+    );
+  } else {
+    return <View></View>
+  }
 }
 
 const styles = StyleSheet.create({
