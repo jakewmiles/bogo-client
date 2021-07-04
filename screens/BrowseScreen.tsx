@@ -41,6 +41,7 @@ const GET_USERS = gql`
 `;
 
 const BrowseScreen = (props: Props) => {
+  console.log('in browse screen');
   const [index, setIndex] = React.useState<Number>(0)
   const isCarousel = React.useRef(null);
 
@@ -48,7 +49,7 @@ const BrowseScreen = (props: Props) => {
 
   const { loading, error, data: users } = useQuery(GET_USERS, {
     variables: {
-      users: { city: userInfo.filterCity }
+      users: { city: userInfo.filterCity, activeUserId: userInfo.id }
     }
   });
   while (loading) {
@@ -86,8 +87,6 @@ const BrowseScreen = (props: Props) => {
       return false;
     })
   }
-
-  console.log(data);
 
   let carousel = (<Carousel
     layout="default"

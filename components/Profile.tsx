@@ -11,16 +11,28 @@ import StarRating from 'react-native-star-rating';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconButton from './IconButton';
 import User from '../interfaces/interfaces';
+import { gql, useMutation } from '@apollo/client';
+import { userVar } from '../client';
 
 interface Props {
   user: User
   ownProfile: boolean
 }
 
+const TOGGLE_FAVORITES = gql`
+  query toggleFavorite($favorites: FavoriteInput!) {
+    favorites(input: $favorites) {
+      id
+    }
+  }
+`;
+
 const Profile = (props: Props) => {
   const user = props.user;
 
-  console.log('in profile user', user);
+  const [toggleFavorites, { data }] = useMutation(TOGGLE_FAVORITES)
+
+  const activeUser = userVar().user;
 
   //the below formats the interests and languages from the array/object based DB notation to the CSV list displayed to users
   let interestsString = '';
@@ -41,10 +53,14 @@ const Profile = (props: Props) => {
 
   //icon buttons to chat or favourite are not visible when viewing own profile
   let iconButtons = (<View style={styles.iconView}>
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        toggleFavorites({ variables: { favorites: { userId: activeUser.id, targetUserId: user.id } } });
+        user.isFavorited = !(user.isFavorited);
+      }}>
       <IconButton
         name={'star'}
-        color={'white'}
+        color={user.isFavorited ? 'gold' : 'white'}
         size={30}
         bgColor={'#99879D'}
       />
@@ -59,6 +75,7 @@ const Profile = (props: Props) => {
       />
     </TouchableOpacity>
   </View>)
+
 
   //view or add hangouts depending on whether this is own profile
   let hangoutButtonText = 'View All';
