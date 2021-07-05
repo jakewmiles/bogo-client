@@ -38,7 +38,7 @@ const Profile = (props: Props) => {
 
   //the below formats the interests and languages from the array/object based DB notation to the CSV list displayed to users
   let interestsString = '';
-  user.interests.forEach(interest => {
+  user.interests.forEach((interest: any) => {
     interestsString = interestsString + interest.name + ', ';
     return;
   })
@@ -46,7 +46,7 @@ const Profile = (props: Props) => {
     interestsString = interestsString.slice(0, -2);
   }
   let languagesString = '';
-  user.languages.forEach(language => {
+  user.languages.forEach((language: any) => {
     languagesString = languagesString + language.name + ', ';
   })
   if (languagesString) {
@@ -106,6 +106,17 @@ const Profile = (props: Props) => {
     guideSymbol = <View></View>
   }
 
+  let userAlbum = (<View style={styles.hangoutImages}></View>)
+
+  if (user.userAlbum && user.userAlbum.length > 1) {
+    userAlbum = (
+      <View style={styles.hangoutImages}>
+        <Image source={{ uri: user.userAlbum[0].imageUrl }} style={styles.hangoutImage} />
+        <Image source={{ uri: user.userAlbum[1].imageUrl }} style={styles.hangoutImage} />
+      </View>
+    )
+  }
+
   return (
     <View style={styles.view}>
       <View style={styles.profileHeader}>
@@ -140,14 +151,19 @@ const Profile = (props: Props) => {
       </ScrollView>
       <View style={styles.hangoutHeader}>
         <Text style={styles.hangoutText}>Local hangout spots</Text>
-        <TouchableOpacity style={styles.hangoutButton}>
+        <TouchableOpacity style={styles.hangoutButton}
+          onPress={() => {
+            navigation.navigate('Browse', {
+              screen: 'BrowseAlbum', params: {
+                firstName: user.firstName,
+                userAlbum: user.userAlbum,
+              }
+            })
+          }}>
           <Text style={styles.hangoutButtonText}>{hangoutButtonText}</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.hangoutImages}>
-        <Image source={{ uri: user.userAlbum[0].imageUrl }} style={styles.hangoutImage} />
-        <Image source={{ uri: user.userAlbum[1].imageUrl }} style={styles.hangoutImage} />
-      </View>
+      {userAlbum}
       <Text style={styles.categoriesHeading}>Interests</Text>
       <Text style={styles.categories}>{interestsString}</Text>
       <Text style={styles.categoriesHeading}>Speaks</Text>
@@ -175,6 +191,7 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: 'space-between',
     alignItems: 'flex-start',
+    paddingBottom: 5,
   },
   profilePicture: {
     height: 69,
@@ -200,6 +217,7 @@ const styles = StyleSheet.create({
   },
   contentScroll: {
     height: 140,
+    marginTop: 5,
   },
   content: {
     fontFamily: 'PTSans_400Regular',
