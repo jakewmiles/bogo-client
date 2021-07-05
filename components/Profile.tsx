@@ -30,6 +30,7 @@ const TOGGLE_FAVORITES = gql`
 
 const Profile = (props: Props) => {
   const user = props.user;
+
   const navigation = useNavigation();
   const [toggleFavorites, { data }] = useMutation(TOGGLE_FAVORITES)
 
@@ -152,8 +153,8 @@ const Profile = (props: Props) => {
         </TouchableOpacity>
       </View>
       <View style={styles.hangoutImages}>
-        <Image source={{ uri: 'https://i.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68' }} style={styles.hangoutImage} />
-        <Image source={{ uri: 'https://i.picsum.photos/id/1016/3844/2563.jpg?hmac=WEryKFRvTdeae2aUrY-DHscSmZuyYI9jd_-p94stBvc' }} style={styles.hangoutImage} />
+        <Image source={{ uri: user.userAlbum[0].imageUrl }} style={styles.hangoutImage} />
+        <Image source={{ uri: user.userAlbum[1].imageUrl }} style={styles.hangoutImage} />
       </View>
       <Text style={styles.categoriesHeading}>Interests</Text>
       <Text style={styles.categories}>{interestsString}</Text>

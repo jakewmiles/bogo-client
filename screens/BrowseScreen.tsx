@@ -44,7 +44,8 @@ const GET_USERS = gql`
 const BrowseScreen = (props: Props) => {
   const [index, setIndex] = React.useState<Number>(0)
   const isCarousel = React.useRef(null);
-
+  console.log('userVar', userVar());
+  
   const userInfo = userVar().user;
 
   const { loading, error, data: users } = useQuery(GET_USERS, {
