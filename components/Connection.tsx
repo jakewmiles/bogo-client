@@ -37,16 +37,22 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'contain',
     borderRadius: 150,
+    borderWidth: 1,
+    borderColor:'white',
   },
   imageView: {
     height: '80%',
-    width: '40%',
+    width: '18%',
+    marginRight: 50,
+    marginLeft: 20
   },
   textView: {
     width: '60%',
   },
   text: {
     fontSize: 27,
+    fontFamily: 'PTSans_700Bold',
+
   },
 });
 

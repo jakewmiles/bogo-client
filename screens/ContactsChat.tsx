@@ -10,6 +10,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Message from '../components/Message';
 
 interface Props {
@@ -27,12 +28,27 @@ interface Message {
 const ContactsChat = ( props: Props ) => {
   const [messageContent, setMessageContent] = useState<string>('');
   const [messagesArray, setMessagesArray] = useState<any[]>([]);
+  
+  const chatId = props.route.params.chatId;
+  console.log(props)
+
 
   return (
     <TouchableWithoutFeedback onPress={() => {
       Keyboard.dismiss();
     }}>
       <View style={styles.view}>
+        <TouchableOpacity
+          style={styles.goBack}
+          onPress={() => props.navigation.goBack()}
+        >
+        <MaterialCommunityIcons
+        name={'arrow-left'}
+        color={'rgba(153, 135, 157, 0.7)'}
+        size={25}
+        
+      />
+        <Text style={styles.goBackText}> Back</Text></TouchableOpacity>
         <Text style={styles.mainHeader}>{props.route.params.firstName}</Text>
         <Image
           style={styles.image}
@@ -82,6 +98,16 @@ const ContactsChat = ( props: Props ) => {
 };
 
 const styles = StyleSheet.create({
+  goBackText: {
+    fontSize:25,    
+    color:'#99879D',
+    opacity:0.7
+  },
+  goBack: {
+    paddingTop:'10%',
+    justifyContent:'flex-start',
+    flexDirection: 'row',
+  },
   view: {
     backgroundColor: '#f9f5ff',
     height: '100%',
@@ -89,7 +115,7 @@ const styles = StyleSheet.create({
   mainHeader: {
     fontSize: 60,
     alignSelf: 'center',
-    marginTop: '10%',
+    // marginTop: '10%',
     marginLeft: '-30%',
   },
   headerContainer: {
@@ -100,12 +126,14 @@ const styles = StyleSheet.create({
   },
   image: {
     height: '10%',
-    width: '20%',
+    width: '17%',
     resizeMode: 'contain',
     borderRadius: 150,
     alignSelf: 'center',
     marginLeft: '60%',
-    marginTop: '-18%',
+    marginTop: '-16%',
+    borderWidth: 1,
+    borderColor: 'white'
   },
   input: {
     borderWidth: 1,

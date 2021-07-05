@@ -20,7 +20,7 @@ export const storage = firebase.storage();
 
 
 const link = new HttpLink({
-  uri: 'http://10.10.22.250:3005'
+  uri: 'http://10.10.22.103:3005'
 });
 
 export const isLoggedInVar = makeVar(false);
@@ -30,6 +30,16 @@ export const filterInterestsVar = makeVar<any>([]);
 export const filterFavoritesVar = makeVar<any>(false);
 export const usersVar = makeVar<any>([]);
 
+
+export const GET_MESSAGES = gql`
+  query getMessages($messageInput: MessageInput){
+    messages(input: $messageInput) {
+      id
+      content
+      authorId
+    }
+  }
+`
 export const GET_USER = gql`
   query GetUser($loginInput: LoginInput!) {
     user(input: $loginInput) {
@@ -51,6 +61,19 @@ export const GET_USER = gql`
       interests {
         id
         name
+      }
+      chats {
+        id
+        userId
+        user1Id
+        profile {
+          id
+          firstName
+          lastName
+          city
+          country
+          profileImg
+        }
       }
     }
   }
@@ -78,7 +101,7 @@ export const SEND_USER = gql`
         id
         name
       }
-      favorites {
+      chats {
         id
         userId
         user1Id
@@ -87,7 +110,8 @@ export const SEND_USER = gql`
           firstName
           lastName
           city
-          courtry
+          country
+          profileImg
         }
       }
     }
