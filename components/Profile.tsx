@@ -11,16 +11,29 @@ import StarRating from 'react-native-star-rating';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconButton from './IconButton';
 import User from '../interfaces/interfaces';
+import { gql, useMutation } from '@apollo/client';
+import { userVar } from '../client';
+import { useNavigation } from '@react-navigation/native';
 
 interface Props {
   user: User
   ownProfile: boolean
 }
 
+const TOGGLE_FAVORITES = gql`
+  mutation toggleFavorite($favorites: FavoriteInput!) {
+    favorites(input: $favorites) {
+      id
+    }
+  }
+`;
+
 const Profile = (props: Props) => {
   const user = props.user;
+  const navigation = useNavigation();
+  const [toggleFavorites, { data }] = useMutation(TOGGLE_FAVORITES)
 
-  console.log('in profile user', user);
+  const activeUser = userVar().user;
 
   //the below formats the interests and languages from the array/object based DB notation to the CSV list displayed to users
   let interestsString = '';
@@ -41,16 +54,29 @@ const Profile = (props: Props) => {
 
   //icon buttons to chat or favourite are not visible when viewing own profile
   let iconButtons = (<View style={styles.iconView}>
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        toggleFavorites({ variables: { favorites: { userId: activeUser.id, targetUserId: user.id } } });
+        user.isFavorited = !(user.isFavorited);
+      }}>
       <IconButton
         name={'star'}
-        color={'white'}
+        color={user.isFavorited ? 'gold' : 'white'}
         size={30}
         bgColor={'#99879D'}
       />
     </TouchableOpacity>
     <View style={styles.buttonDiv} />
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('Contacts', {
+          screen: 'ContactsChat', params: {
+            id: user.id,
+            firstName: user.firstName,
+            profilePicture: user.profileImg
+          }
+        })
+      }}>
       <IconButton
         name={'chat-processing-outline'}
         color={'white'}
@@ -60,11 +86,23 @@ const Profile = (props: Props) => {
     </TouchableOpacity>
   </View>)
 
+
   //view or add hangouts depending on whether this is own profile
   let hangoutButtonText = 'View All';
   if (props.ownProfile) {
     iconButtons = <View />;
     hangoutButtonText = 'Add +';
+  }
+
+  //display compass only when user is a guide
+  let guideSymbol = (<MaterialCommunityIcons
+    name="compass"
+    color="black"
+    size={27}
+  />)
+
+  if (!user.guide) {
+    guideSymbol = <View></View>
   }
 
   return (
