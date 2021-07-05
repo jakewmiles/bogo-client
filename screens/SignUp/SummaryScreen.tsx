@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions, Switch } from 'react-native';
 import FloatingCard from '../../components/FloatingCard';
 import { newUserVar } from '../../client';
 import IconButton from '../../components/IconButton';
@@ -15,12 +15,21 @@ export interface SummaryScreenProps {
 const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
   const [text, setText] = useState<string>('');
   const [guideStatus, setGuideStatus] = useState<boolean>(false);
+  const toggleSwitch = () => setGuideStatus(previousState => !previousState)
+
 
   return ( 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
       <FloatingCard cardWidth={'85%'}>
         <View style={{height: 125, flexDirection: 'row', justifyContent: 'center', width: '90%', alignItems: 'center'}}>
-          <TouchableOpacity
+          <Switch
+            trackColor={{ false: '#BBBBBB', true: '#9f7ca780'}}
+            thumbColor={guideStatus ? '#9f7ca7' : '#FAFAFA'}
+            ios_backgroundColor='#9f7ca7'
+            onValueChange={toggleSwitch}
+            value={guideStatus}
+          />
+          {/* <TouchableOpacity
             style={{height: 125, alignItems: 'center', justifyContent: 'center'}}
             onPress={() => setGuideStatus(!guideStatus)}
           >
@@ -30,7 +39,7 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
             {guideStatus && <View style={{borderWidth: 1, borderRadius: 30, borderColor: 'white'}}>
               <IconButton name={'compass'} size={30} color={'white'} bgColor={'#99879D'}/>
             </View>}
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <View style={{width: '65%', marginHorizontal: 10}}>
             <Text style={styles.header}>Would you like to be a guide?</Text>
           </View>
