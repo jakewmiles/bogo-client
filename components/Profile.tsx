@@ -37,7 +37,7 @@ const Profile = (props: Props) => {
 
   //the below formats the interests and languages from the array/object based DB notation to the CSV list displayed to users
   let interestsString = '';
-  user.interests.forEach(interest => {
+  user.interests.forEach((interest: any) => {
     interestsString = interestsString + interest.name + ', ';
     return;
   })
@@ -45,7 +45,7 @@ const Profile = (props: Props) => {
     interestsString = interestsString.slice(0, -2);
   }
   let languagesString = '';
-  user.languages.forEach(language => {
+  user.languages.forEach((language: any) => {
     languagesString = languagesString + language.name + ', ';
   })
   if (languagesString) {
@@ -139,7 +139,15 @@ const Profile = (props: Props) => {
       </ScrollView>
       <View style={styles.hangoutHeader}>
         <Text style={styles.hangoutText}>Local hangout spots</Text>
-        <TouchableOpacity style={styles.hangoutButton}>
+        <TouchableOpacity style={styles.hangoutButton}
+          onPress={() => {
+            navigation.navigate('Browse', {
+              screen: 'BrowseAlbum', params: {
+                firstName: user.firstName,
+                userAlbum: user.userAlbum,
+              }
+            })
+          }}>
           <Text style={styles.hangoutButtonText}>{hangoutButtonText}</Text>
         </TouchableOpacity>
       </View>

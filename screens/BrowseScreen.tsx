@@ -47,9 +47,6 @@ const BrowseScreen = (props: Props) => {
 
   const userInfo = userVar().user;
 
-  console.log('city', userInfo.filterCity);
-  console.log('activeUserId', userInfo.id);
-
   const { loading, error, data: users } = useQuery(GET_USERS, {
     variables: {
       users: { city: userInfo.filterCity, activeUserId: userInfo.id }
@@ -60,8 +57,6 @@ const BrowseScreen = (props: Props) => {
   }
 
   let data: any[] = [];
-
-  console.log('hello user', users);
 
   // add each user pulled from server to the data array
   if (users) {

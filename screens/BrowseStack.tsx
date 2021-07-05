@@ -2,10 +2,11 @@ import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import BrowseScreen from './BrowseScreen';
 import BrowseFilter from './BrowseFilter';
+import BrowseAlbum from './BrowseAlbum';
 
 const Stack = createStackNavigator();
 
-const BrowseStack = (props: Props) => {
+const BrowseStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -16,6 +17,11 @@ const BrowseStack = (props: Props) => {
       <Stack.Screen
         name="BrowseFilter"
         component={BrowseFilter}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BrowseAlbum"
+        component={BrowseAlbum}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
