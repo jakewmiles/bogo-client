@@ -78,10 +78,10 @@ export const SEND_USER = gql`
         id
         name
       }
-      favorites {
-        id
-        userId
-        user1Id
+      isFavorited
+      userAlbum {
+        photoId
+        imageUrl
       }
     }
   }

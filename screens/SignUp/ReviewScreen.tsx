@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions, Image } from 'react-native';
-import { newUserVar } from '../../client';
+import { newUserVar, userVar } from '../../client';
 import TextButton from '../../components/TextButton';
+import { isLoggedInVar, SEND_USER } from '../../client';
 import { ProgressBar } from 'react-native-paper';
 import { useMutation } from '@apollo/client';
-import { isLoggedInVar, SEND_USER } from '../../client';
 import FloatingCard from '../../components/FloatingCard';
 import { Language } from './LanguagesScreen';
 import { Hobby } from './HobbiesScreen';
@@ -22,7 +22,10 @@ const [ sendUser, sendUserCatch ] = useMutation(SEND_USER, {
 });
 
 if (sendUserCatch.data) {
-  newUserVar(sendUserCatch.data);
+  console.log('SENDUSERCATCH',sendUserCatch.data);
+  
+  userVar(sendUserCatch.data);
+  
   isLoggedInVar(true);
 }
 
@@ -88,9 +91,8 @@ const mapIDs = (array: Hobby[]|Language[]) => {
       <TouchableOpacity 
         style={styles.button}
         onPress={() => {    
-          navigation.navigate('LandingScreen');
           newUserVar({...newUserVar(), languages: mapIDs(newUserVar().languages), interests: mapIDs(newUserVar().interests)})       
-          console.log(newUserVar());
+          console.log('FINALSTEPNEWUSER',newUserVar());
           sendUser({variables:{signupInput: newUserVar()}})
         }}>
         <TextButton title={'LAUNCH ACCOUNT'} filled={true}/>

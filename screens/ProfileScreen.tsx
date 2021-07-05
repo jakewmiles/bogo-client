@@ -26,7 +26,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = () => {
 
   const userInfo = userVar();
 
-  console.log(userInfo);
+  console.log('userInfo', userInfo);
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

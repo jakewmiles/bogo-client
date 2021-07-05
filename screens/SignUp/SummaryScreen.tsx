@@ -66,7 +66,7 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            newUserVar({...newUserVar(), guide: guideStatus, summary: text});
+            newUserVar({...newUserVar(), guide: guideStatus, summary: text});            
             navigation.navigate('ReviewScreen', {newUserObj: newUserVar()});
         }}>
           <IconButton
