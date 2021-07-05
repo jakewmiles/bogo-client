@@ -21,7 +21,7 @@ export const storage = firebase.storage();
 
 const link = new HttpLink({
 
-  uri: 'http://10.10.22.102:3005'
+  uri: 'http://10.10.22.92:3005'
 
 })
 
@@ -54,6 +54,10 @@ export const GET_USER = gql`
       interests {
         id
         name
+      }
+      userAlbum {
+        photoId
+        imageUrl
       }
     }
   }
