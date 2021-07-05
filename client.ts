@@ -55,6 +55,10 @@ export const GET_USER = gql`
         id
         name
       }
+      userAlbum {
+        photoId
+        imageUrl
+      }
     }
   }
 `

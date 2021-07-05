@@ -106,6 +106,17 @@ const Profile = (props: Props) => {
     guideSymbol = <View></View>
   }
 
+  let userAlbum = (<View style={styles.hangoutImages}></View>)
+
+  if (user.userAlbum && user.userAlbum.length > 1) {
+    userAlbum = (
+      <View style={styles.hangoutImages}>
+        <Image source={{ uri: user.userAlbum[0].imageUrl }} style={styles.hangoutImage} />
+        <Image source={{ uri: user.userAlbum[1].imageUrl }} style={styles.hangoutImage} />
+      </View>
+    )
+  }
+
   return (
     <View style={styles.view}>
       <View style={styles.profileHeader}>
@@ -152,10 +163,7 @@ const Profile = (props: Props) => {
           <Text style={styles.hangoutButtonText}>{hangoutButtonText}</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.hangoutImages}>
-        <Image source={{ uri: user.userAlbum[0].imageUrl }} style={styles.hangoutImage} />
-        <Image source={{ uri: user.userAlbum[1].imageUrl }} style={styles.hangoutImage} />
-      </View>
+      {userAlbum}
       <Text style={styles.categoriesHeading}>Interests</Text>
       <Text style={styles.categories}>{interestsString}</Text>
       <Text style={styles.categoriesHeading}>Speaks</Text>
@@ -183,6 +191,7 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: 'space-between',
     alignItems: 'flex-start',
+    paddingBottom: 5,
   },
   profilePicture: {
     height: 69,
@@ -208,6 +217,7 @@ const styles = StyleSheet.create({
   },
   contentScroll: {
     height: 140,
+    marginTop: 5,
   },
   content: {
     fontFamily: 'PTSans_400Regular',
