@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import AlbumSqure from '../components/AlbumSquare';
 
 interface Props {
   route: any
@@ -16,7 +17,7 @@ const BrowseAlbum = (props: Props) => {
           data={props.route.params.userAlbum}
           numColumns={3}
           keyExtractor={item => item.id}
-          renderItem={(item: any) => <Image source={item.imageUrl} />}
+          renderItem={(item: any) => <AlbumSqure imageUrl={item.imageUrl} />}
         />
       </View>
     </ScrollView >
