@@ -13,6 +13,7 @@ import IconButton from './IconButton';
 import User from '../interfaces/interfaces';
 import { gql, useMutation } from '@apollo/client';
 import { userVar } from '../client';
+import { useNavigation } from '@react-navigation/native';
 
 interface Props {
   user: User
@@ -20,7 +21,7 @@ interface Props {
 }
 
 const TOGGLE_FAVORITES = gql`
-  query toggleFavorite($favorites: FavoriteInput!) {
+  mutation toggleFavorite($favorites: FavoriteInput!) {
     favorites(input: $favorites) {
       id
     }
@@ -29,7 +30,7 @@ const TOGGLE_FAVORITES = gql`
 
 const Profile = (props: Props) => {
   const user = props.user;
-
+  const navigation = useNavigation();
   const [toggleFavorites, { data }] = useMutation(TOGGLE_FAVORITES)
 
   const activeUser = userVar().user;
@@ -66,7 +67,16 @@ const Profile = (props: Props) => {
       />
     </TouchableOpacity>
     <View style={styles.buttonDiv} />
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('Contacts', {
+          screen: 'ContactsChat', params: {
+            id: user.id,
+            firstName: user.firstName,
+            profilePicture: user.profileImg
+          }
+        })
+      }}>
       <IconButton
         name={'chat-processing-outline'}
         color={'white'}
@@ -82,6 +92,17 @@ const Profile = (props: Props) => {
   if (props.ownProfile) {
     iconButtons = <View />;
     hangoutButtonText = 'Add +';
+  }
+
+  //display compass only when user is a guide
+  let guideSymbol = (<MaterialCommunityIcons
+    name="compass"
+    color="black"
+    size={27}
+  />)
+
+  if (!user.guide) {
+    guideSymbol = <View></View>
   }
 
   return (

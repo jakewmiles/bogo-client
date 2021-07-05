@@ -3,13 +3,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import BrowseScreen from './BrowseScreen';
 import BrowseFilter from './BrowseFilter';
 
-interface Props {
-  userInfo: {
-    id: number,
-    name: string,
-  }
-}
-
 const Stack = createStackNavigator();
 
 const BrowseStack = (props: Props) => {
@@ -18,7 +11,6 @@ const BrowseStack = (props: Props) => {
       <Stack.Screen
         name="BrowseScreen"
         component={BrowseScreen}
-        initialParams={{ userInfo: props.userInfo }}
         options={{ headerShown: false }}
       />
       <Stack.Screen

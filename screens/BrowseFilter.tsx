@@ -49,7 +49,6 @@ const BrowseFilter = (props: Props) => {
 
   let interestsArray = dataInterests.interests;
   interestsArray = interestsArray.map((interest: any) => { return { ...interest, selected: false } });
-  console.log('interestsArray', interestsArray);
 
   const favoriteToggle = [{ id: "1", name: "Filter by favorites", selected: false }]
 
@@ -76,7 +75,16 @@ const BrowseFilter = (props: Props) => {
           const selectedInterests = interestsArray.filter((interest: any) => interest.selected === true)
           filterInterestsVar({ selectedInterests });
           filterFavoritesVar(favoriteToggle[0].selected);
-          props.navigation.goBack();
+          props.navigation.navigate({
+            name: "BrowseScreen",
+            params: {
+              filter: {
+                user: userVar(),
+                interests: interestsArray,
+                favorite: favoriteToggle[0].selected
+              }
+            }
+          });
         }}>
         <Text style={styles.hangoutButtonText}>Apply Filter</Text>
       </TouchableOpacity>

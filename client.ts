@@ -6,7 +6,7 @@ import { makeVar, gql } from '@apollo/client';
 
 
 const link = new HttpLink({
-  uri: 'http://192.168.1.115:3005'
+  uri: 'http://10.10.22.102:3005'
 });
 
 export const isLoggedInVar = makeVar(false);
