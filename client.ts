@@ -32,11 +32,12 @@ export const usersVar = makeVar<any>([]);
 
 
 export const GET_MESSAGES = gql`
-  query getMessages($messageInput: MessageInput){
+  query getMessages($messageInput: MessageInput!) {
     messages(input: $messageInput) {
       id
       content
       authorId
+      createdAt
     }
   }
 `
@@ -79,6 +80,16 @@ export const GET_USER = gql`
   }
 `
 
+export const SEND_MESSAGES = gql`
+  mutation sendMessage ($messageInput: MessageInput!){
+  messages(input: $messageInput) {
+    id
+    authorId
+    chatId
+    content
+  }
+}
+`
 export const SEND_USER = gql`
   mutation SendUser($signupInput: UserInput!) {
     user(input: $signupInput) {

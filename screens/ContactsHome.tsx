@@ -19,6 +19,9 @@ interface Props {
 const ConnectionsHome = (props: Props) => {
   const alternatingColor = ['#ffffff', '#f9f5ff'];
   const userInfo = userVar();
+  
+
+
   console.log(userInfo.user.chats, 'userinfo contacts')
   return (
     <View style={styles.view}>
@@ -34,14 +37,19 @@ const ConnectionsHome = (props: Props) => {
                   id: item.profile.id,
                   firstName: item.profile.firstName,
                   profilePicture: item.profile.profileImg,
-                  chatId: item.id
+                  chatId: item.id,
+                  city: item.profile.city,
+                  country: item.profile.country
                 });
               }}
             >
               <Connection
                 id={item.profile.id}
+                chatId={item.id}
                 firstName={item.profile.firstName}
                 profilePicture={item.profile.profileImg}
+                city= {item.profile.city}
+                country= {item.profile.country}
               />
             </TouchableOpacity>
           );
