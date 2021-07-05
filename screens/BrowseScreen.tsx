@@ -6,8 +6,9 @@ import { useNavigation } from '@react-navigation/core';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { MainBottomTabParamList } from '../types';
 import { gql, useQuery } from '@apollo/client';
-import { userVar, filterInterestsVar } from '../client';
+import { userVar, filterInterestsVar, filterFavoritesVar } from '../client';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Cormorant_600SemiBold } from '@expo-google-fonts/dev';
 
 interface Props {
   navigation: any;
@@ -47,16 +48,21 @@ const BrowseScreen = (props: Props) => {
   
   const userInfo = userVar().user;
 
+  console.log('city', userInfo.filterCity);
+  console.log('activeUserId', userInfo.id);
+
   const { loading, error, data: users } = useQuery(GET_USERS, {
     variables: {
-      users: { city: userInfo.filterCity }
+      users: { city: userInfo.filterCity, activeUserId: userInfo.id }
     }
   });
   while (loading) {
     return null;
   }
 
-  const data: any[] = [];
+  let data: any[] = [];
+
+  console.log('hello user', users);
 
   // add each user pulled from server to the data array
   if (users) {
@@ -65,12 +71,10 @@ const BrowseScreen = (props: Props) => {
     });
   }
 
-  console.log('interestsfilter', filterInterestsVar());
-
   //remove the users who to not have a matching interest per the interest filter if there is an interest filter
-  const filterInterests = filterInterestsVar();
-  if (filterInterests.length > 0) {
-    data.filter(userObject => {
+  const filterInterests = filterInterestsVar().selectedInterests;
+  if (filterInterests && filterInterests.length > 0) {
+    data = data.filter(userObject => {
       const interests = userObject.user.interests;
       for (let i = 0; i < filterInterests.length; i++) {
         for (let j = 0; j < interests.length; j++) {
@@ -81,7 +85,15 @@ const BrowseScreen = (props: Props) => {
     })
   }
 
-  console.log(data);
+  if (filterFavoritesVar()) {
+    data = data.filter(userObject => {
+      return userObject.user.isFavorited;
+    })
+  }
+  // only show guides in browse
+  data = data.filter(userObject => {
+    return userObject.user.guide;
+  })
 
   let carousel = (<Carousel
     layout="default"
