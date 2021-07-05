@@ -23,6 +23,8 @@ const link = new HttpLink({
 
   uri: 'http://10.10.22.102:3005'
 
+})
+
 
 export const isLoggedInVar = makeVar(false);
 export const userVar = makeVar<any>([]);
