@@ -102,7 +102,7 @@ const BrowseScreen = (props: Props) => {
     onSnapToItem={(index: Number) => setIndex(index)}
   />)
 
-  if (data.length === 0) carousel = (<Text style={{ marginBottom: 70 }}>No guides match the applied filters. Change filter using the below filter button!</Text>)
+  if (data.length === 0) carousel = (<Text style={styles.text}>No guides match the applied filters. Change filter using the below filter button!</Text>)
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -148,6 +148,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '8%',
     justifyContent: 'space-around',
+  },
+  text: {
+    marginBottom: 70,
+    marginHorizontal: 10,
+    fontFamily: 'PTSans_400Regular',
+    fontSize: 22,
+    color: '#99879D',
   }
 })
 
