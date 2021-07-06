@@ -35,8 +35,7 @@ const Message = (props: Props) => {
     return (new Date(unix).toLocaleDateString('en-UK'))
   }
 
-
-  if (props.user == true) {
+  if (parseInt(props.user) === parseInt(id)) {
     user = {
       alignSelf: 'flex-end',
     };

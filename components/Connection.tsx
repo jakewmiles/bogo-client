@@ -36,7 +36,8 @@ const Connection = (props: Props) => {
 
 
   const {loading , error, data} = useQuery(GET_MESSAGES, {
-    variables: {messageInput:{chatId: props.chatId}}
+    variables: {messageInput:{chatId: props.chatId}},
+    pollInterval: 5000
   })
   let latestMessage = ''
   let formattedDate = ''

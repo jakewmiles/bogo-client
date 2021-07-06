@@ -36,7 +36,9 @@ const ContactsChat = ( props: Props ) => {
   const [messageContent, setMessageContent] = useState<string>('');
   const [messagesArray, setMessagesArray] = useState<any[]>([]);
   const {loading , error, data} = useQuery(GET_MESSAGES, {
-    variables: {messageInput:{chatId}}
+    variables: {messageInput:{chatId},
+    pollIntervall: 500
+  }
   })
   const [sendMessage, sendMessageQuery] = useMutation(SEND_MESSAGES, {
     variables: {messageInput:{senderId:userId ,recieverId:props.route.params.id,content:messageContent, chatId}}
