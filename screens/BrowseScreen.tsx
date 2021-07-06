@@ -48,12 +48,8 @@ const GET_USERS = gql`
 const BrowseScreen = (props: Props) => {
   const [index, setIndex] = React.useState<Number>(0)
   const isCarousel = React.useRef(null);
-  console.log('userVar', userVar());
-  
-  const userInfo = userVar().user;
 
-  console.log('city', userInfo.filterCity);
-  console.log('activeUserId', userInfo.id);
+  const userInfo = userVar().user;
 
   const { loading, error, data: users } = useQuery(GET_USERS, {
     variables: {
@@ -65,8 +61,6 @@ const BrowseScreen = (props: Props) => {
   }
 
   let data: any[] = [];
-
-  console.log('hello user', users);
 
   // add each user pulled from server to the data array
   if (users) {
@@ -112,7 +106,7 @@ const BrowseScreen = (props: Props) => {
     onSnapToItem={(index: Number) => setIndex(index)}
   />)
 
-  if (data.length === 0) carousel = (<Text style={{ marginBottom: 70 }}>No guides match the applied filters. Change filter using the below filter button!</Text>)
+  if (data.length === 0) carousel = (<Text style={styles.text}>No guides match the applied filters. Change filter using the below filter button!</Text>)
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -158,6 +152,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '8%',
     justifyContent: 'space-around',
+  },
+  text: {
+    marginBottom: 70,
+    marginHorizontal: 10,
+    fontFamily: 'PTSans_400Regular',
+    fontSize: 22,
+    color: '#99879D',
   }
 })
 

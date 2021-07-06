@@ -14,6 +14,7 @@ interface User {
   languages: Array<{ id: string, name: string }>
   interests: Array<{ id: string, name: string }>
   isFavorited: Boolean
+  userAlbum: Array<{ id: string, imageUrl: string }>
 }
 
 export default User
