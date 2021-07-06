@@ -76,6 +76,7 @@ export const GET_USER = gql`
           country
           profileImg
         }
+      }
       userAlbum {
         photoId
         imageUrl
@@ -128,6 +129,7 @@ export const SEND_USER = gql`
           country
           profileImg
         }
+      }
       isFavorited
       userAlbum {
         photoId
