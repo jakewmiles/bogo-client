@@ -20,10 +20,8 @@ export const storage = firebase.storage();
 
 
 const link = new HttpLink({
-
-  uri: 'http://10.10.22.102:3005'
-
-})
+  uri: 'http://10.10.22.103:3005'
+});
 
 
 export const isLoggedInVar = makeVar(false);
@@ -33,6 +31,17 @@ export const filterInterestsVar = makeVar<any>([]);
 export const filterFavoritesVar = makeVar<any>(false);
 export const usersVar = makeVar<any>([]);
 
+
+export const GET_MESSAGES = gql`
+  query getMessages($messageInput: MessageInput!) {
+    messages(input: $messageInput) {
+      id
+      content
+      authorId
+      createdAt
+    }
+  }
+`
 export const GET_USER = gql`
   query GetUser($loginInput: LoginInput!) {
     user(input: $loginInput) {
@@ -55,6 +64,18 @@ export const GET_USER = gql`
         id
         name
       }
+      chats {
+        id
+        userId
+        user1Id
+        profile {
+          id
+          firstName
+          lastName
+          city
+          country
+          profileImg
+        }
       userAlbum {
         photoId
         imageUrl
@@ -63,6 +84,16 @@ export const GET_USER = gql`
   }
 `
 
+export const SEND_MESSAGES = gql`
+  mutation sendMessage ($messageInput: MessageInput!){
+  messages(input: $messageInput) {
+    id
+    authorId
+    chatId
+    content
+  }
+}
+`
 export const SEND_USER = gql`
   mutation SendUser($signupInput: UserInput!) {
     user(input: $signupInput) {
@@ -85,6 +116,18 @@ export const SEND_USER = gql`
         id
         name
       }
+      chats {
+        id
+        userId
+        user1Id
+        profile {
+          id
+          firstName
+          lastName
+          city
+          country
+          profileImg
+        }
       isFavorited
       userAlbum {
         photoId
