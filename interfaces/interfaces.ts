@@ -10,9 +10,11 @@ interface User {
   summary: string
   profileImg: string
   filterCity: string
+  userAlbum: Array<{ photoId: string, imageUrl: string}>
   languages: Array<{ id: string, name: string }>
   interests: Array<{ id: string, name: string }>
   isFavorited: Boolean
+  userAlbum: Array<{ id: string, imageUrl: string }>
 }
 
 export default User

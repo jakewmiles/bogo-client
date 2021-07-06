@@ -23,6 +23,7 @@ const link = new HttpLink({
   uri: 'http://10.10.22.103:3005'
 });
 
+
 export const isLoggedInVar = makeVar(false);
 export const userVar = makeVar<any>([]);
 export const newUserVar = makeVar<any>([]);
@@ -75,6 +76,9 @@ export const GET_USER = gql`
           country
           profileImg
         }
+      userAlbum {
+        photoId
+        imageUrl
       }
     }
   }
@@ -124,6 +128,10 @@ export const SEND_USER = gql`
           country
           profileImg
         }
+      isFavorited
+      userAlbum {
+        photoId
+        imageUrl
       }
     }
   }

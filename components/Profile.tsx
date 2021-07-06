@@ -11,20 +11,34 @@ import StarRating from 'react-native-star-rating';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconButton from './IconButton';
 import User from '../interfaces/interfaces';
+import { gql, useMutation } from '@apollo/client';
+import { userVar } from '../client';
+import { useNavigation } from '@react-navigation/native';
 
 interface Props {
   user: User
   ownProfile: boolean
 }
 
+const TOGGLE_FAVORITES = gql`
+  mutation toggleFavorite($favorites: FavoriteInput!) {
+    favorites(input: $favorites) {
+      id
+    }
+  }
+`;
+
 const Profile = (props: Props) => {
   const user = props.user;
 
-  console.log('in profile user', user);
+  const navigation = useNavigation();
+  const [toggleFavorites, { data }] = useMutation(TOGGLE_FAVORITES)
+
+  const activeUser = userVar().user;
 
   //the below formats the interests and languages from the array/object based DB notation to the CSV list displayed to users
   let interestsString = '';
-  user.interests.forEach(interest => {
+  user.interests.forEach((interest: any) => {
     interestsString = interestsString + interest.name + ', ';
     return;
   })
@@ -32,7 +46,7 @@ const Profile = (props: Props) => {
     interestsString = interestsString.slice(0, -2);
   }
   let languagesString = '';
-  user.languages.forEach(language => {
+  user.languages.forEach((language: any) => {
     languagesString = languagesString + language.name + ', ';
   })
   if (languagesString) {
@@ -41,16 +55,29 @@ const Profile = (props: Props) => {
 
   //icon buttons to chat or favourite are not visible when viewing own profile
   let iconButtons = (<View style={styles.iconView}>
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        toggleFavorites({ variables: { favorites: { userId: activeUser.id, targetUserId: user.id } } });
+        user.isFavorited = !(user.isFavorited);
+      }}>
       <IconButton
         name={'star'}
-        color={'white'}
+        color={user.isFavorited ? 'gold' : 'white'}
         size={30}
         bgColor={'#99879D'}
       />
     </TouchableOpacity>
     <View style={styles.buttonDiv} />
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('Contacts', {
+          screen: 'ContactsChat', params: {
+            id: user.id,
+            firstName: user.firstName,
+            profilePicture: user.profileImg
+          }
+        })
+      }}>
       <IconButton
         name={'chat-processing-outline'}
         color={'white'}
@@ -60,11 +87,34 @@ const Profile = (props: Props) => {
     </TouchableOpacity>
   </View>)
 
+
   //view or add hangouts depending on whether this is own profile
   let hangoutButtonText = 'View All';
   if (props.ownProfile) {
     iconButtons = <View />;
     hangoutButtonText = 'Add +';
+  }
+
+  //display compass only when user is a guide
+  let guideSymbol = (<MaterialCommunityIcons
+    name="compass"
+    color="black"
+    size={27}
+  />)
+
+  if (!user.guide) {
+    guideSymbol = <View></View>
+  }
+
+  let userAlbum = (<View style={styles.hangoutImages}></View>)
+
+  if (user.userAlbum && user.userAlbum.length > 1) {
+    userAlbum = (
+      <View style={styles.hangoutImages}>
+        <Image source={{ uri: user.userAlbum[0].imageUrl }} style={styles.hangoutImage} />
+        <Image source={{ uri: user.userAlbum[1].imageUrl }} style={styles.hangoutImage} />
+      </View>
+    )
   }
 
   return (
@@ -101,14 +151,19 @@ const Profile = (props: Props) => {
       </ScrollView>
       <View style={styles.hangoutHeader}>
         <Text style={styles.hangoutText}>Local hangout spots</Text>
-        <TouchableOpacity style={styles.hangoutButton}>
+        <TouchableOpacity style={styles.hangoutButton}
+          onPress={() => {
+            navigation.navigate('Browse', {
+              screen: 'BrowseAlbum', params: {
+                firstName: user.firstName,
+                userAlbum: user.userAlbum,
+              }
+            })
+          }}>
           <Text style={styles.hangoutButtonText}>{hangoutButtonText}</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.hangoutImages}>
-        <Image source={{ uri: 'https://i.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68' }} style={styles.hangoutImage} />
-        <Image source={{ uri: 'https://i.picsum.photos/id/1016/3844/2563.jpg?hmac=WEryKFRvTdeae2aUrY-DHscSmZuyYI9jd_-p94stBvc' }} style={styles.hangoutImage} />
-      </View>
+      {userAlbum}
       <Text style={styles.categoriesHeading}>Interests</Text>
       <Text style={styles.categories}>{interestsString}</Text>
       <Text style={styles.categoriesHeading}>Speaks</Text>
@@ -136,6 +191,7 @@ const styles = StyleSheet.create({
     height: 100,
     justifyContent: 'space-between',
     alignItems: 'flex-start',
+    paddingBottom: 5,
   },
   profilePicture: {
     height: 69,
@@ -161,6 +217,7 @@ const styles = StyleSheet.create({
   },
   contentScroll: {
     height: 140,
+    marginTop: 5,
   },
   content: {
     fontFamily: 'PTSans_400Regular',
