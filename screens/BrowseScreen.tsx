@@ -88,6 +88,14 @@ const BrowseScreen = (props: Props) => {
   data = data.filter(userObject => {
     return userObject.user.guide;
   })
+  //filter out user
+  data = data.filter(userObject => {
+    if (userObject.user.id === userInfo.id) {
+      return false;
+    } else {
+      return true;
+    }
+  })
 
   let carousel = (<Carousel
     layout="default"
