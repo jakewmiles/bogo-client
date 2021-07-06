@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions, Switch } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions, Switch, Keyboard } from 'react-native';
 import FloatingCard from '../../components/FloatingCard';
 import { newUserVar } from '../../client';
 import IconButton from '../../components/IconButton';
@@ -19,6 +19,10 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
 
 
   return ( 
+    <TouchableOpacity 
+      onPress={() => Keyboard.dismiss()}  
+      style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}
+    >
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
       <FloatingCard cardWidth={'85%'}>
         <View style={{height: 125, flexDirection: 'row', justifyContent: 'center', width: '90%', alignItems: 'center'}}>
@@ -79,6 +83,7 @@ const SummaryScreen: React.FC<SummaryScreenProps> = ({ navigation }) => {
       </View>
       <ProgressBar progress={0.75} color={'#99879D'} style={styles.progressBar}/>
     </View>
+    </TouchableOpacity>
    );
 }
 

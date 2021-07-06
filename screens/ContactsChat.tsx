@@ -31,6 +31,7 @@ interface Message {
 }
 
 const ContactsChat = ( props: Props ) => {
+  console.log(props)
   const chatId = props.route.params.chatId;
   const userId =userVar().user.id
   const [messageContent, setMessageContent] = useState<string>('');
