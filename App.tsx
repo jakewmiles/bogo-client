@@ -89,6 +89,22 @@ export default function App() {
           <Tab.Screen
             name="Places"
             component={PlacesStack}
+            options={{
+              tabBarLabel: 'Places',
+              tabBarIcon: ({
+                color,
+                size,
+              }: {
+                color: string;
+                size: number;
+              }) => (
+                <MaterialCommunityIcons
+                  name="globe-model"
+                  color={color}
+                  size={size}
+                />
+              ),
+            }}
           />
           <Tab.Screen
             name="Profile"
