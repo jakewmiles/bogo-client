@@ -6,7 +6,7 @@ export interface TextButtonProps {
   filled: boolean,
 }
 
-const TextButton: React.FC<TextButtonProps> = ({title, filled}) => {
+const TextButton: React.FC<TextButtonProps> = ({ title, filled }) => {
   return (
     <View style={filled ? styles.filled : styles.notFilled}>
       <Text style={filled ? styles.filledText : styles.notFilledText}> {title} </Text>
@@ -22,12 +22,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#99879D',
     borderRadius: 50,
     borderWidth: 1,
-    borderColor: '#FFFFFF',
+    borderColor: 'transparent',
     height: '30%',
     width: '100%',
   },
   filledText: {
-    color: '#FFFFFF', 
+    color: '#FFFFFF',
     fontSize: 20,
   },
   notFilled: {
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   notFilledText: {
-    color: '#99879D', 
+    color: '#99879D',
     fontSize: 20,
   }
 })
