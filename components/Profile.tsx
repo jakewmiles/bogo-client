@@ -132,7 +132,7 @@ const Profile = (props: Props) => {
           <StarRating
             disabled={false}
             maxStars={5}
-            rating={3}
+            rating={user.rating}
             starSize={20}
             fullStarColor={"#99879D"}
             halfStarColor={"#99879D"}

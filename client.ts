@@ -50,6 +50,7 @@ export const GET_USER = gql`
       lastName
       dob
       guide
+      rating
       city
       country
       gender
