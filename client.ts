@@ -20,7 +20,6 @@ export const storage = firebase.storage();
 
 
 const link = new HttpLink({
-
   uri: 'http://10.10.22.127:3005'
 });
 

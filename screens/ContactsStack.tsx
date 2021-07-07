@@ -13,21 +13,21 @@ interface Props {
 const Stack = createStackNavigator();
 
 const ContactsStack = (props: Props) => {
-  return ( 
+  return (
     <Stack.Navigator>
       <Stack.Screen
         name="ContactsHome"
-        component={ ContactsHome }
+        component={ContactsHome}
         initialParams={{ userInfo: props.userInfo }}
         options={{ headerShown: false }}
       />
       <Stack.Screen
         name="ContactsChat"
-        component={ ContactsChat }
+        component={ContactsChat}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
-   );
+  );
 }
- 
+
 export default ContactsStack;
