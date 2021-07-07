@@ -31,26 +31,70 @@ interface Message {
   content: string;
 }
 
+function useForceUpdate() {
+  const [value, setValue] = useState(0);
+  return () => { setValue(value => value + 1); }
+}
+
 const ContactsChat = (props: Props) => {
-  const chatId = props.route.params.chatId;
+
+  const forceUpdate = useForceUpdate;
+
+  let chatId = '';
+
+  if (props.route.params.chatId) {
+    chatId = props.route.params.chatId;
+  } else {
+    const userChats = userVar().user.chats;
+
+    //check whether any of the chats for the active user is with the selected profile
+    userChats.forEach((chat: any) => {
+      if (chat.userId === props.route.params.id || chat.user1Id === props.route.params.id) {
+        chatId = chat.id;
+      }
+    })
+  }
   const userId = userVar().user.id
   const [messageContent, setMessageContent] = useState<string>('');
   const [messagesArray, setMessagesArray] = useState<any[]>([]);
-  const { loading, error, data } = useQuery(GET_MESSAGES, {
+
+  let { loading, error, data } = useQuery(GET_MESSAGES, {
     variables: {
       messageInput: { chatId },
       pollIntervall: 500
     }
   })
+
   const [sendMessage, sendMessageQuery] = useMutation(SEND_MESSAGES, {
     variables: { messageInput: { senderId: userId, recieverId: props.route.params.id, content: messageContent, chatId } }
   })
 
+  let flatList;
 
+  if (error) flatList = (<View style={styles.emptyMessageView}><Text style={styles.emptyMessageText}>This chat has no messages</Text></View>);
 
   if (loading) return <View><Text>Loading</Text></View>
-  if (error) return <View><Text>Error</Text></View>
-  data.messages.sort((a, b) => { return b.id - a.id })
+
+  if (data) {
+    data.messages.sort((a, b) => { return b.id - a.id })
+    flatList = (<FlatList
+      inverted={true}
+      style={styles.messageView}
+
+      data={data.messages}
+      keyExtractor={item => String(item.id)}
+      renderItem={({ item }) => {
+        return (
+          <Message
+            id={item.id}
+            user={item.authorId}
+            createdOn={item.createdAt}
+            content={item.content}
+          />
+        );
+      }}
+    />);
+  }
 
   return (
     <TouchableWithoutFeedback onPress={() => {
@@ -63,7 +107,7 @@ const ContactsChat = (props: Props) => {
         <View style={styles.headerContainer}>
           <TouchableOpacity
             style={styles.goBack}
-            onPress={() => props.navigation.goBack()}
+            onPress={() => props.navigation.navigate('ContactsHome')}
           >
             <MaterialCommunityIcons
               name={'arrow-left'}
@@ -81,24 +125,7 @@ const ContactsChat = (props: Props) => {
             }}
           />
         </View>
-        <FlatList
-          inverted={true}
-          style={styles.messageView}
-
-          data={data.messages}
-          keyExtractor={item => String(item.id)}
-          renderItem={({ item }) => {
-            return (
-              <Message
-                id={item.id}
-                user={item.authorId}
-                createdOn={item.createdAt}
-                content={item.content}
-              />
-            );
-          }}
-        />
-
+        {flatList}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -113,7 +140,7 @@ const ContactsChat = (props: Props) => {
             onPress={() => {
               sendMessage()
               setMessageContent('')
-
+              props.navigation.navigate('ContactsChat');
             }}
           >
             <MaterialCommunityIcons
@@ -144,6 +171,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#FAF9FE',
     flexDirection: 'column',
     flex: 1,
+  },
+  emptyMessageView: {
+    backgroundColor: '#FAF9FE',
+    flexDirection: 'column',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyMessageText: {
+    fontFamily: 'PTSans_400Regular',
+    fontSize: 22,
+    color: '#99879D',
   },
   goBackText: {
     fontSize: 20,

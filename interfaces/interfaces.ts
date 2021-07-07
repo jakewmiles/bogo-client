@@ -15,6 +15,7 @@ export interface User {
   languages: Array<{ id: string, name: string }>
   interests: Array<{ id: string, name: string }>
   isFavorited: Boolean
+}
 
 export interface IndividualPlace {
   name: string
