@@ -1,4 +1,4 @@
-interface User {
+export interface User {
   id: string
   firstName: string
   lastName: string
@@ -15,6 +15,10 @@ interface User {
   languages: Array<{ id: string, name: string }>
   interests: Array<{ id: string, name: string }>
   isFavorited: Boolean
-}
 
-export default User
+export interface IndividualPlace {
+  name: string
+  rating: number
+  user_ratings_total: number
+  types: string[]
+}

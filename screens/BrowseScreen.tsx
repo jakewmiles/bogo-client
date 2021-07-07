@@ -38,6 +38,10 @@ const GET_USERS = gql`
         name
       }
       isFavorited
+      userAlbum {
+        photoId
+        imageUrl
+      }
     }
   }
 `;

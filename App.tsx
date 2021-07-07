@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ApolloProvider } from '@apollo/react-hooks';
 import BrowseStack from './screens/BrowseStack';
 import ProfileScreen from './screens/ProfileScreen';
+import PlacesStack from './screens/PlacesStack';
 import ContactsStack from './screens/ContactsStack';
 import SignupStack from './screens/SignUp/SignupStack';
 import client from './client';
@@ -47,6 +48,10 @@ export default function App() {
           <Tab.Screen
             name="Contacts"
             component={ContactsStack}
+          />
+          <Tab.Screen
+            name="Places"
+            component={PlacesStack}
           />
           <Tab.Screen
             name="Profile"
