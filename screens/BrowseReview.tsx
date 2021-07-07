@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList,TextInput, SafeAreaView, KeyboardAvoidingView, Platform,Image } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, FlatList,TextInput, SafeAreaView, KeyboardAvoidingView, Platform,Image, Keyboard } from 'react-native'
 import { userVar } from '../client';
+import { useQuery, useMutation } from '@apollo/client';
 import ModalDropdown from 'react-native-modal-dropdown';
 import FloatingCard from '../components/FloatingCard';
+import {GET_REVIEWS} from '../services/queriesApi'
+import {POST_REVIEWS} from '../services/mutationsApi'
 import ReviewCard from '../components/ReviewCard';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -57,15 +60,30 @@ const data = [
 ]
 
 const BrowseReview: React.FC<BrowseReviewProps> = ({navigation, route}) => {
+  const userInfo = userVar();
+  console.log(userInfo.user.id)
+  const [reviewArr, setReviewArr] = useState([])
   const [rating, setRating] = useState('')
   const [review, setReview] = useState('')
+  const {loading, error, data} = useQuery(GET_REVIEWS, {
+    variables: {userId: {id:route.params.id}},
+    pollInterval:500
+  })
+  const [postReview, postReviewCache] = useMutation(POST_REVIEWS, {
+    variables: {review:{userId: route.params.id ,authorId:userInfo.user.id,content:review, rating: parseInt(rating)}}
+  })
 
+    
+    
+  if (error) console.log(error)
+  if (loading) {
+    return <View><Text>Loading</Text></View>}
+  if (data.length > 0) setReviewArr(data)
 
-  console.log(route)
+  
 
-  const userInfo = userVar();
   let reviews = (<FlatList
-    data={data}
+    data={data.reviews}
     keyExtractor={item => String(item.id)}
     renderItem={({ item}) => {
       return (
@@ -76,9 +94,9 @@ const BrowseReview: React.FC<BrowseReviewProps> = ({navigation, route}) => {
         </View>
       )
     }}
-  />)
-  if (data.length === 0) reviews = (<Text style={styles.text}>No reviews for this guide. Had a great experience with {route.params.firstName}? Leave a message below</Text>)
-  
+    />)
+    if (data.reviews.length == 0) reviews = (<Text style={styles.text}>No reviews for this guide. Had a great experience with {route.params.firstName}? Leave a message below</Text>);
+    
 
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -124,7 +142,11 @@ const BrowseReview: React.FC<BrowseReviewProps> = ({navigation, route}) => {
         />
         <TouchableOpacity
             onPress={() => {
-              console.log({rating, review})
+              if (!rating || !review ) alert('FAIL')
+              postReview()
+              setRating('')
+              setReview('')
+              Keyboard.dismiss()
             }}
             >
             <MaterialCommunityIcons

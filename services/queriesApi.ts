@@ -91,4 +91,19 @@ export const MESSAGES = gql`
     }
   }
 `
+export const GET_REVIEWS = gql`
+  query ($userId: UserInput!) {
+	reviews (input: $userId) {
+    id
+    createdAt
+    content
+    rating
+    profile {
+      id
+      firstName
+      profileImg
+    }
+  }
+}
+`
 
