@@ -22,6 +22,7 @@ const GET_USERS = gql`
       firstName
       lastName
       guide
+      rating
       city
       country
       gender
@@ -91,6 +92,14 @@ const BrowseScreen = (props: Props) => {
   // only show guides in browse
   data = data.filter(userObject => {
     return userObject.user.guide;
+  })
+  //filter out user
+  data = data.filter(userObject => {
+    if (userObject.user.id === userInfo.id) {
+      return false;
+    } else {
+      return true;
+    }
   })
 
   let carousel = (<Carousel
