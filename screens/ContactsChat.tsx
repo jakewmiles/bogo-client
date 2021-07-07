@@ -10,7 +10,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
-  ScrollView,
+  Platform,
   RefreshControlBase
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -57,7 +57,7 @@ const ContactsChat = ( props: Props ) => {
     }}>
       <KeyboardAvoidingView 
       style={styles.view}
-      behavior='padding'
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View style={styles.headerContainer}>
         <TouchableOpacity

@@ -73,6 +73,8 @@ const Profile = (props: Props) => {
         navigation.navigate('Browse', {
           screen: 'BrowseReview', params: {
             id: user.id,
+            firstName: user.firstName,
+            profileImg: user.profileImg
           }
         })
       }}>
