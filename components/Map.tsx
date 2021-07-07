@@ -48,7 +48,7 @@ const Map: React.FC<MapProps> = ({ title, currentLocation, onSelectLocation }) =
     if (!cities.length) setLocation('No major cities nearby');
     else {
       setLocation(`${cities[0].city}, ${cities[0].country}`)
-      onSelectLocation(cities[0].city, cities[0].country)
+      onSelectLocation(cities[0].city, cities[0].country, latitude, longitude)
     };
   }
 

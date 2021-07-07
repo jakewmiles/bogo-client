@@ -10,7 +10,7 @@ import {
 import StarRating from 'react-native-star-rating';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconButton from './IconButton';
-import User from '../interfaces/interfaces';
+import {User} from '../interfaces/interfaces';
 import { gql, useMutation } from '@apollo/client';
 import { userVar } from '../client';
 import { useNavigation } from '@react-navigation/native';
