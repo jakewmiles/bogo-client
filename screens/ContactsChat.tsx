@@ -11,7 +11,6 @@ import {
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
   RefreshControlBase
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -31,6 +30,10 @@ interface Message {
   content: string;
 }
 
+const ContactsChat = ( props: Props ) => {
+  console.log(props)
+  const chatId = props.route.params.chatId;
+  const userId =userVar().user.id
 function useForceUpdate() {
   const [value, setValue] = useState(0);
   return () => { setValue(value => value + 1); }
@@ -100,6 +103,7 @@ const ContactsChat = (props: Props) => {
     <TouchableWithoutFeedback onPress={() => {
       Keyboard.dismiss();
     }}>
+
       <KeyboardAvoidingView
         style={styles.view}
         behavior={Platform.OS === "ios" ? "padding" : "height"}

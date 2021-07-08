@@ -70,6 +70,24 @@ const Profile = (props: Props) => {
     <View style={styles.buttonDiv} />
     <TouchableOpacity
       onPress={() => {
+        navigation.navigate('Browse', {
+          screen: 'BrowseReview', params: {
+            id: user.id,
+            firstName: user.firstName,
+            profileImg: user.profileImg
+          }
+        })
+      }}>
+      <IconButton
+        name={'comment-check-outline'}
+        color={'white'}
+        size={30}
+        bgColor={'#99879D'}
+      />
+    </TouchableOpacity>
+    <View style={styles.buttonDiv} />
+    <TouchableOpacity
+      onPress={() => {
         navigation.navigate('Contacts', {
           screen: 'ContactsChat', params: {
             id: user.id,
