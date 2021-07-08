@@ -105,25 +105,33 @@ const ContactsChat = (props: Props) => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View style={styles.headerContainer}>
-          <TouchableOpacity
-            style={styles.goBack}
-            onPress={() => props.navigation.navigate('ContactsHome')}
-          >
-            <MaterialCommunityIcons
-              name={'arrow-left'}
-              color={'rgba(153, 135, 157, 0.7)'}
-              size={20}
-
-            />
-            <Text style={styles.goBackText}> Back</Text></TouchableOpacity>
-          <Text style={styles.mainHeader}>{props.route.params.firstName} </Text>
-          <Text style={styles.mainInfo}>{props.route.params.city} {props.route.params.country} </Text>
-          <Image
-            style={styles.image}
-            source={{
-              uri: props.route.params.profilePicture,
-            }}
-          />
+          <View style={{justifyContent:'flex-start', width: '20%'}}>
+            <TouchableOpacity
+              style={styles.goBack}
+              onPress={() => props.navigation.navigate('ContactsHome')}
+            >
+              <MaterialCommunityIcons
+                name={'arrow-left'}
+                color={'rgba(153, 135, 157, 0.7)'}
+                size={20}
+              />
+              <Text style={styles.goBackText}> Back</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{flexDirection:'row', flex: 1}}>
+            <View style={{width: '40%', alignItems: 'flex-end', justifyContent: 'center'}}>
+              <Image
+                style={styles.image}
+                source={{
+                  uri: props.route.params.profilePicture,
+                }}
+              />
+            </View>
+            <View style={{flex: 1, alignItems: 'flex-start', justifyContent: 'center'}}>
+              <Text style={styles.mainHeader}>{props.route.params.firstName} </Text>
+              <Text style={styles.mainInfo}>{props.route.params.city}, {props.route.params.country} </Text>
+            </View>
+          </View>
         </View>
         {flatList}
         <View style={styles.inputContainer}>
@@ -158,14 +166,15 @@ const ContactsChat = (props: Props) => {
 const styles = StyleSheet.create({
   mainInfo: {
     color: 'grey',
-    marginLeft: -80,
-    alignSelf: 'center',
-    marginTop: 55
+    // marginLeft: -80,
+    // alignSelf: 'center',
+    // marginTop: 55
   },
   headerContainer: {
     flexDirection: 'row',
-    height: '18%',
-    backgroundColor: 'transparent'
+    height: '13%',
+    backgroundColor: 'transparent',
+    marginTop: 25,
   },
   messageView: {
     backgroundColor: '#FAF9FE',
@@ -190,7 +199,8 @@ const styles = StyleSheet.create({
     opacity: 0.7
   },
   goBack: {
-    paddingTop: '10%',
+    paddingTop: '30%',
+    paddingLeft: '10%',
     justifyContent: 'flex-start',
     flexDirection: 'row',
   },
@@ -203,20 +213,18 @@ const styles = StyleSheet.create({
   mainHeader: {
     fontFamily: 'PTSans_700Bold',
     fontSize: 30,
-    alignSelf: 'center',
-    marginLeft: '20%',
+    // alignSelf: 'center',
+    // marginLeft: '20%',
   },
 
   image: {
-    marginRight: 20,
-    height: 45,
-    width: 45,
+    marginRight: 15,
+    height: 70,
+    width: 70,
     resizeMode: 'contain',
-    borderRadius: 150,
-    alignSelf: 'center',
-    marginLeft: '-40%',
-    borderWidth: 1,
-    borderColor: 'white'
+    borderRadius: 300,
+    // alignSelf: 'center',
+    // marginLeft: '-40%',
   },
   input: {
     borderWidth: 1,

@@ -23,6 +23,7 @@ const GET_USERS = gql`
       lastName
       guide
       rating
+      dob
       city
       country
       gender

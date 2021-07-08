@@ -176,8 +176,8 @@ const Profile = (props: Props) => {
 const styles = StyleSheet.create({
   view: {
     backgroundColor: '#ffffff',
-    height: 560,
-    width: '95%',
+    height: 650,
+    width: '90%',
     borderRadius: 8,
     paddingHorizontal: 15,
     paddingVertical: 15,
@@ -185,6 +185,7 @@ const styles = StyleSheet.create({
     shadowColor: 'rgba(0, 0, 0, .25)',
     shadowOpacity: 1,
     elevation: 5,
+    marginTop: 25,
   },
   profileHeader: {
     flexDirection: 'row',
