@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import BrowseScreen from './BrowseScreen';
 import BrowseFilter from './BrowseFilter';
 import BrowseAlbum from './BrowseAlbum';
+import BrowseReview from './BrowseReview';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,11 @@ const BrowseStack = () => {
       <Stack.Screen
         name="BrowseAlbum"
         component={BrowseAlbum}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BrowseReview"
+        component={BrowseReview}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

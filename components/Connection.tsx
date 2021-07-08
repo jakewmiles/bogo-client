@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { useQuery } from '@apollo/client'
 import { GET_MESSAGES } from '../client'
-import { formatDate } from '../function'
+import formatDate from '../services/function'
 
 
 interface Props {
@@ -15,24 +15,6 @@ interface Props {
 }
 
 const Connection = (props: Props) => {
-  function formatDate(unix) {
-    unix = parseInt(unix)
-    const now = new Date().toDateString().split(' ')
-    const date = new Date(unix).toDateString().split(' ')
-    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  
-    if(now[2] === date[2]) {
-      const date = new Date(parseInt(unix));
-      const hours = date.getHours();
-      const minutes = "0" + date.getMinutes();
-      const formattedTime = hours + ':' + minutes.substr(-2)
-      return formattedTime
-    }
-    if(parseInt(now[2])-1 === parseInt(date[2])) return 'Yesterday'
-    if (parseInt(now[2])>= parseInt(date[2]) || parseInt(date[2]) < parseInt(now[2])-7 ) return days[new Date(unix).getDay()]
-  
-    return (new Date(unix).toLocaleDateString('en-UK'))
-  }
 
 
   const {loading , error, data} = useQuery(GET_MESSAGES, {
@@ -40,12 +22,12 @@ const Connection = (props: Props) => {
     pollInterval: 5000
   })
   let latestMessage = ''
-  let formattedDate = ''
+  let time = ''
   if (loading) return <View><Text>Loading</Text></View>
   console.log(data.messages[data.messages.length-1])
   if (data) {
     latestMessage = data.messages[data.messages.length-1].content}
-    formattedDate = formatDate(data.messages[data.messages.length-1].createdAt)
+    time = formatDate(data.messages[data.messages.length-1].createdAt)
     
   return (
     <View style={styles.view}>
@@ -60,7 +42,7 @@ const Connection = (props: Props) => {
       </View>
       <View style={styles.textView}>
         <Text style={styles.text}>{props.firstName}</Text>
-        <Text style={styles.extraTextDate}>{formattedDate}</Text>
+        <Text style={styles.extraTextDate}>{time}</Text>
         <Text style={styles.extraTextLocation}>{props.city}, {props.country}</Text>
         <Text style={styles.extraText}>{latestMessage}</Text>
 
