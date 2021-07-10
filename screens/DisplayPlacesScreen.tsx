@@ -37,7 +37,7 @@ const DisplayPlacesScreen: React.FC<DisplayPlacesScreenProps> = ({ navigation, r
   })
 
   while (loading) {
-    return <Text>loading</Text>;
+    return <Text></Text>;
   }  
 
   let places;

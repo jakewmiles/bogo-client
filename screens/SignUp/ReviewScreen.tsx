@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions, Image, ScrollView } from 'react-native';
 import { newUserVar, userVar } from '../../client';
 import TextButton from '../../components/TextButton';
 import { isLoggedInVar, SEND_USER } from '../../client';
@@ -36,7 +36,7 @@ const mapIDs = (array: Hobby[]|Language[]) => {
   return ( 
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
       <FloatingCard cardWidth={'85%'}>
-        <View style={{height: 600}}>
+        <ScrollView style={{height: 600}}>
           <Text style={styles.header}>Review account details:</Text>
           <View style={{alignItems:'flex-start', width: '100%', padding: 25}}>
             <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft: 35, marginBottom: 10}}>  
@@ -86,7 +86,7 @@ const mapIDs = (array: Hobby[]|Language[]) => {
               </View>
             </View>
           </View>
-        </View>
+        </ScrollView>
       </FloatingCard>
       <TouchableOpacity 
         style={styles.button}

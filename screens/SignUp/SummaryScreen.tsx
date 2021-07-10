@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
     width: '70%',
     marginTop: 25,
     flexDirection: 'row', 
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginLeft: 160,
   },
   textArea: {
     paddingHorizontal: 15,
@@ -110,9 +111,9 @@ const styles = StyleSheet.create({
     paddingVertical: 25,
     borderWidth: 1,
     borderColor: '#99879D',
-    width: '90%',
+    width: 260,
     height: '60%',
-    marginVertical: 25,
+    marginVertical: 15,
   },
   progressBar: {
     height: 7, 

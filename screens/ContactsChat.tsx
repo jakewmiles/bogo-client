@@ -30,18 +30,8 @@ interface Message {
   content: string;
 }
 
-const ContactsChat = ( props: Props ) => {
-  console.log(props)
-  const chatId = props.route.params.chatId;
-  const userId =userVar().user.id
-function useForceUpdate() {
-  const [value, setValue] = useState(0);
-  return () => { setValue(value => value + 1); }
-}
 
 const ContactsChat = (props: Props) => {
-
-  const forceUpdate = useForceUpdate;
 
   let chatId = '';
 

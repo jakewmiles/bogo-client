@@ -15,49 +15,6 @@ export interface BrowseReviewProps {
 }
 const ratingDb = ['1','2','3','4','5']
 
-const data = [
-  {
-    id:'1',
-    rating:5,
-    content: 'Handy is faaaaantastic',
-    createdAt: '1625568131996',
-    profile: {
-      id:'2',
-      firstName:'Tandy',
-      profileImg:'https://picsum.photos/200',
-    }
- },{
-  id:'2',
-  rating:2,
-  content: 'Handy is bad :(',
-  createdAt: '1625568231996',
-  profile: {
-    id:'1',
-    firstName:'Randy',
-    profileImg:'https://picsum.photos/200'
-  }
-},{
-  id:'3',
-  rating:5,
-  content: '🥨🥐🍞🥯',
-  createdAt: '1625068131996',
-  profile: {
-    id:'2',
-    firstName:'Mandy',
-    profileImg:'https://picsum.photos/200'
-  }
-},{
-  id:'4',
-  rating:5,
-  content: 'Handy is a good shag',
-  createdAt: '162568131996',
-  profile: {
-    id:'2',
-    firstName:'Sandy',
-    profileImg:'https://picsum.photos/200'
-  }
-}
-]
 
 const BrowseReview: React.FC<BrowseReviewProps> = ({navigation, route}) => {
   const userInfo = userVar();
@@ -201,7 +158,7 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingTop: '5%',
-    marginTop: '10%',
+    marginTop: '20%',
     height: '10%',
     width:'100%',
     flexDirection: 'row-reverse', 
@@ -214,7 +171,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     flexDirection: 'row',
     backgroundColor: 'white',
-    marginBottom:'13%'
+    marginBottom:75,
   },
   inputField: {
     borderWidth: 1,

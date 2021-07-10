@@ -35,10 +35,11 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   logo: {
-    fontSize: 90,
+    fontSize: 120,
     marginVertical: '50%',
     opacity: 1,
-    zIndex: 3
+    zIndex: 3,
+    fontFamily: 'PTSans_400Regular'
   },
   button: {
     width: '70%',

@@ -92,7 +92,9 @@ const Profile = (props: Props) => {
           screen: 'ContactsChat', params: {
             id: user.id,
             firstName: user.firstName,
-            profilePicture: user.profileImg
+            profilePicture: user.profileImg,
+            city: user.city,
+            country: user.country,
           }
         })
       }}>

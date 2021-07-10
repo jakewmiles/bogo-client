@@ -24,7 +24,7 @@ const ToggleableButtonFlatlist: React.FC<ToggleableButtonFlatlistProps> = ({ arr
     <FlatList
       data={renderData}
       columnWrapperStyle={styles.tagView}
-      numColumns={3}
+      numColumns={10}
       nestedScrollEnabled
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
