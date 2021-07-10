@@ -1,13 +1,13 @@
-import React from 'react';
 import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack";
-import LandingScreen from '../SignUp/LandingScreen';
-import SignupScreen from '../SignUp/SignupScreen';
-import SigninScreen from '../SignUp/SigninScreen';
-import PersonalInfoScreen from './PersonalInfoScreen';
+import React from 'react';
 import HobbiesScreen from '../SignUp/HobbiesScreen';
 import ImageUploadScreen from '../SignUp/ImageUploadScreen';
-import SummaryScreen from '../SignUp/SummaryScreen';
+import LandingScreen from '../SignUp/LandingScreen';
 import LanguagesScreen from '../SignUp/LanguagesScreen';
+import SigninScreen from '../SignUp/SigninScreen';
+import SignupScreen from '../SignUp/SignupScreen';
+import SummaryScreen from '../SignUp/SummaryScreen';
+import PersonalInfoScreen from './PersonalInfoScreen';
 import ReviewScreen from './ReviewScreen';
 
 interface Props {

@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions} from 'react-native';
 import { newUserVar } from '../../client';
 import FloatingCard from '../../components/FloatingCard';
 import IconButton from '../../components/IconButton';
-import TextButton from '../../components/TextButton';
 import ToggleableButtonFlatlist from '../../components/ToggleableButtonFlatlist';
 import { INTERESTS } from '../../services/queriesApi';
 import { useQuery } from '@apollo/client';
@@ -46,8 +45,6 @@ const HobbiesScreen: React.FC<HobbiesScreenProps> = ({ navigation }) => {
           </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            // const selectedHobbyIDs = dataArray.filter((hobby: Hobby) => hobby.selected === true)
-            //                                 .map((hobby: Hobby) => hobby.id);
             newUserVar({...newUserVar(), interests: dataArray.filter((hobby: Hobby) => hobby.selected === true)});
             navigation.navigate('ImageUploadScreen');
           }}

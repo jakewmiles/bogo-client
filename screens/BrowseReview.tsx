@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList,TextInput, SafeAreaView, KeyboardAvoidingView, Platform,Image, Keyboard } from 'react-native'
-import { userVar } from '../client';
-import { useQuery, useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
+import React, { useState } from 'react';
+import { FlatList, Image, Keyboard, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { userVar } from '../client';
 import FloatingCard from '../components/FloatingCard';
-import {GET_REVIEWS} from '../services/queriesApi'
-import {POST_REVIEWS} from '../services/mutationsApi'
 import ReviewCard from '../components/ReviewCard';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { POST_REVIEWS } from '../services/mutationsApi';
+import { GET_REVIEWS } from '../services/queriesApi';
 
 
 export interface BrowseReviewProps {
@@ -18,7 +18,6 @@ const ratingDb = ['1','2','3','4','5']
 
 const BrowseReview: React.FC<BrowseReviewProps> = ({navigation, route}) => {
   const userInfo = userVar();
-  console.log(userInfo.user.id)
   const [reviewArr, setReviewArr] = useState([])
   const [rating, setRating] = useState('')
   const [review, setReview] = useState('')
@@ -32,7 +31,7 @@ const BrowseReview: React.FC<BrowseReviewProps> = ({navigation, route}) => {
 
     
     
-  if (error) console.log(error)
+  if (error) alert(error)
   if (loading) {
     return <View><Text>Loading</Text></View>}
   if (data.length > 0) setReviewArr(data)

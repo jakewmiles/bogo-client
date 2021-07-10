@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Platform, Image} from 'react-native';
-import IconButton from './IconButton';
 import * as ImagePicker from 'expo-image-picker';
+import React, { useEffect, useState } from 'react';
+import { Image, Platform, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import IconButton from './IconButton';
 
 export interface PhotoSquareProps {
   handleUpload: any;

@@ -1,14 +1,12 @@
-import React from 'react';
-import { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions, Image, ScrollView } from 'react-native';
-import { newUserVar, userVar } from '../../client';
-import TextButton from '../../components/TextButton';
-import { isLoggedInVar, SEND_USER } from '../../client';
-import { ProgressBar } from 'react-native-paper';
 import { useMutation } from '@apollo/client';
+import React from 'react';
+import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ProgressBar } from 'react-native-paper';
+import { isLoggedInVar, newUserVar, SEND_USER, userVar } from '../../client';
 import FloatingCard from '../../components/FloatingCard';
-import { Language } from './LanguagesScreen';
+import TextButton from '../../components/TextButton';
 import { Hobby } from './HobbiesScreen';
+import { Language } from './LanguagesScreen';
 
 
 export interface ReviewScreenProps {
@@ -18,11 +16,10 @@ export interface ReviewScreenProps {
  
 const ReviewScreen: React.FC<ReviewScreenProps> = ({ navigation, route }) => {
 const [ sendUser, sendUserCatch ] = useMutation(SEND_USER, {
-  onError: (err) => console.log(err)
+  onError: (err) => alert(err)
 });
 
 if (sendUserCatch.data) {
-  console.log('SENDUSERCATCH',sendUserCatch.data);
   
   userVar(sendUserCatch.data);
   
@@ -92,7 +89,6 @@ const mapIDs = (array: Hobby[]|Language[]) => {
         style={styles.button}
         onPress={() => {    
           newUserVar({...newUserVar(), languages: mapIDs(newUserVar().languages), interests: mapIDs(newUserVar().interests)})       
-          console.log('FINALSTEPNEWUSER',newUserVar());
           sendUser({variables:{signupInput: newUserVar()}})
         }}>
         <TextButton title={'LAUNCH ACCOUNT'} filled={true}/>

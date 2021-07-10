@@ -1,12 +1,11 @@
+import { gql, useMutation, useQuery } from '@apollo/client';
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { filterFavoritesVar, filterInterestsVar, userVar } from '../client';
+import FloatingCard from '../components/FloatingCard';
 import Map from '../components/Map';
 import ToggleableButtonFlatlist from '../components/ToggleableButtonFlatlist';
-import FloatingCard from '../components/FloatingCard';
-import { gql, useMutation } from '@apollo/client';
-import { userVar, filterInterestsVar, filterFavoritesVar } from '../client';
 import { INTERESTS } from '../services/queriesApi';
-import { useQuery } from '@apollo/client';
 
 interface Props {
   navigation: any;

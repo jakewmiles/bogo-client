@@ -1,10 +1,9 @@
-import React from 'react';
-import { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions, Switch, Keyboard } from 'react-native';
-import FloatingCard from '../../components/FloatingCard';
-import { newUserVar } from '../../client';
-import IconButton from '../../components/IconButton';
+import React, { useState } from 'react';
+import { Dimensions, Keyboard, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
+import { newUserVar } from '../../client';
+import FloatingCard from '../../components/FloatingCard';
+import IconButton from '../../components/IconButton';
 
 
 export interface SummaryScreenProps {

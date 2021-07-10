@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { StyleSheet, View } from 'react-native';
 
 export interface FloatingCardProps {
   children: React.ReactNode;

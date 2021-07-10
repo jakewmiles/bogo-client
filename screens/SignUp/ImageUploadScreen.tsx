@@ -101,13 +101,11 @@ const ImageUploadScreen: React.FC<ImageUploadScreenProps> = ({ navigation }) => 
             })
             let profileImageName = getImageName(profileImage);
             firebaseUpload(profileImage, profileImageName);
-            console.log('IMAGES', imagesArray);
 
             newUserVar({
               ...newUserVar(), profileImg: profileImageName ? `https://firebasestorage.googleapis.com/v0/b/bogo-client.appspot.com/o/images%2F${profileImageName}?alt=media` : '',
               userAlbum: imagesArray
             });
-            console.log('USERALBUMVAR', newUserVar());
 
             navigation.navigate('SummaryScreen');
           }}>

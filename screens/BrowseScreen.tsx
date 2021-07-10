@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
-import Carousel, { Pagination } from 'react-native-snap-carousel'
-import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from '../components/ProfileCarousel';
-import { useNavigation } from '@react-navigation/core';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { MainBottomTabParamList } from '../types';
 import { gql, useQuery } from '@apollo/client';
-import { userVar, filterInterestsVar, filterFavoritesVar } from '../client';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Cormorant_600SemiBold } from '@expo-google-fonts/dev';
+import { filterFavoritesVar, filterInterestsVar, userVar } from '../client';
+import CarouselCardItem, { ITEM_WIDTH, SLIDER_WIDTH } from '../components/ProfileCarousel';
 
 interface Props {
   navigation: any;

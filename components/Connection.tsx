@@ -1,8 +1,8 @@
+import { useQuery } from '@apollo/client';
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { useQuery } from '@apollo/client'
-import { GET_MESSAGES } from '../client'
-import formatDate from '../services/function'
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { GET_MESSAGES } from '../client';
+import formatDate from '../services/function';
 
 
 interface Props {
@@ -24,7 +24,6 @@ const Connection = (props: Props) => {
   let latestMessage = ''
   let time = ''
   if (loading) return <View><Text>Loading</Text></View>
-  console.log(data.messages[data.messages.length-1])
   if (data) {
     latestMessage = data.messages[data.messages.length-1].content}
     time = formatDate(data.messages[data.messages.length-1].createdAt)

@@ -1,12 +1,12 @@
+import { useQuery } from '@apollo/client';
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import IconButton from '../../components/IconButton';
-import ToggleableButtonFlatlist from '../../components/ToggleableButtonFlatlist';
-import FloatingCard from '../../components/FloatingCard';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
 import { newUserVar } from '../../client';
+import FloatingCard from '../../components/FloatingCard';
+import IconButton from '../../components/IconButton';
+import ToggleableButtonFlatlist from '../../components/ToggleableButtonFlatlist';
 import { LANGUAGES } from '../../services/queriesApi';
-import { useQuery } from '@apollo/client';
 
 export interface LanguagesScreenProps {
   navigation: any;

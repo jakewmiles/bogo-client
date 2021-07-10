@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
+import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
   FlatList,
-  Image,
-  TouchableOpacity,
-  TextInput,
-  Keyboard,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  Platform,
-  RefreshControlBase
+  Image, Keyboard, KeyboardAvoidingView,
+  Platform, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Message from '../components/Message';
-import { useMutation, useQuery } from '@apollo/client'
 import { GET_MESSAGES, SEND_MESSAGES, userVar } from '../client';
+import Message from '../components/Message';
 
 interface Props {
   navigation: any;
@@ -160,9 +151,6 @@ const ContactsChat = (props: Props) => {
 const styles = StyleSheet.create({
   mainInfo: {
     color: 'grey',
-    // marginLeft: -80,
-    // alignSelf: 'center',
-    // marginTop: 55
   },
   headerContainer: {
     flexDirection: 'row',
@@ -207,8 +195,6 @@ const styles = StyleSheet.create({
   mainHeader: {
     fontFamily: 'PTSans_700Bold',
     fontSize: 30,
-    // alignSelf: 'center',
-    // marginLeft: '20%',
   },
 
   image: {
@@ -217,8 +203,6 @@ const styles = StyleSheet.create({
     width: 70,
     resizeMode: 'contain',
     borderRadius: 300,
-    // alignSelf: 'center',
-    // marginLeft: '-40%',
   },
   input: {
     borderWidth: 1,

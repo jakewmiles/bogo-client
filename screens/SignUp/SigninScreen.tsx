@@ -1,10 +1,10 @@
-import React from 'react';
-import { StyleSheet, Text, View,TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { useLazyQuery } from '@apollo/client';
 import { Formik } from 'formik';
+import React from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { GET_USER, isLoggedInVar, userVar } from '../../client';
 import FloatingCard from '../../components/FloatingCard';
 import TextButton from '../../components/TextButton';
-import { GET_USER, isLoggedInVar, userVar } from '../../client'
-import { useLazyQuery } from '@apollo/client'
 
 export interface SigninScreenProps {
   navigation: any;
@@ -16,7 +16,7 @@ const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
   const [getUser, { loading, data }] = useLazyQuery(GET_USER)
 
   if (data) {
-    userVar(data)
+    userVar(data)    
     isLoggedInVar(true);
   }
   if (loading) {
@@ -54,7 +54,7 @@ const SigninScreen: React.FC<SigninScreenProps> = ({ navigation }) => {
               style={styles.button}
               onPress={() => {
                 if (!values.email || !values.password) alert('FAIL')
-                else {
+                else {                  
                   getUser({ variables: { loginInput: { email: values.email, password: values.password } } })
                 }
               }}>

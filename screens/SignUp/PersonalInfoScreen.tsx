@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import IconButton from '../../components/IconButton';
-import FloatingCard from '../../components/FloatingCard';
-import Map from '../../components/Map';
-import { newUserVar } from '../../client';
+import React, { useState } from 'react';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
+import { newUserVar } from '../../client';
+import IconButton from '../../components/IconButton';
+import Map from '../../components/Map';
 
 export interface PersonalInfoScreenProps {
   navigation: any;

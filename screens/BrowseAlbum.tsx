@@ -1,10 +1,10 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import AlbumSqure from '../components/AlbumSquare';
-import { useNavigation } from '@react-navigation/native';
-import IconButton from '../components/IconButton';
 import FloatingCard from '../components/FloatingCard';
+import IconButton from '../components/IconButton';
 
 interface Props {
   route: any

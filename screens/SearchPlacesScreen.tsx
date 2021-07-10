@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import TextButton from '../components/TextButton';
+import gql from 'graphql-tag';
+import React, { useState } from 'react';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Map from '../components/Map';
-import { useLazyQuery } from '@apollo/client';
-import gql from 'graphql-tag'
+import TextButton from '../components/TextButton';
 
 export interface SearchPlacesScreenProps {
   navigation: any;

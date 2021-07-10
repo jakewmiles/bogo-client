@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, ImageBackground, requireNativeComponent } from 'react-native';
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import TextButton from '../../components/TextButton';
 
 export interface LandingScreenProps {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import Profile from '../components/Profile';
 import { userVar } from '../client';
+import Profile from '../components/Profile';
 
 export interface ProfileScreenProps {
 

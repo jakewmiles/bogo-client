@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import { gql, useMutation } from '@apollo/client';
+import { useNavigation } from '@react-navigation/native';
+import React from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
   Image,
-  ScrollView,
+  ScrollView, StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
 import StarRating from 'react-native-star-rating';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import IconButton from './IconButton';
-import {User} from '../interfaces/interfaces';
-import { gql, useMutation } from '@apollo/client';
 import { userVar } from '../client';
-import { useNavigation } from '@react-navigation/native';
+import { User } from '../interfaces/interfaces';
+import IconButton from './IconButton';
 
 interface Props {
   user: User

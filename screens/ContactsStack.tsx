@@ -1,7 +1,7 @@
-import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
-import ContactsHome from './ContactsHome';
+import React from 'react';
 import ContactsChat from './ContactsChat';
+import ContactsHome from './ContactsHome';
 
 interface Props {
   userInfo: {

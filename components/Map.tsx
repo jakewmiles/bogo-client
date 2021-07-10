@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
-import IconButton from '../components/IconButton';
-import MapView, { LatLng, Marker, Region } from 'react-native-maps';
-import FloatingCard from '../components/FloatingCard';
 import * as Location from 'expo-location';
 import { LocationObject } from 'expo-location';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import MapView, { LatLng, Marker } from 'react-native-maps';
+import FloatingCard from '../components/FloatingCard';
+import IconButton from '../components/IconButton';
 
 export interface MapProps {
   title: string;
@@ -25,7 +25,7 @@ const Map: React.FC<MapProps> = ({ title, currentLocation, onSelectLocation }) =
 
   const getCurrentLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') console.log('Permission denied');
+    if (status !== 'granted') alert('Permission denied');
     let location = await Location.getCurrentPositionAsync({});
     setDisabledButton(false);
     setRegion(location)

@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions, FlatList, Image } from 'react-native';
 import { useQuery } from '@apollo/client';
-import gql from 'graphql-tag';
-import IconButton from '../components/IconButton';
-import FloatingCard from '../components/FloatingCard';
-import StarRating from 'react-native-star-rating';
 import * as WebBrowser from 'expo-web-browser';
+import gql from 'graphql-tag';
+import React from 'react';
+import { Dimensions, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import StarRating from 'react-native-star-rating';
+import FloatingCard from '../components/FloatingCard';
 
 export interface DisplayPlacesScreenProps {
   navigation: any;

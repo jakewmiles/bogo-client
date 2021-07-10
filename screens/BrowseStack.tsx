@@ -1,9 +1,9 @@
-import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
-import BrowseScreen from './BrowseScreen';
-import BrowseFilter from './BrowseFilter';
+import React from 'react';
 import BrowseAlbum from './BrowseAlbum';
+import BrowseFilter from './BrowseFilter';
 import BrowseReview from './BrowseReview';
+import BrowseScreen from './BrowseScreen';
 
 const Stack = createStackNavigator();
 

@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { userVar } from '../client';
 import Connection from '../components/Connection';
-import { userVar } from '../client'
 
 interface Props {
   navigation: any;
@@ -22,7 +16,6 @@ const ConnectionsHome = (props: Props) => {
   
 
 
-  console.log(userInfo.user.chats, 'userinfo contacts')
   return (
     <View style={styles.view}>
       <Text style={styles.mainHeader}>Your Connections</Text>

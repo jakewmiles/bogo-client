@@ -1,8 +1,8 @@
 
-import { ApolloClient } from 'apollo-client';
+import { gql, makeVar } from '@apollo/client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
-import { makeVar, gql } from '@apollo/client';
 import firebase from 'firebase/app';
 import 'firebase/storage';
 

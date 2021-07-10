@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Dimensions } from 'react-native';
-import { Formik } from 'formik';
-import TextButton from '../../components/TextButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import FloatingCard from '../../components/FloatingCard';
+import { Formik } from 'formik';
+import React, { useState } from 'react';
+import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ProgressBar, RadioButton } from 'react-native-paper';
 import { newUserVar } from '../../client';
-import { RadioButton, ProgressBar, Colors } from 'react-native-paper';
+import FloatingCard from '../../components/FloatingCard';
+import TextButton from '../../components/TextButton';
 
 export interface SignupScreenProps {
   navigation: any;
@@ -33,7 +33,9 @@ const SignupScreen: React.FC<SignupScreenProps> = ({ navigation }) => {
     <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
       <Formik
         initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
-        onSubmit={values => console.log(values)}
+        onSubmit={values => {
+          return;
+        }}
       >
         {({ handleChange, handleBlur, handleSubmit, values}) => (
           <View style={{width: '90%', justifyContent: 'center', alignItems: 'center'}}>

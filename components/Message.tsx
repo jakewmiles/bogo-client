@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, ViewStyle } from 'react-native';
-import { userVar } from '../client'
-import formatDate from '../services/function'
+import { StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { userVar } from '../client';
+import formatDate from '../services/function';
 
 
 interface Props {

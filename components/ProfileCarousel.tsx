@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text, StyleSheet, Dimensions, Image } from "react-native"
+import React from 'react';
+import { Dimensions, StyleSheet, View } from "react-native";
 import Profile from './Profile';
 
 export const SLIDER_WIDTH = Dimensions.get('window').width

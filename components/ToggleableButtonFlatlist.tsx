@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, FlatList, View } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import TextButton from '../components/TextButton';
-import FloatingCard from './FloatingCard';
 
 export interface ToggleableButtonFlatlistProps {
   array: any;

@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import StarRating from 'react-native-star-rating';
-import formatDate from '../services/function'
+import formatDate from '../services/function';
 
 
 const ReviewCard = ({prop}) => {
